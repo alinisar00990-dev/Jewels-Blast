@@ -4,14 +4,330 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Jewels Blast</title>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* SCREEN MANAGEMENT */
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .screen.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* LOADING SCREEN */
+        #loading-screen {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            overflow: hidden;
+        }
+
+        .loading-container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* FLOATING JEWELS ANIMATION */
+        .floating-jewels {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .jewel {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatJewel linear infinite;
+            opacity: 0.6;
+        }
+
+        .jewel-1 { left: 5%; font-size: 1.5rem; animation-duration: 8s; animation-delay: 0s; }
+        .jewel-2 { left: 15%; font-size: 2rem; animation-duration: 10s; animation-delay: 1s; }
+        .jewel-3 { left: 25%; font-size: 1.8rem; animation-duration: 7s; animation-delay: 2s; }
+        .jewel-4 { left: 35%; font-size: 2.2rem; animation-duration: 9s; animation-delay: 0.5s; }
+        .jewel-5 { left: 50%; font-size: 1.6rem; animation-duration: 11s; animation-delay: 1.5s; }
+        .jewel-6 { left: 60%; font-size: 2rem; animation-duration: 8s; animation-delay: 3s; }
+        .jewel-7 { left: 70%; font-size: 1.4rem; animation-duration: 10s; animation-delay: 2.5s; }
+        .jewel-8 { left: 80%; font-size: 2.5rem; animation-duration: 7s; animation-delay: 0.8s; }
+        .jewel-9 { left: 88%; font-size: 1.8rem; animation-duration: 9s; animation-delay: 1.8s; }
+        .jewel-10 { left: 95%; font-size: 2rem; animation-duration: 12s; animation-delay: 3.5s; }
+
+        @keyframes floatJewel {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* LOGO */
+        .logo-container {
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .game-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title-jewels {
+            font-family: 'Fredoka One', cursive;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(138, 43, 226, 0.6), 0 0 40px rgba(138, 43, 226, 0.4);
+            letter-spacing: 8px;
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+
+        .title-blast {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #ff6b6b);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 12px;
+            animation: rainbowText 3s ease infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .title-sparkle {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* LOADING BAR */
+        .loading-bar-container {
+            width: 280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .loading-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .loading-text {
+            color: #fff;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .loading-tip {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            margin-top: 25px;
+            font-style: italic;
+            transition: opacity 0.3s ease;
+        }
+
+        /* MAIN MENU SCREEN */
+        #menu-screen {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            overflow-y: auto;
+        }
+
+        .menu-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .menu-title .title-jewels { font-size: 2.5rem; letter-spacing: 4px; }
+        .menu-title .title-blast { font-size: 2.2rem; letter-spacing: 6px; }
+
+        .menu-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* GAME CARDS */
+        .game-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            width: 100%;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Fredoka One', cursive;
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .play-btn {
+            padding: 10px 35px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.95rem;
+            color: #fff;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+        }
+
+        .candy-btn { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+        .block-btn { background: linear-gradient(135deg, #4d96ff, #3742fa); }
+        .number-btn { background: linear-gradient(135deg, #6bcb77, #1dd1a1); }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* FOOTER */
+        .menu-footer {
+            display: flex;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .footer-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .footer-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .game-cards {
+                flex-direction: row;
+                max-width: 800px;
+            }
+            .game-card { flex: 1; }
+        }
+    </style>
 </head>
 <body>
+
     <!-- LOADING SCREEN -->
     <div id="loading-screen" class="screen active">
         <div class="loading-container">
-            <!-- Animated Background Jewels -->
             <div class="floating-jewels">
                 <span class="jewel jewel-1">💎</span>
                 <span class="jewel jewel-2">🔴</span>
@@ -21,11 +337,8 @@
                 <span class="jewel jewel-6">🟣</span>
                 <span class="jewel jewel-7">💎</span>
                 <span class="jewel jewel-8">🟠</span>
-                <span class="jewel jewel-9">💎</span>
-                <span class="jewel jewel-10">🔴</span>
             </div>
 
-            <!-- Logo -->
             <div class="logo-container">
                 <h1 class="game-title">
                     <span class="title-jewels">JEWELS</span>
@@ -34,16 +347,13 @@
                 <div class="title-sparkle">✨💎✨</div>
             </div>
 
-            <!-- Loading Bar -->
             <div class="loading-bar-container">
                 <div class="loading-bar">
                     <div class="loading-bar-fill" id="loading-bar-fill"></div>
-                    <div class="loading-bar-shine"></div>
                 </div>
                 <p class="loading-text" id="loading-text">Loading... 0%</p>
             </div>
 
-            <!-- Loading Tips -->
             <p class="loading-tip" id="loading-tip">🎮 Get ready for fun!</p>
         </div>
     </div>
@@ -51,65 +361,95 @@
     <!-- MAIN MENU SCREEN -->
     <div id="menu-screen" class="screen">
         <div class="menu-container">
-            <!-- Header -->
             <div class="menu-header">
-                <h1 class="menu-title">
+                <h1 class="game-title menu-title">
                     <span class="title-jewels">JEWELS</span>
                     <span class="title-blast">BLAST</span>
                 </h1>
                 <p class="menu-subtitle">Choose Your Game!</p>
             </div>
 
-            <!-- Game Cards -->
             <div class="game-cards">
-                <!-- Candy Crush Card -->
-                <div class="game-card candy-card" onclick="launchGame('candy-crush')">
+                <div class="game-card" onclick="launchGame('Candy Crush')">
                     <div class="card-icon">🍬</div>
-                    <div class="card-glow"></div>
                     <h2 class="card-title">Candy Crush</h2>
                     <p class="card-desc">Match 3 or more candies!</p>
-                    <div class="card-badge">
-                        <span class="badge-stars">⭐⭐⭐</span>
-                    </div>
                     <button class="play-btn candy-btn">PLAY NOW</button>
                 </div>
 
-                <!-- Block Blast Card -->
-                <div class="game-card block-card" onclick="launchGame('block-blast')">
+                <div class="game-card" onclick="launchGame('Block Blast')">
                     <div class="card-icon">🧱</div>
-                    <div class="card-glow"></div>
                     <h2 class="card-title">Block Blast</h2>
                     <p class="card-desc">Fill rows & columns!</p>
-                    <div class="card-badge">
-                        <span class="badge-stars">⭐⭐⭐</span>
-                    </div>
                     <button class="play-btn block-btn">PLAY NOW</button>
                 </div>
 
-                <!-- Number Link Card -->
-                <div class="game-card number-card" onclick="launchGame('number-link')">
+                <div class="game-card" onclick="launchGame('Number Link')">
                     <div class="card-icon">🔢</div>
-                    <div class="card-glow"></div>
                     <h2 class="card-title">Number Link</h2>
                     <p class="card-desc">Connect matching numbers!</p>
-                    <div class="card-badge">
-                        <span class="badge-stars">⭐⭐⭐</span>
-                    </div>
                     <button class="play-btn number-btn">PLAY NOW</button>
                 </div>
             </div>
 
-            <!-- Footer -->
             <div class="menu-footer">
-                <button class="footer-btn" onclick="toggleSound()">
-                    <span id="sound-icon">🔊</span>
-                </button>
-                <button class="footer-btn" onclick="showSettings()">⚙️</button>
-                <button class="footer-btn" onclick="showInfo()">ℹ️</button>
+                <button class="footer-btn" onclick="alert('Sound Toggled!')">🔊</button>
+                <button class="footer-btn" onclick="alert('Settings feature coming soon!')">⚙️</button>
+                <button class="footer-btn" onclick="alert('Jewels Blast v1.0')">ℹ️</button>
             </div>
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script>
+        const loadingTips = [
+            "🍬 Match 3 candies to crush them!",
+            "🧱 Fill complete rows to clear blocks!",
+            "🔢 Connect numbers with paths!",
+            "💎 Collect jewels to earn rewards!",
+            "🔥 Create combos for bonus points!"
+        ];
+
+        let loadProgress = 0;
+        let tipIndex = 0;
+
+        function startLoading() {
+            const loadingBarFill = document.getElementById('loading-bar-fill');
+            const loadingText = document.getElementById('loading-text');
+            const loadingTip = document.getElementById('loading-tip');
+
+            const tipInterval = setInterval(() => {
+                tipIndex = (tipIndex + 1) % loadingTips.length;
+                loadingTip.style.opacity = '0';
+                setTimeout(() => {
+                    loadingTip.textContent = loadingTips[tipIndex];
+                    loadingTip.style.opacity = '1';
+                }, 300);
+            }, 1200);
+
+            const loadInterval = setInterval(() => {
+                loadProgress += Math.random() * 12 + 4;
+                if (loadProgress > 100) loadProgress = 100;
+
+                loadingBarFill.style.width = loadProgress + '%';
+                loadingText.textContent = `Loading... ${Math.floor(loadProgress)}%`;
+
+                if (loadProgress >= 100) {
+                    clearInterval(loadInterval);
+                    clearInterval(tipInterval);
+
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').classList.remove('active');
+                        document.getElementById('menu-screen').classList.add('active');
+                    }, 600);
+                }
+            }, 150);
+        }
+
+        function launchGame(gameName) {
+            alert(`Launching ${gameName}! We will build this game next.`);
+        }
+
+        document.addEventListener('DOMContentLoaded', startLoading);
+    </script>
 </body>
 </html>
