@@ -1,1 +1,514 @@
 
+/* ============================================
+   JEWELS BLAST - MAIN STYLESHEET
+   ============================================ */
+
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* SCREEN MANAGEMENT */
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+#loading-screen {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    overflow: hidden;
+}
+
+.loading-container {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+}
+
+/* FLOATING JEWELS ANIMATION */
+.floating-jewels {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.jewel {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatJewel linear infinite;
+    opacity: 0.6;
+}
+
+.jewel-1 { left: 5%; font-size: 1.5rem; animation-duration: 8s; animation-delay: 0s; }
+.jewel-2 { left: 15%; font-size: 2rem; animation-duration: 10s; animation-delay: 1s; }
+.jewel-3 { left: 25%; font-size: 1.8rem; animation-duration: 7s; animation-delay: 2s; }
+.jewel-4 { left: 35%; font-size: 2.2rem; animation-duration: 9s; animation-delay: 0.5s; }
+.jewel-5 { left: 50%; font-size: 1.6rem; animation-duration: 11s; animation-delay: 1.5s; }
+.jewel-6 { left: 60%; font-size: 2rem; animation-duration: 8s; animation-delay: 3s; }
+.jewel-7 { left: 70%; font-size: 1.4rem; animation-duration: 10s; animation-delay: 2.5s; }
+.jewel-8 { left: 80%; font-size: 2.5rem; animation-duration: 7s; animation-delay: 0.8s; }
+.jewel-9 { left: 88%; font-size: 1.8rem; animation-duration: 9s; animation-delay: 1.8s; }
+.jewel-10 { left: 95%; font-size: 2rem; animation-duration: 12s; animation-delay: 3.5s; }
+
+@keyframes floatJewel {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* LOGO */
+.logo-container {
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 10;
+}
+
+.game-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.title-jewels {
+    font-family: 'Fredoka One', cursive;
+    font-size: 4rem;
+    color: #fff;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(138, 43, 226, 0.6),
+        0 0 40px rgba(138, 43, 226, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: 8px;
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+.title-blast {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #ff6b6b);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowText 3s ease infinite;
+    letter-spacing: 12px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes rainbowText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.title-sparkle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* LOADING BAR */
+.loading-bar-container {
+    width: 280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    box-shadow: 
+        0 0 15px rgba(138, 43, 226, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.loading-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
+    background-size: 200% 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    animation: barShimmer 2s linear infinite;
+    position: relative;
+}
+
+.loading-bar-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes barShimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.loading-text {
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+.loading-tip {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    margin-top: 30px;
+    font-style: italic;
+    position: relative;
+    z-index: 10;
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   MAIN MENU SCREEN
+   ============================================ */
+#menu-screen {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.menu-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* MENU HEADER */
+.menu-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 20px;
+}
+
+.menu-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-title .title-jewels {
+    font-size: 2.8rem;
+    letter-spacing: 5px;
+}
+
+.menu-title .title-blast {
+    font-size: 2.4rem;
+    letter-spacing: 8px;
+}
+
+.menu-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    margin-top: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+/* GAME CARDS */
+.game-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.game-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.game-card:active {
+    transform: scale(0.97);
+}
+
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    opacity: 0.1;
+    border-radius: 50%;
+    transition: opacity 0.3s ease;
+}
+
+.candy-card .card-glow { background: radial-gradient(circle, #ff6b6b, transparent 70%); }
+.block-card .card-glow { background: radial-gradient(circle, #4d96ff, transparent 70%); }
+.number-card .card-glow { background: radial-gradient(circle, #6bcb77, transparent 70%); }
+
+.game-card:hover .card-glow { opacity: 0.25; }
+
+.card-icon {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    display: inline-block;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.card-title {
+    font-family: 'Fredoka One', cursive;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.card-desc {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
+
+.card-badge {
+    margin-bottom: 15px;
+}
+
+.badge-stars {
+    font-size: 1rem;
+}
+
+/* PLAY BUTTONS */
+.play-btn {
+    padding: 10px 40px;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.candy-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.block-btn {
+    background: linear-gradient(135deg, #4d96ff, #3742fa);
+    box-shadow: 0 4px 15px rgba(77, 150, 255, 0.4);
+}
+
+.number-btn {
+    background: linear-gradient(135deg, #6bcb77, #1dd1a1);
+    box-shadow: 0 4px 15px rgba(107, 203, 119, 0.4);
+}
+
+.play-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.play-btn:active {
+    transform: scale(0.95);
+}
+
+/* MENU FOOTER */
+.menu-footer {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.footer-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.footer-btn:active {
+    transform: scale(0.9);
+}
+
+/* ============================================
+   SCREEN TRANSITIONS
+   ============================================ */
+.screen.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+
+.screen.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 380px) {
+    .title-jewels { font-size: 3rem; }
+    .title-blast { font-size: 2.5rem; }
+    .menu-title .title-jewels { font-size: 2.2rem; }
+    .menu-title .title-blast { font-size: 1.8rem; }
+    .card-icon { font-size: 2.5rem; }
+    .card-title { font-size: 1.2rem; }
+    .loading-bar-container { width: 240px; }
+}
+
+@media (min-width: 768px) {
+    .game-cards {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 800px;
+    }
+    .game-card {
+        width: calc(33% - 15px);
+        min-width: 220px;
+    }
+}
+
+/* ============================================
+   PARTICLE EFFECT (MENU BACKGROUND)
+   ============================================ */
+.menu-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.menu-container {
+    position: relative;
+    z-index: 1;
+}
