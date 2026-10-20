@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <meta name="theme-color" content="#0d0726">
     <title>Jewels Blast</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -41,12 +41,14 @@
         }
 
         /* ============================================
-           LOADING SCREEN
+           GLOBAL BACKGROUND (STARS)
            ============================================ */
-        #loading-screen {
-            background: radial-gradient(circle at center, #1b1240 0%, #0d0726 50%, #050212 100%);
-            justify-content: center;
-            align-items: center;
+        .global-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%);
+            z-index: -1;
         }
 
         .stars-container {
@@ -72,6 +74,14 @@
             50% { opacity: 1; transform: scale(1.3); }
         }
 
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
+        #loading-screen {
+            justify-content: center;
+            align-items: center;
+        }
+
         .logo-box {
             text-align: center;
             position: relative;
@@ -92,7 +102,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9));
-            letter-spacing: 2px;
         }
 
         .blast-title {
@@ -101,7 +110,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9));
-            letter-spacing: 3px;
             margin-top: -10px;
         }
 
@@ -139,13 +147,8 @@
         }
 
         /* ============================================
-           PAGE SCREENS - GENERAL
+           HEADER
            ============================================ */
-        .page-screen {
-            background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%);
-            padding-bottom: 85px; /* Space for bottom nav */
-        }
-
         .top-header {
             width: 100%;
             padding: 20px 20px 10px 20px;
@@ -167,7 +170,7 @@
         }
 
         /* ============================================
-           MENU SCREEN - MAIN CONTENT
+           MENU SCREEN - BANNERS (MATCHING NEW IMAGE)
            ============================================ */
         .menu-content {
             flex: 1;
@@ -176,9 +179,9 @@
             overflow: hidden;
             position: relative;
             z-index: 5;
+            padding-bottom: 80px;
         }
 
-        /* MINI GAMES BANNERS */
         .banners-wrapper {
             padding: 5px 0 10px 0;
             flex-shrink: 0;
@@ -195,61 +198,38 @@
 
         .banners-scroll::-webkit-scrollbar { display: none; }
 
-        .banner-card {
-            min-width: 155px;
-            height: 80px;
+        .new-banner {
+            min-width: 160px;
+            height: 90px;
             border-radius: 16px;
-            padding: 12px;
+            padding: 10px 12px;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            justify-content: space-between;
             position: relative;
             overflow: hidden;
             cursor: pointer;
             flex-shrink: 0;
             scroll-snap-align: start;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .banner-mini1 { background: linear-gradient(135deg, #38bdf8, #3b82f6); }
-        .banner-mini2 { background: linear-gradient(135deg, #34d399, #059669); }
-        .banner-daily { background: linear-gradient(135deg, #fbbf24, #ea580c); }
-
-        .banner-icon-box {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-
-        .banner-text-box {
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .banner-title {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .banner-subtitle {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             color: white;
-            font-size: 0.85rem;
-            font-weight: 800;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
+
+        .nb-daily { background: linear-gradient(135deg, #4da7ff, #1d7afc); }
+        .nb-water { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+        .nb-world { background: linear-gradient(135deg, #d946ef, #a855f7); }
+        .nb-mansion { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
+
+        .nb-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; font-weight: 600; }
+        .nb-badge { background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 8px; display: flex; align-items: center; gap: 4px;}
+        
+        .nb-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .nb-title { font-size: 0.95rem; font-weight: 700; line-height: 1.1; max-width: 70%; text-transform: capitalize;}
+        .nb-daily-title { font-size: 0.65rem; font-weight: 700; opacity: 0.8; margin-bottom: 2px; text-transform: uppercase;}
+        .nb-icon { font-size: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); margin-bottom: -5px; margin-right: -5px;}
 
         /* ============================================
-           ULTRA REALISTIC HORIZONTAL SCROLL CAROUSEL
+           CAROUSEL & CARDS (WITH GAMEPLAY ANIMATION)
            ============================================ */
         .carousel-area {
             flex: 1;
@@ -264,35 +244,33 @@
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            padding: 0 calc(50vw - 135px); /* Centers the cards perfectly */
+            padding: 0 calc(50vw - 135px);
             gap: 20px;
             width: 100%;
             height: 100%;
             align-items: center;
-            scrollbar-width: none; /* Hide scrollbar Firefox */
+            scrollbar-width: none;
         }
+        .carousel-scroll::-webkit-scrollbar { display: none; }
 
-        .carousel-scroll::-webkit-scrollbar { display: none; /* Hide scrollbar Chrome/Safari */ }
-
-        /* EXACT CARD REPLICA FROM YOUR IMAGE */
         .game-card {
             scroll-snap-align: center;
             flex-shrink: 0;
             width: 270px;
-            height: 380px;
+            height: 390px;
             border-radius: 20px;
             background: #ffffff;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            transition: transform 0.2s ease-out; /* Smooth scaling */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s ease-out;
             transform-origin: center center;
         }
 
-        /* CARD TOP (Image Area) */
+        /* CARD TOP - GAMEPLAY ANIMATION CONTAINER */
         .card-top {
-            flex: 1;
+            height: 210px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -301,51 +279,97 @@
             overflow: hidden;
         }
 
-        .card-candy .card-top { background: linear-gradient(145deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); }
-        .card-block .card-top { background: linear-gradient(145deg, #4facfe 0%, #00f2fe 100%); }
-        .card-number .card-top { background: linear-gradient(145deg, #43e97b 0%, #38f9d7 100%); }
+        .card-candy .card-top { background: linear-gradient(180deg, #ff7eb3 0%, #ff758c 100%); }
+        .card-block .card-top { background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); }
+        .card-number .card-top { background: linear-gradient(180deg, #43e97b 0%, #38f9d7 100%); }
 
-        /* Background floating shapes */
-        .bg-shape {
+        /* Simulated Gameplay Animations */
+        .gameplay-box {
             position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            animation: float 6s infinite ease-in-out;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.4; /* Keep it subtle behind the text */
+            z-index: 1;
         }
-        .shape1 { width: 150px; height: 150px; top: -20px; left: -30px; }
-        .shape2 { width: 100px; height: 100px; bottom: -10px; right: -20px; animation-delay: 2s; }
+
+        /* Candy Swap Animation */
+        .candy-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px;
+            font-size: 2rem; text-align: center;
+        }
+        .anim-candy-1 { animation: swapRight 2s infinite alternate ease-in-out; }
+        .anim-candy-2 { animation: swapLeft 2s infinite alternate ease-in-out; }
+        .anim-candy-pop { animation: popItem 2s infinite ease-in-out; }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes swapRight { 0%, 40% { transform: translateX(0); } 60%, 100% { transform: translateX(120%); } }
+        @keyframes swapLeft { 0%, 40% { transform: translateX(0); } 60%, 100% { transform: translateX(-120%); } }
+        @keyframes popItem { 0%, 70% { transform: scale(1); opacity: 1; } 85% { transform: scale(1.5); opacity: 0; } 100% { transform: scale(0); opacity: 0; } }
+
+        /* Block Drop Animation */
+        .block-grid {
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; padding-bottom: 20px;
+        }
+        .tetris-piece { width: 60px; height: 40px; background: rgba(255,255,255,0.8); border-radius: 8px; margin-bottom: 5px;}
+        .falling-piece { animation: fallDown 2.5s infinite linear; position: absolute; top: -50px; }
+        .clearing-row { animation: clearRow 2.5s infinite ease-in-out; width: 80%; height: 20px; background: white; border-radius: 5px;}
+        
+        @keyframes fallDown { 0% { top: -50px; } 70%, 100% { top: 130px; } }
+        @keyframes clearRow { 0%, 70% { opacity: 1; transform: scaleX(1); } 80% { opacity: 1; background: #fff6bb; } 95%, 100% { opacity: 0; transform: scaleX(0); } }
+
+        /* Number Merge Animation */
+        .number-grid {
+            display: flex; align-items: center; justify-content: center; height: 100%; gap: 15px;
+        }
+        .num-tile {
+            width: 50px; height: 50px; background: white; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 800; color: #0d9488;
+        }
+        .num-move { animation: mergeMove 2s infinite ease-in-out; z-index: 2; }
+        .num-stay { animation: mergeResult 2s infinite ease-in-out; }
+        
+        @keyframes mergeMove { 0%, 30% { transform: translateX(0); opacity: 1; } 60% { transform: translateX(65px); opacity: 0; } 100% { transform: translateX(65px); opacity: 0; } }
+        @keyframes mergeResult { 0%, 55% { transform: scale(1); content: "2"; } 65% { transform: scale(1.2); background: #ffeb3b; } 80%, 100% { transform: scale(1); } }
+
+        .card-text-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
+            width: 100%;
         }
 
         .card-title {
             color: #ffffff;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            z-index: 2;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
             letter-spacing: 1px;
             text-align: center;
             line-height: 1.1;
         }
 
-        .card-badge {
-            background: #ffffff;
-            color: #111111;
-            padding: 5px 16px;
+        /* NEW: LEVEL IN CARD */
+        .card-level {
+            background: rgba(255,255,255,0.9);
+            color: #111;
+            padding: 4px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 700;
-            margin-top: 10px;
-            z-index: 2;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-weight: 800;
+            margin-top: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        /* CARD BOTTOM (White Area exactly like picture) */
+        /* CARD BOTTOM - HIGH SCORE & BUTTON */
         .card-bottom {
-            height: 175px;
+            height: 180px;
             background: #ffffff;
             padding: 20px 25px;
             display: flex;
@@ -356,8 +380,10 @@
 
         .points-label {
             color: #888888;
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .points-value {
@@ -367,10 +393,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: -5px;
+            margin-top: -2px;
         }
 
-        /* The Big Blue Button from the reference */
         .play-btn {
             width: 100%;
             background: #2563eb;
@@ -382,119 +407,225 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            transition: background 0.2s;
+            transition: transform 0.1s;
         }
 
-        .play-btn:active {
-            background: #1d4ed8;
-            transform: scale(0.98);
+        .play-btn:active { transform: scale(0.96); }
+
+        /* ============================================
+           TOURNAMENT PAGE (MATCHING IMAGE)
+           ============================================ */
+        #tournament-screen {
+            background: transparent; /* Lets stars show through behind the modal design */
+            z-index: 50;
+        }
+
+        .tourney-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-icon {
+            width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+
+        .tourney-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(180deg, #ea580c 0%, #f97316 25%, #ffffff 25.1%, #ffffff 100%);
+            border-radius: 0;
+            position: relative;
+        }
+
+        /* Medals Section (Top Orange part) */
+        .tourney-top {
+            height: 25%;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .tourney-timer {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        .medals-box {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .medal {
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 5px 10px rgba(255,255,255,0.5);
+            font-size: 2rem;
+            position: relative;
+        }
+        .medal-silver { width: 70px; height: 70px; background: linear-gradient(135deg, #e2e8f0, #94a3b8); margin-bottom: 10px;}
+        .medal-gold { width: 90px; height: 90px; background: linear-gradient(135deg, #fef08a, #eab308); z-index: 2;}
+        .medal-bronze { width: 70px; height: 70px; background: linear-gradient(135deg, #fdba74, #ea580c); margin-bottom: 10px;}
+
+        /* Leaderboard Section (White part) */
+        .tourney-bottom {
+            flex: 1;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 15px 20px;
+        }
+
+        .tourney-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 25px;
+            padding: 4px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #64748b;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .leaderboard-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 80px; /* Space for play button */
+        }
+        .leaderboard-list::-webkit-scrollbar { display: none; }
+
+        .lb-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lb-item.me {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 10px;
+            margin: 0 -10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .lb-rank {
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 700; color: white; margin-right: 15px;
+        }
+        .rank-1 { background: #eab308; box-shadow: 0 2px 5px rgba(234,179,8,0.4); }
+        .rank-2 { background: #94a3b8; box-shadow: 0 2px 5px rgba(148,163,184,0.4); }
+        .rank-3 { background: #ea580c; box-shadow: 0 2px 5px rgba(234,88,12,0.4); }
+        .rank-other { background: #fca5a5; } /* Reddish for 4+ */
+
+        .lb-name { flex: 1; font-weight: 600; color: #334155; font-size: 0.95rem; }
+        .lb-score { font-weight: 800; color: #0f172a; font-size: 0.95rem; }
+
+        .tourney-play-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+        }
+
+        /* CONFETTI OVERLAY */
+        .confetti-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; overflow: hidden;
+        }
+        .confetti {
+            position: absolute; width: 8px; height: 15px;
+            animation: fallConfetti linear infinite;
+        }
+        @keyframes fallConfetti {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(800px) rotate(720deg); opacity: 0; }
         }
 
         /* ============================================
            BOTTOM NAVIGATION
            ============================================ */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #ffffff;
-            border-top: 1px solid #eeeeee;
-            display: flex;
-            justify-content: space-around;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #ffffff; border-top: 1px solid #eeeeee;
+            display: flex; justify-content: space-around;
             padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 10px;
             z-index: 100;
             box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 5px 15px;
-            cursor: pointer;
-            border-radius: 12px;
-        }
-
-        .nav-icon {
-            font-size: 1.5rem;
-            color: #94a3b8;
-            transition: all 0.2s ease;
-        }
-
-        .nav-label {
-            font-size: 0.65rem;
-            color: #94a3b8;
-            font-weight: 700;
-            transition: all 0.2s ease;
-        }
-
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px 15px; cursor: pointer; }
+        .nav-icon { font-size: 1.5rem; color: #94a3b8; transition: all 0.2s ease; }
+        .nav-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; transition: all 0.2s ease; }
         .nav-item.active .nav-icon { color: #2563eb; transform: scale(1.1); }
         .nav-item.active .nav-label { color: #2563eb; }
 
-        /* ============================================
-           OTHER PAGES (REWARDS, PROFILE, SETTINGS)
-           ============================================ */
-        .page-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px 20px;
-            position: relative;
-            z-index: 5;
-        }
-        .page-content::-webkit-scrollbar { display: none; }
-
-        /* Generic Settings/Profile Box */
-        .info-box {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .info-icon { font-size: 2rem; }
-        .info-title { font-weight: 700; font-size: 1.1rem; color: #ffd700; }
-        .info-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
-
-        /* TOAST */
-        #toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        /* RESPONSIVE Adjustments */
+        /* RESPONSIVE */
         @media (max-width: 360px) {
-            .game-card { width: 240px; height: 340px; }
+            .game-card { width: 240px; height: 350px; }
             .carousel-scroll { padding: 0 calc(50vw - 120px); }
-            .card-bottom { padding: 15px 20px; height: 150px; }
-            .card-title { font-size: 1.7rem; }
+            .card-bottom { padding: 15px 20px; height: 160px; }
+            .card-title { font-size: 1.8rem; }
             .points-value { font-size: 1.5rem; }
+            .medal-gold { width: 75px; height: 75px; }
+            .medal-silver, .medal-bronze { width: 60px; height: 60px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="global-bg">
+        <div class="stars-container" id="global-stars"></div>
+    </div>
+
     <!-- LOADING SCREEN -->
     <div id="loading-screen" class="screen active">
-        <div class="stars-container" id="stars-container"></div>
         <div class="logo-box">
             <span class="title-word jewels-title">Jewels</span>
             <span class="title-word blast-title">Blast</span>
@@ -508,135 +639,226 @@
     </div>
 
     <!-- MAIN MENU SCREEN -->
-    <div id="menu-screen" class="screen page-screen">
-        <div class="stars-container" id="menu-stars"></div>
-        
+    <div id="menu-screen" class="screen">
         <div class="top-header">
             <div class="main-title">JEWELS BLAST</div>
         </div>
 
         <div class="menu-content">
-            <!-- BANNERS (Like Top of Reference Image) -->
+            <!-- UPDATED BANNERS (MATCHING NEW IMAGE EXACTLY) -->
             <div class="banners-wrapper">
                 <div class="banners-scroll">
-                    <div class="banner-card banner-mini1" onclick="showToast('Loading Daily Challenge...')">
-                        <div class="banner-icon-box">📅</div>
-                        <div class="banner-text-box">
-                            <div class="banner-title">Daily Challenge</div>
-                            <div class="banner-subtitle">Play Today</div>
+                    <!-- Daily Challenge -->
+                    <div class="new-banner nb-daily" onclick="showPage('tournament-screen')">
+                        <div class="nb-top">
+                            <span style="opacity: 0.9;">DAILY CHALLENGE</span>
+                        </div>
+                        <div class="nb-bottom">
+                            <div class="nb-title" style="font-size: 1rem;">October 20</div>
+                            <div class="nb-icon">📅</div>
                         </div>
                     </div>
-                    <div class="banner-card banner-mini2" onclick="showToast('Loading Event...')">
-                        <div class="banner-icon-box">🌱</div>
-                        <div class="banner-text-box">
-                            <div class="banner-title">Special Event</div>
-                            <div class="banner-subtitle">Water Sort</div>
+                    <!-- Water Sort -->
+                    <div class="new-banner nb-water" onclick="alert('Water Sort Game loading...')">
+                        <div class="nb-top">
+                            <span class="nb-badge">🪙 3</span>
+                            <span class="nb-badge">⏱ 6d 02h</span>
+                        </div>
+                        <div class="nb-bottom">
+                            <div class="nb-title">Water Sort</div>
+                            <div class="nb-icon">🌱</div>
+                        </div>
+                    </div>
+                    <!-- World of Games -->
+                    <div class="new-banner nb-world" onclick="alert('World of Games loading...')">
+                        <div class="nb-top">
+                            <span class="nb-badge">🔑 115</span>
+                            <span class="nb-badge">⏱ 2d 02h</span>
+                        </div>
+                        <div class="nb-bottom">
+                            <div class="nb-title">World of Games</div>
+                            <div class="nb-icon">🧩</div>
+                        </div>
+                    </div>
+                    <!-- Haunted Mansion -->
+                    <div class="new-banner nb-mansion" onclick="alert('Haunted Mansion loading...')">
+                        <div class="nb-top">
+                            <span class="nb-badge">💎 3</span>
+                            <span class="nb-badge">⏱ 2d 02h</span>
+                        </div>
+                        <div class="nb-bottom">
+                            <div class="nb-title">Haunted Mansion</div>
+                            <div class="nb-icon">🕰️</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ULTRA REALISTIC CAROUSEL (NO DOTS, EXACT LAYOUT) -->
+            <!-- CAROUSEL (WITH GAMEPLAY ANIMATIONS, LEVEL & HIGHSCORE) -->
             <div class="carousel-area">
                 <div class="carousel-scroll" id="carousel">
                     
                     <!-- CANDY QUEST -->
                     <div class="game-card card-candy">
                         <div class="card-top">
-                            <div class="bg-shape shape1"></div>
-                            <div class="bg-shape shape2"></div>
-                            <div class="card-title">Candy Quest</div>
-                            <div class="card-badge">Popular</div>
+                            <!-- Simulated Gameplay Background -->
+                            <div class="gameplay-box">
+                                <div class="candy-grid">
+                                    <span class="anim-candy-1">🍬</span><span>🍭</span><span class="anim-candy-pop">✨</span><span>🍬</span>
+                                    <span>🍭</span><span class="anim-candy-2">🍬</span><span>🍭</span><span>🧁</span>
+                                </div>
+                            </div>
+                            <!-- Card Content -->
+                            <div class="card-text-content">
+                                <div class="card-title">Candy Quest</div>
+                                <div class="card-level">⭐ Level 45</div>
+                            </div>
                         </div>
                         <div class="card-bottom">
-                            <div class="points-label">Win Rate</div>
-                            <div class="points-value">🏆 98%</div>
-                            <button class="play-btn" onclick="launchGame('Candy Quest')">New Game</button>
+                            <div class="points-label">High Score</div>
+                            <div class="points-value">🏆 14,250</div>
+                            <button class="play-btn" onclick="alert('Launching Candy Quest! Next step!')">New Game</button>
                         </div>
                     </div>
 
                     <!-- BLOCK BLAST -->
                     <div class="game-card card-block">
                         <div class="card-top">
-                            <div class="bg-shape shape1"></div>
-                            <div class="bg-shape shape2"></div>
-                            <div class="card-title">Block Blast</div>
-                            <div class="card-badge">Hard</div>
+                            <!-- Simulated Gameplay Background -->
+                            <div class="gameplay-box">
+                                <div class="block-grid">
+                                    <div class="tetris-piece falling-piece"></div>
+                                    <div class="clearing-row"></div>
+                                </div>
+                            </div>
+                            <!-- Card Content -->
+                            <div class="card-text-content">
+                                <div class="card-title">Block Blast</div>
+                                <div class="card-level">⭐ Level 28</div>
+                            </div>
                         </div>
                         <div class="card-bottom">
-                            <div class="points-label">Popularity</div>
-                            <div class="points-value">🏆 400%</div>
-                            <button class="play-btn" onclick="launchGame('Block Blast')">New Game</button>
+                            <div class="points-label">High Score</div>
+                            <div class="points-value">🏆 8,940</div>
+                            <button class="play-btn" onclick="alert('Launching Block Blast! Next step!')">New Game</button>
                         </div>
                     </div>
 
                     <!-- NUMBER MATCH -->
                     <div class="game-card card-number">
                         <div class="card-top">
-                            <div class="bg-shape shape1"></div>
-                            <div class="bg-shape shape2"></div>
-                            <div class="card-title">Number<br>Match</div>
-                            <div class="card-badge">Expert</div>
+                            <!-- Simulated Gameplay Background -->
+                            <div class="gameplay-box">
+                                <div class="number-grid">
+                                    <div class="num-tile num-move">2</div>
+                                    <div class="num-tile num-stay">2</div>
+                                </div>
+                            </div>
+                            <!-- Card Content -->
+                            <div class="card-text-content">
+                                <div class="card-title">Number<br>Match</div>
+                                <div class="card-level">⭐ Level 15</div>
+                            </div>
                         </div>
                         <div class="card-bottom">
-                            <div class="points-label">Completion</div>
-                            <div class="points-value">🏆 200%</div>
-                            <button class="play-btn" onclick="launchGame('Number Match')">New Game</button>
+                            <div class="points-label">High Score</div>
+                            <div class="points-value">🏆 24,000</div>
+                            <button class="play-btn" onclick="alert('Launching Number Match! Next step!')">New Game</button>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- REWARDS SCREEN -->
-    <div id="rewards-screen" class="screen page-screen">
-        <div class="stars-container"></div>
-        <div class="top-header"><div class="main-title">REWARDS</div></div>
-        <div class="page-content">
-            <div class="info-box">
-                <div class="info-icon">🎁</div>
-                <div>
-                    <div class="info-title">Daily Bonus</div>
-                    <div class="info-desc">Claim your free gems today!</div>
-                </div>
+        
+        <!-- BOTTOM NAVIGATION -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="showPage('menu-screen', this)">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Main</div>
+            </div>
+            <div class="nav-item" onclick="showPage('tournament-screen', this)">
+                <div class="nav-icon">📅</div>
+                <div class="nav-label">Tournaments</div>
+            </div>
+            <div class="nav-item" onclick="alert('Profile Page Coming Soon!')">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Me</div>
             </div>
         </div>
     </div>
 
-    <!-- PROFILE SCREEN -->
-    <div id="profile-screen" class="screen page-screen">
-        <div class="stars-container"></div>
-        <div class="top-header"><div class="main-title">PROFILE</div></div>
-        <div class="page-content">
-            <div class="info-box">
-                <div class="info-icon">👤</div>
-                <div>
-                    <div class="info-title">Player 1</div>
-                    <div class="info-desc">Level 5 Master</div>
+    <!-- TOURNAMENT SCREEN (MATCHING NEW IMAGE) -->
+    <div id="tournament-screen" class="screen">
+        <div class="tourney-header">
+            <div class="btn-icon" onclick="showPage('menu-screen', document.querySelectorAll('.nav-item')[0])">❮</div>
+            <div>Tournament</div>
+            <div class="btn-icon">ℹ</div>
+        </div>
+
+        <div class="tourney-content">
+            <!-- Confetti Overlay -->
+            <div class="confetti-container" id="confetti-box"></div>
+
+            <!-- Orange Medals Section -->
+            <div class="tourney-top">
+                <div class="tourney-timer">⏱ 2d 01h</div>
+                <div class="medals-box">
+                    <div class="medal medal-bronze">🥉</div>
+                    <div class="medal medal-gold">👑</div>
+                    <div class="medal medal-silver">🥈</div>
                 </div>
+            </div>
+
+            <!-- White Leaderboard Section -->
+            <div class="tourney-bottom">
+                <div class="tourney-tabs">
+                    <div class="tab-btn active">Total Score</div>
+                    <div class="tab-btn">Best Score</div>
+                </div>
+
+                <div class="leaderboard-list">
+                    <div class="lb-item">
+                        <div class="lb-rank rank-1">1</div>
+                        <div class="lb-name">Blushing Quail</div>
+                        <div class="lb-score">150,365</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank rank-2">2</div>
+                        <div class="lb-name">Thankful Chicken</div>
+                        <div class="lb-score">128,060</div>
+                    </div>
+                    <div class="lb-item me">
+                        <div class="lb-rank rank-3">3</div>
+                        <div class="lb-name">Me</div>
+                        <div class="lb-score">125,324</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank rank-other">4</div>
+                        <div class="lb-name">Embarrassed Tamarin</div>
+                        <div class="lb-score">115,400</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank rank-other">5</div>
+                        <div class="lb-name">Real Penguin</div>
+                        <div class="lb-score">87,612</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank rank-other">6</div>
+                        <div class="lb-name">Tough Warbler</div>
+                        <div class="lb-score">79,720</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank rank-other">7</div>
+                        <div class="lb-name">Precious Albatross</div>
+                        <div class="lb-score">77,640</div>
+                    </div>
+                </div>
+
+                <button class="tourney-play-btn" onclick="alert('Starting Tournament Match!')">Play</button>
             </div>
         </div>
     </div>
-
-    <!-- BOTTOM NAVIGATION (White like reference image) -->
-    <div class="bottom-nav">
-        <div class="nav-item active" onclick="showPage('menu-screen', this)">
-            <div class="nav-icon">🏠</div>
-            <div class="nav-label">Main</div>
-        </div>
-        <div class="nav-item" onclick="showPage('rewards-screen', this)">
-            <div class="nav-icon">📅</div>
-            <div class="nav-label">Challenges</div>
-        </div>
-        <div class="nav-item" onclick="showPage('profile-screen', this)">
-            <div class="nav-icon">👤</div>
-            <div class="nav-label">Me</div>
-        </div>
-    </div>
-
-    <div id="toast"></div>
 
     <script>
         /* ============ STARS BACKGROUND ============ */
@@ -656,6 +878,23 @@
             }
         }
 
+        /* ============ CONFETTI GENERATOR ============ */
+        function createConfetti() {
+            const container = document.getElementById('confetti-box');
+            if (!container) return;
+            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
+            
+            for (let i = 0; i < 40; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + '%';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                conf.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(conf);
+            }
+        }
+
         /* ============ LOADING ============ */
         let progress = 0;
         function animateLoading() {
@@ -672,7 +911,6 @@
                     setTimeout(() => {
                         document.getElementById('loading-screen').classList.remove('active');
                         document.getElementById('menu-screen').classList.add('active');
-                        document.querySelectorAll('.page-screen .stars-container').forEach(c => createStars(c, 25));
                         initCarouselScale();
                     }, 400);
                 }
@@ -680,29 +918,22 @@
         }
 
         /* ============ ULTRA REALISTIC CARD SCALING ============ */
-        // This makes the center card full size (1) and side cards slightly smaller (0.85)
         function initCarouselScale() {
             const carousel = document.getElementById('carousel');
             const cards = document.querySelectorAll('.game-card');
             
             function updateScale() {
                 const centerPosition = carousel.scrollLeft + (carousel.clientWidth / 2);
-                
                 cards.forEach(card => {
                     const cardCenter = card.offsetLeft + (card.clientWidth / 2);
                     const distanceFromCenter = Math.abs(centerPosition - cardCenter);
-                    
-                    // Scale formula: Center = 1. Far away scales down to 0.85
                     const scale = Math.max(0.85, 1 - (distanceFromCenter / 1200));
-                    
                     card.style.transform = `scale(${scale})`;
                 });
             }
 
             carousel.addEventListener('scroll', updateScale);
-            // Run once to set initial sizes
             updateScale();
-            // Scroll to center the middle card initially
             setTimeout(() => {
                 carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2);
             }, 100);
@@ -713,25 +944,18 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             
-            const nav = document.querySelector('.bottom-nav');
-            nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            navElement.classList.add('active');
-        }
-
-        /* ============ TOAST ============ */
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2000);
-        }
-
-        function launchGame(gameName) {
-            showToast(`🎮 Launching ${gameName}! Next step...`);
+            if(navElement) {
+                const nav = document.querySelector('.bottom-nav');
+                if(nav) {
+                    nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    navElement.classList.add('active');
+                }
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            createStars(document.getElementById('stars-container'), 40);
+            createStars(document.getElementById('global-stars'), 50);
+            createConfetti();
             animateLoading();
         });
     </script>
