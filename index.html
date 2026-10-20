@@ -64,28 +64,14 @@
         .carousel-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 calc(50vw - 135px); gap: 20px; width: 100%; height: 100%; align-items: center; scrollbar-width: none; transform-style: preserve-3d; }
         .carousel-scroll::-webkit-scrollbar { display: none; }
         
-        .game-card {
-            scroll-snap-align: center; flex-shrink: 0;
-            width: 270px; height: 390px; border-radius: 20px; background: #ffffff;
-            overflow: hidden; display: flex; flex-direction: column;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-            transition: transform 0.1s; transform-origin: center center;
-        }
-
-        /* CARD CANVAS CONTAINER */
+        .game-card { scroll-snap-align: center; flex-shrink: 0; width: 270px; height: 390px; border-radius: 20px; background: #ffffff; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.1s; transform-origin: center center; }
         .card-top { height: 210px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; overflow: hidden; background: #111; }
-        
-        /* The Canvas Engine */
         .game-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-
-        /* Overlay shadow for crystal clear text readability */
         .video-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 75%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); z-index: 2; pointer-events: none; }
-
         .card-text-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 18px; pointer-events: none; }
         .card-title { color: #ffffff; font-size: 2.1rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9); letter-spacing: 1px; text-align: center; line-height: 1.1; }
         .card-level { background: rgba(255,255,255,0.95); color: #111; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-top: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 5px; }
 
-        /* CARD BOTTOM */
         .card-bottom { height: 180px; background: #ffffff; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
         .points-label { color: #888888; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .points-value { color: #111111; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-top: -2px; }
@@ -99,7 +85,6 @@
         .tourney-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; position: relative; z-index: 10; }
         .btn-icon { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .tourney-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(180deg, #ea580c 0%, #f97316 25%, #ffffff 25.1%, #ffffff 100%); position: relative; }
-        
         .tourney-top { height: 25%; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
         .tourney-timer { background: rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
         .medals-box { display: flex; align-items: flex-end; justify-content: center; gap: 10px; margin-bottom: 20px; }
@@ -107,14 +92,12 @@
         .medal-silver { width: 70px; height: 70px; background: linear-gradient(135deg, #e2e8f0, #94a3b8); margin-bottom: 10px;}
         .medal-gold { width: 90px; height: 90px; background: linear-gradient(135deg, #fef08a, #eab308); z-index: 2;}
         .medal-bronze { width: 70px; height: 70px; background: linear-gradient(135deg, #fdba74, #ea580c); margin-bottom: 10px;}
-
         .tourney-bottom { flex: 1; background: #ffffff; display: flex; flex-direction: column; overflow: hidden; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 15px 20px; }
         .tourney-tabs { display: flex; background: #f1f5f9; border-radius: 25px; padding: 4px; margin-bottom: 15px; }
         .tab-btn { flex: 1; text-align: center; padding: 8px 0; font-size: 0.9rem; font-weight: 700; color: #64748b; border-radius: 20px; cursor: pointer; }
         .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
         .leaderboard-list { flex: 1; overflow-y: auto; padding-bottom: 80px; }
         .leaderboard-list::-webkit-scrollbar { display: none; }
-        
         .lb-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
         .lb-item.me { background: #f8fafc; border-radius: 12px; padding: 12px 10px; margin: 0 -10px; border: 1px solid #e2e8f0; }
         .lb-rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: white; margin-right: 15px; }
@@ -122,7 +105,6 @@
         .lb-name { flex: 1; font-weight: 600; color: #334155; font-size: 0.95rem; }
         .lb-score { font-weight: 800; color: #0f172a; font-size: 0.95rem; }
         .tourney-play-btn { position: absolute; bottom: 20px; left: 20px; right: 20px; background: #3b82f6; color: white; border: none; border-radius: 25px; padding: 15px; font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); cursor: pointer; }
-
         .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; overflow: hidden; }
         .confetti { position: absolute; width: 8px; height: 15px; animation: fallConfetti linear infinite; }
         @keyframes fallConfetti { 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; } 100% { transform: translateY(800px) rotate(720deg); opacity: 0; } }
@@ -131,6 +113,20 @@
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px 15px; cursor: pointer; }
         .nav-icon { font-size: 1.5rem; color: #94a3b8; } .nav-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; }
         .nav-item.active .nav-icon, .nav-item.active .nav-label { color: #2563eb; transform: scale(1.1); }
+
+        /* ============================================
+           CANDY QUEST PLAYABLE GAME SCREEN (NEW)
+           ============================================ */
+        #candy-play-screen { background: radial-gradient(circle at top, #24164c 0%, #110926 70%, #080312 100%); z-index: 200; display: none; flex-direction: column; }
+        #candy-play-screen.active { display: flex; }
+        .candy-game-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0,0,0,0.5); border-bottom: 2px solid rgba(255,255,255,0.1); color: white; z-index: 10; }
+        .cg-back { font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; }
+        .cg-score-box { text-align: right; }
+        .cg-score-label { font-size: 0.7rem; color: #a855f7; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .cg-score-val { font-size: 1.5rem; font-weight: 900; color: #ffd700; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.4); line-height: 1; }
+        .candy-board-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px; position: relative; }
+        /* Playable Canvas Engine */
+        #candy-engine-canvas { background: rgba(0,0,0,0.4); border-radius: 12px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.6); touch-action: none; /* Prevents scrolling while swiping */ border: 2px solid rgba(255,255,255,0.05); }
 
         @media (max-width: 360px) {
             .game-card { width: 240px; height: 350px; }
@@ -155,7 +151,6 @@
     <div id="menu-screen" class="screen">
         <div class="top-header"><div class="main-title">JEWELS BLAST</div></div>
         <div class="menu-content">
-            
             <div class="banners-wrapper">
                 <div class="banners-scroll">
                     <div class="new-banner nb-daily" onclick="showPage('tournament-screen')"><div class="nb-top"><span>DAILY CHALLENGE</span></div><div class="nb-bottom"><div class="nb-title">October 20</div><div class="nb-icon">📅</div></div></div>
@@ -165,14 +160,13 @@
                 </div>
             </div>
 
-            <!-- 3D COVERFLOW CAROUSEL WITH REAL-TIME CANVAS GAMEPLAY VIDEO PREVIEWS -->
+            <!-- 3D CAROUSEL -->
             <div class="carousel-area">
                 <div class="carousel-scroll" id="carousel">
                     
                     <!-- CANDY QUEST -->
                     <div class="game-card card-candy">
                         <div class="card-top">
-                            <!-- Real 60FPS Candy Crush Gameplay Canvas -->
                             <canvas id="candy-canvas" class="game-canvas"></canvas>
                             <div class="video-overlay"></div>
                             <div class="card-text-content">
@@ -183,14 +177,13 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 14,250</div>
-                            <button class="play-btn" onclick="alert('Starting Candy Quest!')">New Game</button>
+                            <button class="play-btn" onclick="startPlayableCandyQuest()">New Game</button>
                         </div>
                     </div>
 
                     <!-- BLOCK BLAST -->
                     <div class="game-card card-block">
                         <div class="card-top">
-                            <!-- Real 60FPS Block Blast Gameplay Canvas -->
                             <canvas id="block-canvas" class="game-canvas"></canvas>
                             <div class="video-overlay"></div>
                             <div class="card-text-content">
@@ -201,14 +194,13 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 8,940</div>
-                            <button class="play-btn" onclick="alert('Starting Block Blast!')">New Game</button>
+                            <button class="play-btn" onclick="alert('Block Blast Playable Coming Next!')">New Game</button>
                         </div>
                     </div>
 
                     <!-- NUMBER MATCH -->
                     <div class="game-card card-number">
                         <div class="card-top">
-                            <!-- Real 60FPS Number Match Gameplay Canvas -->
                             <canvas id="number-canvas" class="game-canvas"></canvas>
                             <div class="video-overlay"></div>
                             <div class="card-text-content">
@@ -219,7 +211,7 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 24,000</div>
-                            <button class="play-btn" onclick="alert('Starting Number Match!')">New Game</button>
+                            <button class="play-btn" onclick="alert('Number Match Playable Coming Next!')">New Game</button>
                         </div>
                     </div>
 
@@ -251,11 +243,23 @@
                     <div class="lb-item me"><div class="lb-rank rank-3">3</div><div class="lb-name">Me</div><div class="lb-score">125,324</div></div>
                     <div class="lb-item"><div class="lb-rank rank-other">4</div><div class="lb-name">Embarrassed Tamarin</div><div class="lb-score">115,400</div></div>
                     <div class="lb-item"><div class="lb-rank rank-other">5</div><div class="lb-name">Real Penguin</div><div class="lb-score">87,612</div></div>
-                    <div class="lb-item"><div class="lb-rank rank-other">6</div><div class="lb-name">Tough Warbler</div><div class="lb-score">79,720</div></div>
-                    <div class="lb-item"><div class="lb-rank rank-other">7</div><div class="lb-name">Precious Albatross</div><div class="lb-score">77,640</div></div>
                 </div>
                 <button class="tourney-play-btn">Play</button>
             </div>
+        </div>
+    </div>
+
+    <!-- FULL PLAYABLE CANDY QUEST GAME SCREEN -->
+    <div id="candy-play-screen" class="screen">
+        <div class="candy-game-header">
+            <div class="cg-back" onclick="quitCandyQuest()">❮ Quit</div>
+            <div class="cg-score-box">
+                <div class="cg-score-label">Score</div>
+                <div class="cg-score-val" id="playable-candy-score">0</div>
+            </div>
+        </div>
+        <div class="candy-board-wrapper">
+            <canvas id="candy-engine-canvas"></canvas>
         </div>
     </div>
 
@@ -324,270 +328,457 @@
         }
 
         /* ==========================================================================
-           REAL-TIME 60FPS AUTONOMOUS GAME PLAYBACK PREVIEWS (CANVAS ENGINES)
+           1. MENU PREVIEW CANVASES (AUTONOMOUS 60FPS)
            ========================================================================== */
         function startCanvasGamePreviews() {
-            initCandyCanvas();
-            initBlockCanvas();
-            initNumberCanvas();
+            initMenuCandyPreview(); initBlockCanvas(); initNumberCanvas();
         }
 
-        /* 1. CANDY QUEST REAL GAMEPLAY ENGINE */
-        function initCandyCanvas() {
-            const canvas = document.getElementById('candy-canvas');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = 270; canvas.height = 210;
-
+        /* -- Menu Candy Preview -- */
+        function initMenuCandyPreview() {
+            const canvas = document.getElementById('candy-canvas'); if(!canvas) return;
+            const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
             const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
-            const shapes = ['circle', 'diamond', 'square', 'star'];
-            const cols = 6, rows = 5;
-            const cellSize = 38;
-            const offsetX = (canvas.width - cols * cellSize) / 2;
-            const offsetY = 10;
-
-            let grid = [];
-            for (let r = 0; r < rows; r++) {
-                grid[r] = [];
-                for (let c = 0; c < cols; c++) {
-                    grid[r][c] = {
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        shape: shapes[Math.floor(Math.random() * shapes.length)],
-                        scale: 1, opacity: 1, offsetY: 0
-                    };
-                }
-            }
-
-            let particles = [];
+            const cols = 6, rows = 5, cellSize = 38;
+            const offsetX = (canvas.width - cols * cellSize) / 2, offsetY = 10;
             let frame = 0;
 
-            function drawCandy(x, y, color, shape, scale = 1) {
-                ctx.save();
-                ctx.translate(x + cellSize / 2, y + cellSize / 2);
-                ctx.scale(scale, scale);
-
-                ctx.fillStyle = color;
-                ctx.shadowColor = color;
-                ctx.shadowBlur = 8;
-
-                ctx.beginPath();
-                if (shape === 'circle') ctx.arc(0, 0, 14, 0, Math.PI * 2);
-                else if (shape === 'square') { ctx.roundRect(-12, -12, 24, 24, 6); }
-                else if (shape === 'diamond') { ctx.moveTo(0, -14); ctx.lineTo(14, 0); ctx.lineTo(0, 14); ctx.lineTo(-14, 0); ctx.closePath(); }
-                else { ctx.arc(0, 0, 12, 0, Math.PI * 2); }
-                ctx.fill();
-
-                // Gloss Highlight
-                ctx.fillStyle = 'rgba(255,255,255,0.45)';
-                ctx.beginPath();
-                ctx.arc(-4, -4, 4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
+            function drawShape(x, y, color) {
+                ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x+cellSize/2, y+cellSize/2, 14, 0, Math.PI*2); ctx.fill();
             }
 
             function loop() {
-                frame++;
-                ctx.fillStyle = '#160826';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Grid background
+                frame++; ctx.fillStyle = '#160826'; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
                         ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)';
                         ctx.fillRect(offsetX + c * cellSize, offsetY + r * cellSize, cellSize, cellSize);
-                        
-                        let item = grid[r][c];
-                        drawCandy(offsetX + c * cellSize, offsetY + r * cellSize + item.offsetY, item.color, item.shape, item.scale);
+                        drawShape(offsetX + c * cellSize, offsetY + r * cellSize, colors[(r+c+frame/40)%colors.length | 0]);
+                    }
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        /* -- Block Blast Preview -- */
+        function initBlockCanvas() {
+            const canvas = document.getElementById('block-canvas'); if(!canvas) return;
+            const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
+            let frame = 0;
+            function loop() {
+                frame++; ctx.fillStyle = '#061329'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#00f2fe'; ctx.fillRect(100, (frame%250)-40, 50, 50);
+                requestAnimationFrame(loop);
+            } loop();
+        }
+
+        /* -- Number Match Preview -- */
+        function initNumberCanvas() {
+            const canvas = document.getElementById('number-canvas'); if(!canvas) return;
+            const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
+            let frame = 0;
+            function loop() {
+                frame++; ctx.fillStyle = '#05231c'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#38f9d7'; ctx.beginPath(); ctx.arc(135, 105, 20 + Math.sin(frame*0.1)*5, 0, Math.PI*2); ctx.fill();
+                requestAnimationFrame(loop);
+            } loop();
+        }
+
+        /* ==========================================================================
+           2. FULL PLAYABLE CANDY QUEST MATCH-3 ENGINE (ULTRA-REAL)
+           ========================================================================== */
+        let candyEngineRun = false;
+
+        function startPlayableCandyQuest() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('candy-play-screen').classList.add('active');
+            candyEngineRun = true;
+            initRealCandyMatchEngine();
+        }
+
+        function quitCandyQuest() {
+            candyEngineRun = false;
+            document.getElementById('candy-play-screen').classList.remove('active');
+            document.getElementById('menu-screen').classList.add('active');
+        }
+
+        function initRealCandyMatchEngine() {
+            const canvas = document.getElementById('candy-engine-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreEl = document.getElementById('playable-candy-score');
+            
+            // Setup sizing based on screen wrapper
+            let boardSize = Math.min(window.innerWidth - 20, 400); // Max 400px width
+            canvas.width = boardSize;
+            canvas.height = boardSize; // Square grid
+
+            const rows = 8;
+            const cols = 8;
+            const cellSize = boardSize / cols;
+            
+            // Types: 0: Red Jelly, 1: Blue Gem, 2: Green Block, 3: Yellow Diamond, 4: Purple Orb
+            const TYPES = 5;
+            let grid = [];
+            let score = 0;
+            let particles = [];
+            
+            // Game State
+            let isAnimating = false;
+            let dragStart = null;
+            let dragCurrent = null;
+
+            // Initialize Grid
+            function createGrid() {
+                for (let r = 0; r < rows; r++) {
+                    grid[r] = [];
+                    for (let c = 0; c < cols; c++) {
+                        let type;
+                        do {
+                            type = Math.floor(Math.random() * TYPES);
+                        } while (
+                            (c >= 2 && grid[r][c-1].type === type && grid[r][c-2].type === type) ||
+                            (r >= 2 && grid[r-1][c].type === type && grid[r-2][c].type === type)
+                        );
+                        grid[r][c] = { r, c, x: c * cellSize, y: r * cellSize, type: type, scale: 1, alpha: 1, markedForDelete: false };
+                    }
+                }
+            }
+            createGrid();
+
+            /* --- HIGH-END PROCEDURAL CANDY DRAWING --- */
+            function drawRealisticCandy(x, y, size, type, scale, alpha) {
+                ctx.save();
+                ctx.translate(x + size/2, y + size/2);
+                ctx.scale(scale, scale);
+                ctx.globalAlpha = alpha;
+                
+                let r = (size/2) * 0.8; // Radius/bounds
+                
+                // Drop Shadow
+                ctx.shadowColor = 'rgba(0,0,0,0.6)';
+                ctx.shadowBlur = 8;
+                ctx.shadowOffsetY = 4;
+
+                ctx.beginPath();
+                
+                if (type === 0) {
+                    // RED JELLY BEAN (Circle)
+                    let grad = ctx.createRadialGradient(-r*0.3, -r*0.3, r*0.1, 0, 0, r);
+                    grad.addColorStop(0, '#ff7a7a'); grad.addColorStop(0.3, '#f90000'); grad.addColorStop(1, '#660000');
+                    ctx.fillStyle = grad;
+                    ctx.arc(0, 0, r, 0, Math.PI*2);
+                    ctx.fill();
+                    // Specular Highlight
+                    ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                    ctx.beginPath(); ctx.ellipse(-r*0.3, -r*0.3, r*0.35, r*0.15, -Math.PI/4, 0, Math.PI*2); ctx.fill();
+                
+                } else if (type === 1) {
+                    // BLUE SAPPHIRE (Hexagon)
+                    let grad = ctx.createLinearGradient(-r, -r, r, r);
+                    grad.addColorStop(0, '#80dfff'); grad.addColorStop(0.5, '#0088cc'); grad.addColorStop(1, '#003366');
+                    ctx.fillStyle = grad;
+                    for (let i=0; i<6; i++) { let a = (i*Math.PI)/3; ctx.lineTo(r*Math.cos(a), r*Math.sin(a)); }
+                    ctx.closePath(); ctx.fill();
+                    // Inner Facets
+                    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); for(let i=0; i<6; i++){ let a = (i*Math.PI)/3; ctx.moveTo(0,0); ctx.lineTo(r*Math.cos(a), r*Math.sin(a)); } ctx.stroke();
+                
+                } else if (type === 2) {
+                    // GREEN JELLY BLOCK (Rounded Square)
+                    let grad = ctx.createLinearGradient(0, -r, 0, r);
+                    grad.addColorStop(0, '#66ff66'); grad.addColorStop(1, '#008000');
+                    ctx.fillStyle = grad;
+                    ctx.roundRect(-r*0.9, -r*0.9, r*1.8, r*1.8, r*0.3); ctx.fill();
+                    // Inner Glow Bevel
+                    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2;
+                    ctx.strokeRect(-r*0.7, -r*0.7, r*1.4, r*1.4);
+                
+                } else if (type === 3) {
+                    // YELLOW DIAMOND / STAR
+                    let grad = ctx.createRadialGradient(0, -r*0.2, 0, 0, 0, r);
+                    grad.addColorStop(0, '#ffff99'); grad.addColorStop(0.4, '#ffcc00'); grad.addColorStop(1, '#997300');
+                    ctx.fillStyle = grad;
+                    ctx.moveTo(0, -r*1.1); ctx.lineTo(r*1.1, 0); ctx.lineTo(0, r*1.1); ctx.lineTo(-r*1.1, 0); ctx.closePath(); ctx.fill();
+                    // Highlight point
+                    ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(255,255,255,0.8)';
+                    ctx.beginPath(); ctx.arc(0, -r*0.4, r*0.15, 0, Math.PI*2); ctx.fill();
+                
+                } else if (type === 4) {
+                    // PURPLE MAGIC ORB (Oval)
+                    let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+                    grad.addColorStop(0, '#ff99ff'); grad.addColorStop(0.5, '#aa00ff'); grad.addColorStop(1, '#330066');
+                    ctx.fillStyle = grad;
+                    ctx.ellipse(0, 0, r, r*0.85, 0, 0, Math.PI*2); ctx.fill();
+                    // Magic swirl
+                    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(0, 0, r*0.5, Math.PI, Math.PI*2.5); ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+
+            /* --- INPUT HANDLING (SWIPE / DRAG) --- */
+            function getEventPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            }
+
+            canvas.addEventListener('mousedown', handleStart);
+            canvas.addEventListener('touchstart', handleStart, {passive: false});
+            canvas.addEventListener('mousemove', handleMove);
+            canvas.addEventListener('touchmove', handleMove, {passive: false});
+            window.addEventListener('mouseup', handleEnd);
+            window.addEventListener('touchend', handleEnd);
+
+            function handleStart(e) {
+                if (isAnimating) return;
+                const pos = getEventPos(e);
+                let c = Math.floor(pos.x / cellSize);
+                let r = Math.floor(pos.y / cellSize);
+                if (c >= 0 && c < cols && r >= 0 && r < rows) {
+                    dragStart = { r, c, startX: pos.x, startY: pos.y };
+                }
+            }
+
+            function handleMove(e) {
+                if (!dragStart || isAnimating) return;
+                e.preventDefault(); // Stop scrolling
+                dragCurrent = getEventPos(e);
+                
+                let dx = dragCurrent.x - dragStart.startX;
+                let dy = dragCurrent.y - dragStart.startY;
+                
+                // If dragged far enough, trigger swap
+                if (Math.abs(dx) > cellSize * 0.4 || Math.abs(dy) > cellSize * 0.4) {
+                    let targetR = dragStart.r;
+                    let targetC = dragStart.c;
+                    
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        targetC += (dx > 0) ? 1 : -1;
+                    } else {
+                        targetR += (dy > 0) ? 1 : -1;
+                    }
+                    
+                    if (targetC >= 0 && targetC < cols && targetR >= 0 && targetR < rows) {
+                        attemptSwap(dragStart.r, dragStart.c, targetR, targetC);
+                    }
+                    dragStart = null;
+                }
+            }
+
+            function handleEnd() { dragStart = null; }
+
+            /* --- LOGIC & ANIMATION --- */
+            async function attemptSwap(r1, c1, r2, c2) {
+                isAnimating = true;
+                let item1 = grid[r1][c1];
+                let item2 = grid[r2][c2];
+
+                // Visual Swap
+                await animateSwap(item1, item2, r1, c1, r2, c2);
+                
+                // Logical Swap
+                grid[r1][c1] = item2; grid[r1][c1].r = r1; grid[r1][c1].c = c1;
+                grid[r2][c2] = item1; grid[r2][c2].r = r2; grid[r2][c2].c = c2;
+
+                let matches = findMatches();
+                if (matches.length > 0) {
+                    await processMatches(matches);
+                } else {
+                    // Invalid move, swap back
+                    await animateSwap(grid[r1][c1], grid[r2][c2], r1, c1, r2, c2);
+                    let temp = grid[r1][c1];
+                    grid[r1][c1] = grid[r2][c2]; grid[r1][c1].r = r1; grid[r1][c1].c = c1;
+                    grid[r2][c2] = temp; grid[r2][c2].r = r2; grid[r2][c2].c = c2;
+                    isAnimating = false;
+                }
+            }
+
+            function animateSwap(i1, i2, r1, c1, r2, c2) {
+                return new Promise(resolve => {
+                    let frames = 15;
+                    let current = 0;
+                    let startX1 = i1.x, startY1 = i1.y;
+                    let targetX1 = c2 * cellSize, targetY1 = r2 * cellSize;
+                    let startX2 = i2.x, startY2 = i2.y;
+                    let targetX2 = c1 * cellSize, targetY2 = r1 * cellSize;
+
+                    function step() {
+                        current++;
+                        let t = current / frames;
+                        // Smoothstep ease out
+                        t = t * (2 - t);
+                        i1.x = startX1 + (targetX1 - startX1) * t;
+                        i1.y = startY1 + (targetY1 - startY1) * t;
+                        i2.x = startX2 + (targetX2 - startX2) * t;
+                        i2.y = startY2 + (targetY2 - startY2) * t;
+
+                        if (current < frames) requestAnimationFrame(step);
+                        else resolve();
+                    }
+                    step();
+                });
+            }
+
+            function findMatches() {
+                let matches = [];
+                // Horizontal
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols - 2; c++) {
+                        let type = grid[r][c].type;
+                        if (type === -1) continue;
+                        if (grid[r][c+1].type === type && grid[r][c+2].type === type) {
+                            matches.push(grid[r][c], grid[r][c+1], grid[r][c+2]);
+                        }
+                    }
+                }
+                // Vertical
+                for (let c = 0; c < cols; c++) {
+                    for (let r = 0; r < rows - 2; r++) {
+                        let type = grid[r][c].type;
+                        if (type === -1) continue;
+                        if (grid[r+1][c].type === type && grid[r+2][c].type === type) {
+                            matches.push(grid[r][c], grid[r+1][c], grid[r+2][c]);
+                        }
+                    }
+                }
+                return [...new Set(matches)]; // Unique items
+            }
+
+            function spawnParticles(x, y, colorCode) {
+                const colors = ['#f90000', '#0088cc', '#008000', '#ffcc00', '#aa00ff'];
+                let color = colors[colorCode] || '#fff';
+                for(let i=0; i<8; i++) {
+                    particles.push({
+                        x: x + cellSize/2, y: y + cellSize/2,
+                        vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10,
+                        life: 1, color: color
+                    });
+                }
+            }
+
+            async function processMatches(matches) {
+                score += matches.length * 100;
+                scoreEl.innerText = score.toLocaleString();
+
+                // Shrink out animation & particles
+                for(let i=1.0; i>=0; i-=0.15) {
+                    matches.forEach(m => { m.scale = i; m.alpha = i; });
+                    await new Promise(r => setTimeout(r, 16));
+                }
+
+                matches.forEach(m => {
+                    spawnParticles(m.x, m.y, m.type);
+                    grid[m.r][m.c] = null;
+                });
+
+                // Apply Gravity Drop
+                let dropping = false;
+                for (let c = 0; c < cols; c++) {
+                    let emptySpaces = 0;
+                    for (let r = rows - 1; r >= 0; r--) {
+                        if (grid[r][c] === null) {
+                            emptySpaces++;
+                        } else if (emptySpaces > 0) {
+                            let item = grid[r][c];
+                            grid[r + emptySpaces][c] = item;
+                            item.r = r + emptySpaces;
+                            grid[r][c] = null;
+                            dropping = true;
+                        }
+                    }
+                    // Spawn new at top
+                    for (let i = 0; i < emptySpaces; i++) {
+                        let r = emptySpaces - 1 - i;
+                        grid[r][c] = {
+                            r: r, c: c,
+                            x: c * cellSize, y: -(i + 1) * cellSize,
+                            type: Math.floor(Math.random() * TYPES),
+                            scale: 1, alpha: 1
+                        };
+                        dropping = true;
                     }
                 }
 
-                // Simulate Matches & Explosions every 60 frames
-                if (frame % 70 === 0) {
-                    let matchR = Math.floor(Math.random() * (rows - 1));
-                    let matchC = Math.floor(Math.random() * (cols - 2));
-                    let matchColor = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    for (let i = 0; i < 3; i++) {
-                        grid[matchR][matchC + i].color = matchColor;
-                        // Spawn particles
-                        for(let p = 0; p < 8; p++) {
-                            particles.push({
-                                x: offsetX + (matchC + i) * cellSize + 19,
-                                y: offsetY + matchR * cellSize + 19,
-                                vx: (Math.random() - 0.5) * 6,
-                                vy: (Math.random() - 0.5) * 6,
-                                color: matchColor,
-                                size: Math.random() * 4 + 2,
-                                life: 1
-                            });
+                if (dropping) {
+                    await animateDrops();
+                    let newMatches = findMatches();
+                    if (newMatches.length > 0) {
+                        await processMatches(newMatches);
+                    } else {
+                        isAnimating = false;
+                    }
+                } else {
+                    isAnimating = false;
+                }
+            }
+
+            function animateDrops() {
+                return new Promise(resolve => {
+                    let dropping = true;
+                    function step() {
+                        dropping = false;
+                        for (let r = 0; r < rows; r++) {
+                            for (let c = 0; c < cols; c++) {
+                                let item = grid[r][c];
+                                let targetY = r * cellSize;
+                                if (item.y < targetY) {
+                                    item.y += 12; // Fall speed
+                                    if (item.y > targetY) item.y = targetY; // Snap
+                                    dropping = true;
+                                }
+                            }
+                        }
+                        if (dropping) requestAnimationFrame(step);
+                        else resolve();
+                    }
+                    step();
+                });
+            }
+
+            /* --- RENDER LOOP --- */
+            function render() {
+                if (!candyEngineRun) return;
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw Board Grid Cells
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.02)';
+                        ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+                    }
+                }
+
+                // Draw Candies
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        let item = grid[r][c];
+                        if (item) {
+                            drawRealisticCandy(item.x, item.y, cellSize, item.type, item.scale, item.alpha);
                         }
                     }
                 }
 
-                // Update & Render Particle Physics
+                // Draw Particles
                 for (let i = particles.length - 1; i >= 0; i--) {
                     let p = particles[i];
                     p.x += p.vx; p.y += p.vy;
-                    p.life -= 0.04;
+                    p.life -= 0.05;
                     if (p.life <= 0) { particles.splice(i, 1); continue; }
                     
                     ctx.fillStyle = p.color;
                     ctx.globalAlpha = p.life;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.life * 5, 0, Math.PI*2); ctx.fill();
                     ctx.globalAlpha = 1;
                 }
 
-                requestAnimationFrame(loop);
+                requestAnimationFrame(render);
             }
-            loop();
-        }
-
-        /* 2. BLOCK BLAST REAL GAMEPLAY ENGINE */
-        function initBlockCanvas() {
-            const canvas = document.getElementById('block-canvas');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = 270; canvas.height = 210;
-
-            const cols = 8, rows = 6;
-            const cellSize = 26;
-            const offsetX = (canvas.width - cols * cellSize) / 2;
-            const offsetY = 15;
-            const colors = ['#00f2fe', '#4facfe', '#ff0844', '#ffb199', '#f6d365'];
-
-            let grid = Array(rows).fill().map(() => Array(cols).fill(null));
-
-            // Fill initial random blocks
-            for(let r = 2; r < rows; r++) {
-                for(let c = 0; c < cols; c++) {
-                    if(Math.random() > 0.4) grid[r][c] = colors[Math.floor(Math.random() * colors.length)];
-                }
-            }
-
-            let activePiece = {
-                shape: [[1,1],[1,1]],
-                x: 10, y: -40, targetY: offsetY + 0 * cellSize, targetX: offsetX + 3 * cellSize,
-                color: '#00f2fe'
-            };
-
-            let frame = 0;
-            let clearingRow = -1;
-
-            function loop() {
-                frame++;
-                ctx.fillStyle = '#061329';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Grid lines
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-                        ctx.lineWidth = 1;
-                        ctx.strokeRect(offsetX + c * cellSize, offsetY + r * cellSize, cellSize, cellSize);
-
-                        if(grid[r][c]) {
-                            ctx.fillStyle = grid[r][c];
-                            ctx.shadowColor = grid[r][c]; ctx.shadowBlur = 4;
-                            ctx.fillRect(offsetX + c * cellSize + 1, offsetY + r * cellSize + 1, cellSize - 2, cellSize - 2);
-                            ctx.shadowBlur = 0;
-                        }
-                    }
-                }
-
-                // Animate Falling Piece
-                if (activePiece.y < activePiece.targetY) {
-                    activePiece.y += 3;
-                } else {
-                    // Place Piece & Reset
-                    if (frame % 60 === 0) {
-                        activePiece.y = -40;
-                        activePiece.color = colors[Math.floor(Math.random() * colors.length)];
-                        clearingRow = Math.floor(Math.random() * (rows - 2)) + 2;
-                        
-                        // Clear a row animation
-                        for(let c = 0; c < cols; c++) grid[clearingRow][c] = '#ffffff';
-                        setTimeout(() => {
-                            for(let c = 0; c < cols; c++) grid[clearingRow][c] = null;
-                        }, 200);
-                    }
-                }
-
-                // Render Active Piece
-                ctx.fillStyle = activePiece.color;
-                ctx.shadowColor = activePiece.color; ctx.shadowBlur = 10;
-                for(let pr = 0; pr < activePiece.shape.length; pr++) {
-                    for(let pc = 0; pc < activePiece.shape[pr].length; pc++) {
-                        if(activePiece.shape[pr][pc]) {
-                            ctx.fillRect(activePiece.targetX + pc * cellSize + 1, activePiece.y + pr * cellSize + 1, cellSize - 2, cellSize - 2);
-                        }
-                    }
-                }
-                ctx.shadowBlur = 0;
-
-                requestAnimationFrame(loop);
-            }
-            loop();
-        }
-
-        /* 3. NUMBER LINK REAL GAMEPLAY ENGINE */
-        function initNumberCanvas() {
-            const canvas = document.getElementById('number-canvas');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = 270; canvas.height = 210;
-
-            const nodes = [
-                { x: 50, y: 50, num: 1, color: '#38f9d7' },
-                { x: 220, y: 50, num: 1, color: '#38f9d7' },
-                { x: 70, y: 150, num: 4, color: '#ff758c' },
-                { x: 200, y: 150, num: 4, color: '#ff758c' }
-            ];
-
-            let progress = 0;
-
-            function loop() {
-                progress += 0.015;
-                if (progress > 1.4) progress = 0;
-
-                ctx.fillStyle = '#05231c';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Draw Connecting Beam between matching 1s
-                if (progress <= 1) {
-                    ctx.strokeStyle = '#38f9d7';
-                    ctx.lineWidth = 6;
-                    ctx.shadowColor = '#38f9d7';
-                    ctx.shadowBlur = 15;
-                    ctx.beginPath();
-                    ctx.moveTo(nodes[0].x, nodes[0].y);
-                    
-                    let currentX = nodes[0].x + (nodes[1].x - nodes[0].x) * Math.min(progress, 1);
-                    let currentY = nodes[0].y + (nodes[1].y - nodes[0].y) * Math.min(progress, 1);
-                    ctx.lineTo(currentX, currentY);
-                    ctx.stroke();
-                    ctx.shadowBlur = 0;
-                }
-
-                // Render Number Nodes
-                nodes.forEach(node => {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.shadowColor = node.color; ctx.shadowBlur = 10;
-                    ctx.beginPath();
-                    ctx.arc(node.x, node.y, 22, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    ctx.fillStyle = '#0f172a';
-                    ctx.font = 'bold 18px Poppins';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(node.num, node.x, node.y);
-                });
-
-                requestAnimationFrame(loop);
-            }
-            loop();
+            render();
         }
 
         function showPage(pageId, navElement) {
