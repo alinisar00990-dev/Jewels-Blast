@@ -8,707 +8,173 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-            background: #070514;
-            position: fixed;
-        }
-
-        .screen {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .screen.active {
-            display: flex;
-            flex-direction: column;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; background: #070514; position: fixed; }
+        
+        .screen { display: none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1; }
+        .screen.active { display: flex; flex-direction: column; }
 
         /* ============================================
            GLOBAL BACKGROUND (STARS)
            ============================================ */
-        .global-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%);
-            z-index: -1;
-        }
-
-        .stars-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 6px #fff, 0 0 12px #a855f7;
-            animation: twinkle linear infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.3); }
-        }
+        .global-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%); z-index: -1; }
+        .stars-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; }
+        .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 6px #fff, 0 0 12px #a855f7; animation: twinkle linear infinite; }
+        
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.3); } }
 
         /* ============================================
-           LOADING SCREEN
+           HEADER & LOADING
            ============================================ */
-        #loading-screen {
-            justify-content: center;
-            align-items: center;
-        }
+        #loading-screen { justify-content: center; align-items: center; }
+        .logo-box { text-align: center; position: relative; z-index: 10; margin-bottom: 90px; }
+        .title-word { font-family: 'Cinzel Decorative', serif; font-weight: 900; display: block; line-height: 1.1; }
+        .jewels-title { font-size: 3.8rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 35%, #d49400 65%, #8a5a00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9)); }
+        .blast-title { font-size: 4rem; background: linear-gradient(180deg, #fff9d4 0%, #ffe066 30%, #e6a100 65%, #996300 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9)); margin-top: -10px; }
+        .loading-box { position: absolute; bottom: 15%; width: 75%; max-width: 320px; text-align: center; z-index: 10; }
+        .loading-track { width: 100%; height: 18px; background: rgba(10, 6, 28, 0.85); border-radius: 20px; padding: 3px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .loading-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #c084fc, #e879f9, #f43f5e); border-radius: 20px; transition: width 0.2s ease-out; }
+        .loading-text { color: rgba(237, 215, 156, 0.75); font-size: 0.8rem; margin-top: 12px; letter-spacing: 2px; }
 
-        .logo-box {
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            margin-bottom: 90px;
-        }
-
-        .title-word {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 900;
-            display: block;
-            line-height: 1.1;
-        }
-
-        .jewels-title {
-            font-size: 3.8rem;
-            background: linear-gradient(180deg, #fff6bb 0%, #ffd700 35%, #d49400 65%, #8a5a00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9));
-        }
-
-        .blast-title {
-            font-size: 4rem;
-            background: linear-gradient(180deg, #fff9d4 0%, #ffe066 30%, #e6a100 65%, #996300 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9));
-            margin-top: -10px;
-        }
-
-        .loading-box {
-            position: absolute;
-            bottom: 15%;
-            width: 75%;
-            max-width: 320px;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .loading-track {
-            width: 100%;
-            height: 18px;
-            background: rgba(10, 6, 28, 0.85);
-            border-radius: 20px;
-            padding: 3px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .loading-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #c084fc, #e879f9, #f43f5e);
-            border-radius: 20px;
-            transition: width 0.2s ease-out;
-        }
-
-        .loading-text {
-            color: rgba(237, 215, 156, 0.75);
-            font-size: 0.8rem;
-            margin-top: 12px;
-            letter-spacing: 2px;
-        }
+        .top-header { width: 100%; padding: 20px 20px 10px 20px; text-align: center; flex-shrink: 0; position: relative; z-index: 10; }
+        .main-title { font-family: 'Cinzel Decorative', serif; font-weight: 900; font-size: 2rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 50%, #d49400 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8)); letter-spacing: 3px; }
 
         /* ============================================
-           HEADER
+           MENU BANNERS
            ============================================ */
-        .top-header {
-            width: 100%;
-            padding: 20px 20px 10px 20px;
-            text-align: center;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        .main-title {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 900;
-            font-size: 2rem;
-            background: linear-gradient(180deg, #fff6bb 0%, #ffd700 50%, #d49400 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8));
-            letter-spacing: 3px;
-        }
-
-        /* ============================================
-           MENU SCREEN - BANNERS (MATCHING NEW IMAGE)
-           ============================================ */
-        .menu-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            z-index: 5;
-            padding-bottom: 80px;
-        }
-
-        .banners-wrapper {
-            padding: 5px 0 10px 0;
-            flex-shrink: 0;
-        }
-
-        .banners-scroll {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 5px 20px;
-            scrollbar-width: none;
-            scroll-snap-type: x mandatory;
-        }
-
+        .menu-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 5; padding-bottom: 80px; }
+        .banners-wrapper { padding: 5px 0 10px 0; flex-shrink: 0; }
+        .banners-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; }
         .banners-scroll::-webkit-scrollbar { display: none; }
-
-        .new-banner {
-            min-width: 160px;
-            height: 90px;
-            border-radius: 16px;
-            padding: 10px 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-
+        .new-banner { min-width: 160px; height: 90px; border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0; scroll-snap-align: start; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: white; }
         .nb-daily { background: linear-gradient(135deg, #4da7ff, #1d7afc); }
         .nb-water { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
         .nb-world { background: linear-gradient(135deg, #d946ef, #a855f7); }
         .nb-mansion { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
-
         .nb-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; font-weight: 600; }
         .nb-badge { background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 8px; display: flex; align-items: center; gap: 4px;}
-        
         .nb-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
         .nb-title { font-size: 0.95rem; font-weight: 700; line-height: 1.1; max-width: 70%; text-transform: capitalize;}
-        .nb-daily-title { font-size: 0.65rem; font-weight: 700; opacity: 0.8; margin-bottom: 2px; text-transform: uppercase;}
         .nb-icon { font-size: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); margin-bottom: -5px; margin-right: -5px;}
 
         /* ============================================
-           CAROUSEL & CARDS (WITH GAMEPLAY ANIMATION)
+           HIGH-END 3D VIDEO CAROUSEL
            ============================================ */
-        .carousel-area {
-            flex: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            min-height: 0;
-        }
-
-        .carousel-scroll {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 0 calc(50vw - 135px);
-            gap: 20px;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            scrollbar-width: none;
-        }
+        .carousel-area { flex: 1; position: relative; display: flex; align-items: center; width: 100%; min-height: 0; perspective: 1200px; /* Crucial for 3D effect */ }
+        .carousel-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 calc(50vw - 135px); gap: 20px; width: 100%; height: 100%; align-items: center; scrollbar-width: none; transform-style: preserve-3d; }
         .carousel-scroll::-webkit-scrollbar { display: none; }
-
+        
         .game-card {
-            scroll-snap-align: center;
-            flex-shrink: 0;
-            width: 270px;
-            height: 390px;
-            border-radius: 20px;
-            background: #ffffff;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            transition: transform 0.2s ease-out;
-            transform-origin: center center;
+            scroll-snap-align: center; flex-shrink: 0;
+            width: 270px; height: 390px; border-radius: 20px; background: #ffffff;
+            overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            transition: transform 0.1s; transform-origin: center center;
         }
 
-        /* CARD TOP - GAMEPLAY ANIMATION CONTAINER */
-        .card-top {
-            height: 210px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card-candy .card-top { background: linear-gradient(180deg, #ff7eb3 0%, #ff758c 100%); }
-        .card-block .card-top { background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); }
-        .card-number .card-top { background: linear-gradient(180deg, #43e97b 0%, #38f9d7 100%); }
-
-        /* Simulated Gameplay Animations */
-        .gameplay-box {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.4; /* Keep it subtle behind the text */
-            z-index: 1;
-        }
-
-        /* Candy Swap Animation */
-        .candy-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px;
-            font-size: 2rem; text-align: center;
-        }
-        .anim-candy-1 { animation: swapRight 2s infinite alternate ease-in-out; }
-        .anim-candy-2 { animation: swapLeft 2s infinite alternate ease-in-out; }
-        .anim-candy-pop { animation: popItem 2s infinite ease-in-out; }
+        /* CARD VIDEO TOP */
+        .card-top { height: 210px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; overflow: hidden; background: #000; }
         
-        @keyframes swapRight { 0%, 40% { transform: translateX(0); } 60%, 100% { transform: translateX(120%); } }
-        @keyframes swapLeft { 0%, 40% { transform: translateX(0); } 60%, 100% { transform: translateX(-120%); } }
-        @keyframes popItem { 0%, 70% { transform: scale(1); opacity: 1; } 85% { transform: scale(1.5); opacity: 0; } 100% { transform: scale(0); opacity: 0; } }
+        /* The Video Tag */
+        .gameplay-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.9; }
 
-        /* Block Drop Animation */
-        .block-grid {
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; padding-bottom: 20px;
-        }
-        .tetris-piece { width: 60px; height: 40px; background: rgba(255,255,255,0.8); border-radius: 8px; margin-bottom: 5px;}
-        .falling-piece { animation: fallDown 2.5s infinite linear; position: absolute; top: -50px; }
-        .clearing-row { animation: clearRow 2.5s infinite ease-in-out; width: 80%; height: 20px; background: white; border-radius: 5px;}
-        
-        @keyframes fallDown { 0% { top: -50px; } 70%, 100% { top: 130px; } }
-        @keyframes clearRow { 0%, 70% { opacity: 1; transform: scaleX(1); } 80% { opacity: 1; background: #fff6bb; } 95%, 100% { opacity: 0; transform: scaleX(0); } }
+        /* Cinematic Gradient overlay for text readability */
+        .video-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 65%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); z-index: 2; }
 
-        /* Number Merge Animation */
-        .number-grid {
-            display: flex; align-items: center; justify-content: center; height: 100%; gap: 15px;
-        }
-        .num-tile {
-            width: 50px; height: 50px; background: white; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; font-weight: 800; color: #0d9488;
-        }
-        .num-move { animation: mergeMove 2s infinite ease-in-out; z-index: 2; }
-        .num-stay { animation: mergeResult 2s infinite ease-in-out; }
-        
-        @keyframes mergeMove { 0%, 30% { transform: translateX(0); opacity: 1; } 60% { transform: translateX(65px); opacity: 0; } 100% { transform: translateX(65px); opacity: 0; } }
-        @keyframes mergeResult { 0%, 55% { transform: scale(1); content: "2"; } 65% { transform: scale(1.2); background: #ffeb3b; } 80%, 100% { transform: scale(1); } }
+        .card-text-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 20px; }
+        .card-title { color: #ffffff; font-size: 2.2rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9); letter-spacing: 1px; text-align: center; line-height: 1.1; }
+        .card-level { background: rgba(255,255,255,0.95); color: #111; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-top: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 5px; }
 
-        .card-text-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
-            width: 100%;
-        }
-
-        .card-title {
-            color: #ffffff;
-            font-size: 2.2rem;
-            font-weight: 800;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-            letter-spacing: 1px;
-            text-align: center;
-            line-height: 1.1;
-        }
-
-        /* NEW: LEVEL IN CARD */
-        .card-level {
-            background: rgba(255,255,255,0.9);
-            color: #111;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            margin-top: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* CARD BOTTOM - HIGH SCORE & BUTTON */
-        .card-bottom {
-            height: 180px;
-            background: #ffffff;
-            padding: 20px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .points-label {
-            color: #888888;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .points-value {
-            color: #111111;
-            font-size: 1.8rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: -2px;
-        }
-
-        .play-btn {
-            width: 100%;
-            background: #2563eb;
-            color: #ffffff;
-            border: none;
-            border-radius: 25px;
-            padding: 14px 0;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            transition: transform 0.1s;
-        }
-
+        /* CARD BOTTOM */
+        .card-bottom { height: 180px; background: #ffffff; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+        .points-label { color: #888888; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .points-value { color: #111111; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-top: -2px; }
+        .play-btn { width: 100%; background: #2563eb; color: #ffffff; border: none; border-radius: 25px; padding: 14px 0; font-size: 1.05rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.1s; }
         .play-btn:active { transform: scale(0.96); }
 
         /* ============================================
-           TOURNAMENT PAGE (MATCHING IMAGE)
+           TOURNAMENT & NAV
            ============================================ */
-        #tournament-screen {
-            background: transparent; /* Lets stars show through behind the modal design */
-            z-index: 50;
-        }
-
-        .tourney-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 700;
-            position: relative;
-            z-index: 10;
-        }
-
-        .btn-icon {
-            width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
-
-        .tourney-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            background: linear-gradient(180deg, #ea580c 0%, #f97316 25%, #ffffff 25.1%, #ffffff 100%);
-            border-radius: 0;
-            position: relative;
-        }
-
-        /* Medals Section (Top Orange part) */
-        .tourney-top {
-            height: 25%;
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .tourney-timer {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex; align-items: center; gap: 5px;
-        }
-
-        .medals-box {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .medal {
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 5px 10px rgba(255,255,255,0.5);
-            font-size: 2rem;
-            position: relative;
-        }
+        #tournament-screen { background: transparent; z-index: 50; }
+        .tourney-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; position: relative; z-index: 10; }
+        .btn-icon { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .tourney-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(180deg, #ea580c 0%, #f97316 25%, #ffffff 25.1%, #ffffff 100%); position: relative; }
+        
+        .tourney-top { height: 25%; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .tourney-timer { background: rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .medals-box { display: flex; align-items: flex-end; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .medal { border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 5px 10px rgba(255,255,255,0.5); font-size: 2rem; position: relative; }
         .medal-silver { width: 70px; height: 70px; background: linear-gradient(135deg, #e2e8f0, #94a3b8); margin-bottom: 10px;}
         .medal-gold { width: 90px; height: 90px; background: linear-gradient(135deg, #fef08a, #eab308); z-index: 2;}
         .medal-bronze { width: 70px; height: 70px; background: linear-gradient(135deg, #fdba74, #ea580c); margin-bottom: 10px;}
 
-        /* Leaderboard Section (White part) */
-        .tourney-bottom {
-            flex: 1;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            padding: 15px 20px;
-        }
-
-        .tourney-tabs {
-            display: flex;
-            background: #f1f5f9;
-            border-radius: 25px;
-            padding: 4px;
-            margin-bottom: 15px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #64748b;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .tab-btn.active {
-            background: #3b82f6;
-            color: white;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
-        }
-
-        .leaderboard-list {
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 80px; /* Space for play button */
-        }
+        .tourney-bottom { flex: 1; background: #ffffff; display: flex; flex-direction: column; overflow: hidden; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 15px 20px; }
+        .tourney-tabs { display: flex; background: #f1f5f9; border-radius: 25px; padding: 4px; margin-bottom: 15px; }
+        .tab-btn { flex: 1; text-align: center; padding: 8px 0; font-size: 0.9rem; font-weight: 700; color: #64748b; border-radius: 20px; cursor: pointer; }
+        .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+        .leaderboard-list { flex: 1; overflow-y: auto; padding-bottom: 80px; }
         .leaderboard-list::-webkit-scrollbar { display: none; }
-
-        .lb-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .lb-item.me {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 12px 10px;
-            margin: 0 -10px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .lb-rank {
-            width: 28px; height: 28px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.8rem; font-weight: 700; color: white; margin-right: 15px;
-        }
-        .rank-1 { background: #eab308; box-shadow: 0 2px 5px rgba(234,179,8,0.4); }
-        .rank-2 { background: #94a3b8; box-shadow: 0 2px 5px rgba(148,163,184,0.4); }
-        .rank-3 { background: #ea580c; box-shadow: 0 2px 5px rgba(234,88,12,0.4); }
-        .rank-other { background: #fca5a5; } /* Reddish for 4+ */
-
+        
+        .lb-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .lb-item.me { background: #f8fafc; border-radius: 12px; padding: 12px 10px; margin: 0 -10px; border: 1px solid #e2e8f0; }
+        .lb-rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: white; margin-right: 15px; }
+        .rank-1 { background: #eab308; } .rank-2 { background: #94a3b8; } .rank-3 { background: #ea580c; } .rank-other { background: #fca5a5; }
         .lb-name { flex: 1; font-weight: 600; color: #334155; font-size: 0.95rem; }
         .lb-score { font-weight: 800; color: #0f172a; font-size: 0.95rem; }
+        .tourney-play-btn { position: absolute; bottom: 20px; left: 20px; right: 20px; background: #3b82f6; color: white; border: none; border-radius: 25px; padding: 15px; font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); cursor: pointer; }
 
-        .tourney-play-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-            cursor: pointer;
-        }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; overflow: hidden; }
+        .confetti { position: absolute; width: 8px; height: 15px; animation: fallConfetti linear infinite; }
+        @keyframes fallConfetti { 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; } 100% { transform: translateY(800px) rotate(720deg); opacity: 0; } }
 
-        /* CONFETTI OVERLAY */
-        .confetti-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; overflow: hidden;
-        }
-        .confetti {
-            position: absolute; width: 8px; height: 15px;
-            animation: fallConfetti linear infinite;
-        }
-        @keyframes fallConfetti {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(800px) rotate(720deg); opacity: 0; }
-        }
-
-        /* ============================================
-           BOTTOM NAVIGATION
-           ============================================ */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #ffffff; border-top: 1px solid #eeeeee;
-            display: flex; justify-content: space-around;
-            padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 10px;
-            z-index: 100;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
-        }
-
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #eeeeee; display: flex; justify-content: space-around; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 10px; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px 15px; cursor: pointer; }
-        .nav-icon { font-size: 1.5rem; color: #94a3b8; transition: all 0.2s ease; }
-        .nav-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; transition: all 0.2s ease; }
-        .nav-item.active .nav-icon { color: #2563eb; transform: scale(1.1); }
-        .nav-item.active .nav-label { color: #2563eb; }
+        .nav-icon { font-size: 1.5rem; color: #94a3b8; } .nav-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; }
+        .nav-item.active .nav-icon, .nav-item.active .nav-label { color: #2563eb; transform: scale(1.1); }
 
-        /* RESPONSIVE */
         @media (max-width: 360px) {
             .game-card { width: 240px; height: 350px; }
             .carousel-scroll { padding: 0 calc(50vw - 120px); }
             .card-bottom { padding: 15px 20px; height: 160px; }
             .card-title { font-size: 1.8rem; }
             .points-value { font-size: 1.5rem; }
-            .medal-gold { width: 75px; height: 75px; }
-            .medal-silver, .medal-bronze { width: 60px; height: 60px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="global-bg">
-        <div class="stars-container" id="global-stars"></div>
-    </div>
+    <div class="global-bg"><div class="stars-container" id="global-stars"></div></div>
 
     <!-- LOADING SCREEN -->
     <div id="loading-screen" class="screen active">
-        <div class="logo-box">
-            <span class="title-word jewels-title">Jewels</span>
-            <span class="title-word blast-title">Blast</span>
-        </div>
-        <div class="loading-box">
-            <div class="loading-track">
-                <div class="loading-fill" id="loading-fill"></div>
-            </div>
-            <p class="loading-text" id="loading-text">LOADING...</p>
-        </div>
+        <div class="logo-box"><span class="title-word jewels-title">Jewels</span><span class="title-word blast-title">Blast</span></div>
+        <div class="loading-box"><div class="loading-track"><div class="loading-fill" id="loading-fill"></div></div><p class="loading-text" id="loading-text">LOADING...</p></div>
     </div>
 
     <!-- MAIN MENU SCREEN -->
     <div id="menu-screen" class="screen">
-        <div class="top-header">
-            <div class="main-title">JEWELS BLAST</div>
-        </div>
-
+        <div class="top-header"><div class="main-title">JEWELS BLAST</div></div>
         <div class="menu-content">
-            <!-- UPDATED BANNERS (MATCHING NEW IMAGE EXACTLY) -->
+            
             <div class="banners-wrapper">
                 <div class="banners-scroll">
-                    <!-- Daily Challenge -->
-                    <div class="new-banner nb-daily" onclick="showPage('tournament-screen')">
-                        <div class="nb-top">
-                            <span style="opacity: 0.9;">DAILY CHALLENGE</span>
-                        </div>
-                        <div class="nb-bottom">
-                            <div class="nb-title" style="font-size: 1rem;">October 20</div>
-                            <div class="nb-icon">📅</div>
-                        </div>
-                    </div>
-                    <!-- Water Sort -->
-                    <div class="new-banner nb-water" onclick="alert('Water Sort Game loading...')">
-                        <div class="nb-top">
-                            <span class="nb-badge">🪙 3</span>
-                            <span class="nb-badge">⏱ 6d 02h</span>
-                        </div>
-                        <div class="nb-bottom">
-                            <div class="nb-title">Water Sort</div>
-                            <div class="nb-icon">🌱</div>
-                        </div>
-                    </div>
-                    <!-- World of Games -->
-                    <div class="new-banner nb-world" onclick="alert('World of Games loading...')">
-                        <div class="nb-top">
-                            <span class="nb-badge">🔑 115</span>
-                            <span class="nb-badge">⏱ 2d 02h</span>
-                        </div>
-                        <div class="nb-bottom">
-                            <div class="nb-title">World of Games</div>
-                            <div class="nb-icon">🧩</div>
-                        </div>
-                    </div>
-                    <!-- Haunted Mansion -->
-                    <div class="new-banner nb-mansion" onclick="alert('Haunted Mansion loading...')">
-                        <div class="nb-top">
-                            <span class="nb-badge">💎 3</span>
-                            <span class="nb-badge">⏱ 2d 02h</span>
-                        </div>
-                        <div class="nb-bottom">
-                            <div class="nb-title">Haunted Mansion</div>
-                            <div class="nb-icon">🕰️</div>
-                        </div>
-                    </div>
+                    <div class="new-banner nb-daily" onclick="showPage('tournament-screen')"><div class="nb-top"><span>DAILY CHALLENGE</span></div><div class="nb-bottom"><div class="nb-title">October 20</div><div class="nb-icon">📅</div></div></div>
+                    <div class="new-banner nb-water"><div class="nb-top"><span class="nb-badge">🪙 3</span><span class="nb-badge">⏱ 6d 02h</span></div><div class="nb-bottom"><div class="nb-title">Water Sort</div><div class="nb-icon">🌱</div></div></div>
+                    <div class="new-banner nb-world"><div class="nb-top"><span class="nb-badge">🔑 115</span><span class="nb-badge">⏱ 2d 02h</span></div><div class="nb-bottom"><div class="nb-title">World of Games</div><div class="nb-icon">🧩</div></div></div>
+                    <div class="new-banner nb-mansion"><div class="nb-top"><span class="nb-badge">💎 3</span><span class="nb-badge">⏱ 2d 02h</span></div><div class="nb-bottom"><div class="nb-title">Haunted Mansion</div><div class="nb-icon">🕰️</div></div></div>
                 </div>
             </div>
 
-            <!-- CAROUSEL (WITH GAMEPLAY ANIMATIONS, LEVEL & HIGHSCORE) -->
+            <!-- 3D VIDEO CAROUSEL -->
             <div class="carousel-area">
                 <div class="carousel-scroll" id="carousel">
                     
                     <!-- CANDY QUEST -->
                     <div class="game-card card-candy">
                         <div class="card-top">
-                            <!-- Simulated Gameplay Background -->
-                            <div class="gameplay-box">
-                                <div class="candy-grid">
-                                    <span class="anim-candy-1">🍬</span><span>🍭</span><span class="anim-candy-pop">✨</span><span>🍬</span>
-                                    <span>🍭</span><span class="anim-candy-2">🍬</span><span>🍭</span><span>🧁</span>
-                                </div>
-                            </div>
-                            <!-- Card Content -->
+                            <!-- High Quality Gameplay Video Loop Placeholder -->
+                            <video class="gameplay-video" src="https://media.giphy.com/media/l41YkxvU8c7J7Bba0/giphy.mp4" autoplay loop muted playsinline></video>
+                            <div class="video-overlay"></div>
                             <div class="card-text-content">
                                 <div class="card-title">Candy Quest</div>
                                 <div class="card-level">⭐ Level 45</div>
@@ -724,14 +190,9 @@
                     <!-- BLOCK BLAST -->
                     <div class="game-card card-block">
                         <div class="card-top">
-                            <!-- Simulated Gameplay Background -->
-                            <div class="gameplay-box">
-                                <div class="block-grid">
-                                    <div class="tetris-piece falling-piece"></div>
-                                    <div class="clearing-row"></div>
-                                </div>
-                            </div>
-                            <!-- Card Content -->
+                            <!-- High Quality Gameplay Video Loop Placeholder -->
+                            <video class="gameplay-video" src="https://media.giphy.com/media/3o7btQ0NESGHLmmhmg/giphy.mp4" autoplay loop muted playsinline></video>
+                            <div class="video-overlay"></div>
                             <div class="card-text-content">
                                 <div class="card-title">Block Blast</div>
                                 <div class="card-level">⭐ Level 28</div>
@@ -740,21 +201,16 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 8,940</div>
-                            <button class="play-btn" onclick="alert('Launching Block Blast! Next step!')">New Game</button>
+                            <button class="play-btn">New Game</button>
                         </div>
                     </div>
 
                     <!-- NUMBER MATCH -->
                     <div class="game-card card-number">
                         <div class="card-top">
-                            <!-- Simulated Gameplay Background -->
-                            <div class="gameplay-box">
-                                <div class="number-grid">
-                                    <div class="num-tile num-move">2</div>
-                                    <div class="num-tile num-stay">2</div>
-                                </div>
-                            </div>
-                            <!-- Card Content -->
+                            <!-- High Quality Gameplay Video Loop Placeholder -->
+                            <video class="gameplay-video" src="https://media.giphy.com/media/3o7TKSHA51ADn5a9l6/giphy.mp4" autoplay loop muted playsinline></video>
+                            <div class="video-overlay"></div>
                             <div class="card-text-content">
                                 <div class="card-title">Number<br>Match</div>
                                 <div class="card-level">⭐ Level 15</div>
@@ -763,7 +219,7 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 24,000</div>
-                            <button class="play-btn" onclick="alert('Launching Number Match! Next step!')">New Game</button>
+                            <button class="play-btn">New Game</button>
                         </div>
                     </div>
 
@@ -771,193 +227,115 @@
             </div>
         </div>
         
-        <!-- BOTTOM NAVIGATION -->
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="showPage('menu-screen', this)">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Main</div>
-            </div>
-            <div class="nav-item" onclick="showPage('tournament-screen', this)">
-                <div class="nav-icon">📅</div>
-                <div class="nav-label">Tournaments</div>
-            </div>
-            <div class="nav-item" onclick="alert('Profile Page Coming Soon!')">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">Me</div>
-            </div>
+            <div class="nav-item active" onclick="showPage('menu-screen', this)"><div class="nav-icon">🏠</div><div class="nav-label">Main</div></div>
+            <div class="nav-item" onclick="showPage('tournament-screen', this)"><div class="nav-icon">📅</div><div class="nav-label">Tournaments</div></div>
+            <div class="nav-item" onclick="alert('Profile Page Coming Soon!')"><div class="nav-icon">👤</div><div class="nav-label">Me</div></div>
         </div>
     </div>
 
-    <!-- TOURNAMENT SCREEN (MATCHING NEW IMAGE) -->
+    <!-- TOURNAMENT SCREEN -->
     <div id="tournament-screen" class="screen">
-        <div class="tourney-header">
-            <div class="btn-icon" onclick="showPage('menu-screen', document.querySelectorAll('.nav-item')[0])">❮</div>
-            <div>Tournament</div>
-            <div class="btn-icon">ℹ</div>
-        </div>
-
+        <div class="tourney-header"><div class="btn-icon" onclick="showPage('menu-screen', document.querySelectorAll('.nav-item')[0])">❮</div><div>Tournament</div><div class="btn-icon">ℹ</div></div>
         <div class="tourney-content">
-            <!-- Confetti Overlay -->
             <div class="confetti-container" id="confetti-box"></div>
-
-            <!-- Orange Medals Section -->
             <div class="tourney-top">
                 <div class="tourney-timer">⏱ 2d 01h</div>
-                <div class="medals-box">
-                    <div class="medal medal-bronze">🥉</div>
-                    <div class="medal medal-gold">👑</div>
-                    <div class="medal medal-silver">🥈</div>
-                </div>
+                <div class="medals-box"><div class="medal medal-bronze">🥉</div><div class="medal medal-gold">👑</div><div class="medal medal-silver">🥈</div></div>
             </div>
-
-            <!-- White Leaderboard Section -->
             <div class="tourney-bottom">
-                <div class="tourney-tabs">
-                    <div class="tab-btn active">Total Score</div>
-                    <div class="tab-btn">Best Score</div>
-                </div>
-
+                <div class="tourney-tabs"><div class="tab-btn active">Total Score</div><div class="tab-btn">Best Score</div></div>
                 <div class="leaderboard-list">
-                    <div class="lb-item">
-                        <div class="lb-rank rank-1">1</div>
-                        <div class="lb-name">Blushing Quail</div>
-                        <div class="lb-score">150,365</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank rank-2">2</div>
-                        <div class="lb-name">Thankful Chicken</div>
-                        <div class="lb-score">128,060</div>
-                    </div>
-                    <div class="lb-item me">
-                        <div class="lb-rank rank-3">3</div>
-                        <div class="lb-name">Me</div>
-                        <div class="lb-score">125,324</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank rank-other">4</div>
-                        <div class="lb-name">Embarrassed Tamarin</div>
-                        <div class="lb-score">115,400</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank rank-other">5</div>
-                        <div class="lb-name">Real Penguin</div>
-                        <div class="lb-score">87,612</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank rank-other">6</div>
-                        <div class="lb-name">Tough Warbler</div>
-                        <div class="lb-score">79,720</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank rank-other">7</div>
-                        <div class="lb-name">Precious Albatross</div>
-                        <div class="lb-score">77,640</div>
-                    </div>
+                    <div class="lb-item"><div class="lb-rank rank-1">1</div><div class="lb-name">Blushing Quail</div><div class="lb-score">150,365</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-2">2</div><div class="lb-name">Thankful Chicken</div><div class="lb-score">128,060</div></div>
+                    <div class="lb-item me"><div class="lb-rank rank-3">3</div><div class="lb-name">Me</div><div class="lb-score">125,324</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">4</div><div class="lb-name">Embarrassed Tamarin</div><div class="lb-score">115,400</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">5</div><div class="lb-name">Real Penguin</div><div class="lb-score">87,612</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">6</div><div class="lb-name">Tough Warbler</div><div class="lb-score">79,720</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">7</div><div class="lb-name">Precious Albatross</div><div class="lb-score">77,640</div></div>
                 </div>
-
-                <button class="tourney-play-btn" onclick="alert('Starting Tournament Match!')">Play</button>
+                <button class="tourney-play-btn">Play</button>
             </div>
         </div>
     </div>
 
     <script>
-        /* ============ STARS BACKGROUND ============ */
         function createStars(container, count) {
             if (!container) return;
             for (let i = 0; i < count; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                const size = Math.random() * 3 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                star.style.animationDelay = (Math.random() * 3) + 's';
+                const star = document.createElement('div'); star.className = 'star';
+                const size = Math.random() * 3 + 1; star.style.width = size + 'px'; star.style.height = size + 'px';
+                star.style.top = Math.random() * 100 + '%'; star.style.left = Math.random() * 100 + '%';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's'; star.style.animationDelay = (Math.random() * 3) + 's';
                 container.appendChild(star);
             }
         }
 
-        /* ============ CONFETTI GENERATOR ============ */
         function createConfetti() {
-            const container = document.getElementById('confetti-box');
-            if (!container) return;
+            const container = document.getElementById('confetti-box'); if (!container) return;
             const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
-            
             for (let i = 0; i < 40; i++) {
-                const conf = document.createElement('div');
-                conf.className = 'confetti';
-                conf.style.left = Math.random() * 100 + '%';
-                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                conf.style.animationDelay = (Math.random() * 5) + 's';
+                const conf = document.createElement('div'); conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + '%'; conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animationDuration = (Math.random() * 3 + 2) + 's'; conf.style.animationDelay = (Math.random() * 5) + 's';
                 container.appendChild(conf);
             }
         }
 
-        /* ============ LOADING ============ */
-        let progress = 0;
         function animateLoading() {
-            const fill = document.getElementById('loading-fill');
-            const text = document.getElementById('loading-text');
+            const fill = document.getElementById('loading-fill'); const text = document.getElementById('loading-text');
+            let progress = 0;
             const interval = setInterval(() => {
-                progress += Math.random() * 10 + 5;
-                if (progress > 100) progress = 100;
-                fill.style.width = progress + '%';
-                text.textContent = `LOADING... ${Math.floor(progress)}%`;
-                
+                progress += Math.random() * 10 + 5; if (progress > 100) progress = 100;
+                fill.style.width = progress + '%'; text.textContent = `LOADING... ${Math.floor(progress)}%`;
                 if (progress >= 100) {
                     clearInterval(interval);
-                    setTimeout(() => {
-                        document.getElementById('loading-screen').classList.remove('active');
-                        document.getElementById('menu-screen').classList.add('active');
-                        initCarouselScale();
-                    }, 400);
+                    setTimeout(() => { document.getElementById('loading-screen').classList.remove('active'); document.getElementById('menu-screen').classList.add('active'); init3DCarousel(); }, 400);
                 }
             }, 100);
         }
 
-        /* ============ ULTRA REALISTIC CARD SCALING ============ */
-        function initCarouselScale() {
+        /* ============ TRUE 3D COVERFLOW SWIPE ============ */
+        function init3DCarousel() {
             const carousel = document.getElementById('carousel');
             const cards = document.querySelectorAll('.game-card');
             
-            function updateScale() {
+            function update3D() {
                 const centerPosition = carousel.scrollLeft + (carousel.clientWidth / 2);
+                
                 cards.forEach(card => {
                     const cardCenter = card.offsetLeft + (card.clientWidth / 2);
-                    const distanceFromCenter = Math.abs(centerPosition - cardCenter);
-                    const scale = Math.max(0.85, 1 - (distanceFromCenter / 1200));
-                    card.style.transform = `scale(${scale})`;
+                    const distanceFromCenter = centerPosition - cardCenter;
+                    
+                    // Normalize distance (-1 to 1)
+                    const normalizedDist = distanceFromCenter / carousel.clientWidth; 
+                    
+                    // Scale: Center is 1, sides shrink to 0.85
+                    const scale = Math.max(0.85, 1 - Math.abs(normalizedDist) * 0.15);
+                    
+                    // RotateY: Center is 0deg, sides tilt up to 30deg (True 3D Effect)
+                    const rotateY = normalizedDist * 35; // Maximum tilt is 35 degrees
+                    
+                    // Apply smooth 3D transformation
+                    card.style.transform = `scale(${scale}) rotateY(${rotateY}deg)`;
                 });
             }
 
-            carousel.addEventListener('scroll', updateScale);
-            updateScale();
-            setTimeout(() => {
-                carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2);
-            }, 100);
+            carousel.addEventListener('scroll', update3D);
+            update3D();
+            setTimeout(() => { carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2); }, 100);
         }
 
-        /* ============ PAGE NAVIGATION ============ */
         function showPage(pageId, navElement) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            
             if(navElement) {
                 const nav = document.querySelector('.bottom-nav');
-                if(nav) {
-                    nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                    navElement.classList.add('active');
-                }
+                if(nav) { nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); navElement.classList.add('active'); }
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            createStars(document.getElementById('global-stars'), 50);
-            createConfetti();
-            animateLoading();
-        });
+        document.addEventListener('DOMContentLoaded', () => { createStars(document.getElementById('global-stars'), 50); createConfetti(); animateLoading(); });
     </script>
 </body>
 </html>
