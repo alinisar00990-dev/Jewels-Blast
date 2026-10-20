@@ -8,159 +8,148 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; }
         html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; background: #070514; position: fixed; }
         
         .screen { display: none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1; }
         .screen.active { display: flex; flex-direction: column; }
 
-        /* ============================================ GLOBAL BG ============================================ */
+        /* ============== GLOBAL BG ============== */
         .global-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%); z-index: -1; }
         .stars-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; }
-        .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 6px #fff, 0 0 12px #a855f7; animation: twinkle linear infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.3); } }
+        .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 6px #fff; animation: twinkle linear infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
 
-        /* ============================================ LOADING ============================================ */
+        /* ============== LOADING ============== */
         #loading-screen { justify-content: center; align-items: center; }
-        .logo-box { text-align: center; position: relative; z-index: 10; margin-bottom: 90px; }
+        .logo-box { text-align: center; margin-bottom: 90px; }
         .title-word { font-family: 'Cinzel Decorative', serif; font-weight: 900; display: block; line-height: 1.1; }
         .jewels-title { font-size: 3.8rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 35%, #d49400 65%, #8a5a00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9)); }
         .blast-title { font-size: 4rem; background: linear-gradient(180deg, #fff9d4 0%, #ffe066 30%, #e6a100 65%, #996300 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9)); margin-top: -10px; }
-        .loading-box { position: absolute; bottom: 15%; width: 75%; max-width: 320px; text-align: center; z-index: 10; }
+        .loading-box { position: absolute; bottom: 15%; width: 75%; max-width: 320px; text-align: center; }
         .loading-track { width: 100%; height: 18px; background: rgba(10, 6, 28, 0.85); border-radius: 20px; padding: 3px; border: 1px solid rgba(255, 255, 255, 0.2); }
         .loading-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #c084fc, #e879f9, #f43f5e); border-radius: 20px; transition: width 0.2s ease-out; }
         .loading-text { color: rgba(237, 215, 156, 0.75); font-size: 0.8rem; margin-top: 12px; letter-spacing: 2px; }
 
-        /* ============================================ MENU ============================================ */
-        .top-header { width: 100%; padding: 20px 20px 10px 20px; text-align: center; flex-shrink: 0; position: relative; z-index: 10; }
+        /* ============== MENU ============== */
+        .top-header { width: 100%; padding: 20px 20px 10px 20px; text-align: center; flex-shrink: 0; }
         .main-title { font-family: 'Cinzel Decorative', serif; font-weight: 900; font-size: 2rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 50%, #d49400 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8)); letter-spacing: 3px; }
-        .menu-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 5; padding-bottom: 80px; }
+        .menu-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding-bottom: 80px; }
         .banners-wrapper { padding: 5px 0 10px 0; flex-shrink: 0; }
-        .banners-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+        .banners-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 5px 20px; scrollbar-width: none; }
         .banners-scroll::-webkit-scrollbar { display: none; }
-        .new-banner { min-width: 160px; height: 90px; border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0; scroll-snap-align: start; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: white; }
+        .new-banner { min-width: 160px; height: 90px; border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: white; }
         .nb-daily { background: linear-gradient(135deg, #4da7ff, #1d7afc); }
         .nb-water { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
         .nb-world { background: linear-gradient(135deg, #d946ef, #a855f7); }
         .nb-mansion { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
         .nb-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; font-weight: 600; }
-        .nb-badge { background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 8px; display: flex; align-items: center; gap: 4px;}
+        .nb-badge { background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 8px; }
         .nb-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
-        .nb-title { font-size: 0.95rem; font-weight: 700; line-height: 1.1; max-width: 70%; text-transform: capitalize;}
-        .nb-icon { font-size: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); margin-bottom: -5px; margin-right: -5px;}
+        .nb-title { font-size: 0.95rem; font-weight: 700; max-width: 70%; }
+        .nb-icon { font-size: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); }
 
         .carousel-area { flex: 1; position: relative; display: flex; align-items: center; width: 100%; min-height: 0; perspective: 1200px; }
         .carousel-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 calc(50vw - 135px); gap: 20px; width: 100%; height: 100%; align-items: center; scrollbar-width: none; transform-style: preserve-3d; }
         .carousel-scroll::-webkit-scrollbar { display: none; }
         
-        .game-card { scroll-snap-align: center; flex-shrink: 0; width: 270px; height: 390px; border-radius: 20px; background: #ffffff; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.1s; transform-origin: center center; }
-        .card-top { height: 210px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; overflow: hidden; background: #111; }
+        .game-card { scroll-snap-align: center; flex-shrink: 0; width: 270px; height: 390px; border-radius: 20px; background: #ffffff; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.1s; }
+        .card-top { height: 210px; position: relative; overflow: hidden; background: #4a1f5c; }
         .game-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .video-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 75%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); z-index: 2; pointer-events: none; }
-        .card-text-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 18px; pointer-events: none; }
+        .video-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 75%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); z-index: 2; }
+        .card-text-content { position: absolute; bottom: 18px; left: 0; right: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; pointer-events: none; }
         .card-title { color: #ffffff; font-size: 2.1rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9); letter-spacing: 1px; text-align: center; line-height: 1.1; }
-        .card-level { background: rgba(255,255,255,0.95); color: #111; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-top: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 5px; }
+        .card-level { background: rgba(255,255,255,0.95); color: #111; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-top: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); }
         .card-bottom { height: 180px; background: #ffffff; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
         .points-label { color: #888888; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .points-value { color: #111111; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-top: -2px; }
-        .play-btn { width: 100%; background: #2563eb; color: #ffffff; border: none; border-radius: 25px; padding: 14px 0; font-size: 1.05rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.1s; }
+        .points-value { color: #111111; font-size: 1.8rem; font-weight: 800; }
+        .play-btn { width: 100%; background: #2563eb; color: #ffffff; border: none; border-radius: 25px; padding: 14px 0; font-size: 1.05rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .play-btn:active { transform: scale(0.96); }
 
-        /* ============================================ TOURNAMENT ============================================ */
-        #tournament-screen { background: transparent; z-index: 50; }
-        .tourney-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; position: relative; z-index: 10; }
+        /* ============== TOURNAMENT ============== */
+        .tourney-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; }
         .btn-icon { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .tourney-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(180deg, #ea580c 0%, #f97316 25%, #ffffff 25.1%, #ffffff 100%); position: relative; }
-        .tourney-top { height: 25%; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .tourney-timer { background: rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
-        .medals-box { display: flex; align-items: flex-end; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .medal { border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 5px 10px rgba(255,255,255,0.5); font-size: 2rem; position: relative; }
+        .tourney-top { height: 25%; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .tourney-timer { background: rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; }
+        .medals-box { display: flex; align-items: flex-end; justify-content: center; gap: 10px; }
+        .medal { border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); font-size: 2rem; }
         .medal-silver { width: 70px; height: 70px; background: linear-gradient(135deg, #e2e8f0, #94a3b8); margin-bottom: 10px;}
-        .medal-gold { width: 90px; height: 90px; background: linear-gradient(135deg, #fef08a, #eab308); z-index: 2;}
+        .medal-gold { width: 90px; height: 90px; background: linear-gradient(135deg, #fef08a, #eab308); }
         .medal-bronze { width: 70px; height: 70px; background: linear-gradient(135deg, #fdba74, #ea580c); margin-bottom: 10px;}
         .tourney-bottom { flex: 1; background: #ffffff; display: flex; flex-direction: column; overflow: hidden; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 15px 20px; }
         .tourney-tabs { display: flex; background: #f1f5f9; border-radius: 25px; padding: 4px; margin-bottom: 15px; }
         .tab-btn { flex: 1; text-align: center; padding: 8px 0; font-size: 0.9rem; font-weight: 700; color: #64748b; border-radius: 20px; cursor: pointer; }
-        .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+        .tab-btn.active { background: #3b82f6; color: white; }
         .leaderboard-list { flex: 1; overflow-y: auto; padding-bottom: 80px; }
-        .leaderboard-list::-webkit-scrollbar { display: none; }
         .lb-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
-        .lb-item.me { background: #f8fafc; border-radius: 12px; padding: 12px 10px; margin: 0 -10px; border: 1px solid #e2e8f0; }
+        .lb-item.me { background: #f8fafc; border-radius: 12px; padding: 12px 10px; margin: 0 -10px; }
         .lb-rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: white; margin-right: 15px; }
         .rank-1 { background: #eab308; } .rank-2 { background: #94a3b8; } .rank-3 { background: #ea580c; } .rank-other { background: #fca5a5; }
         .lb-name { flex: 1; font-weight: 600; color: #334155; font-size: 0.95rem; }
         .lb-score { font-weight: 800; color: #0f172a; font-size: 0.95rem; }
-        .tourney-play-btn { position: absolute; bottom: 20px; left: 20px; right: 20px; background: #3b82f6; color: white; border: none; border-radius: 25px; padding: 15px; font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); cursor: pointer; }
-        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; overflow: hidden; }
-        .confetti { position: absolute; width: 8px; height: 15px; animation: fallConfetti linear infinite; }
-        @keyframes fallConfetti { 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; } 100% { transform: translateY(800px) rotate(720deg); opacity: 0; } }
+        .tourney-play-btn { position: absolute; bottom: 20px; left: 20px; right: 20px; background: #3b82f6; color: white; border: none; border-radius: 25px; padding: 15px; font-size: 1.1rem; font-weight: 700; cursor: pointer; }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #eeeeee; display: flex; justify-content: space-around; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 10px; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px 15px; cursor: pointer; }
         .nav-icon { font-size: 1.5rem; color: #94a3b8; } .nav-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; }
-        .nav-item.active .nav-icon, .nav-item.active .nav-label { color: #2563eb; transform: scale(1.1); }
+        .nav-item.active .nav-icon, .nav-item.active .nav-label { color: #2563eb; }
 
         /* ============================================
-           CANDY QUEST PLAYABLE (REAL CANDY CRUSH LAYOUT)
+           CANDY QUEST GAME SCREEN (PERFECT VERSION)
            ============================================ */
-        #candy-play-screen { background: #000; z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: flex-start; }
-        #candy-play-screen.active { display: flex; }
+        #candy-play-screen { background: #000; z-index: 200; }
         
-        /* Top Mini-Header: X button, 3-dot menu */
-        .cq-mini-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; z-index: 20; }
-        .cq-icon-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(80,80,80,0.9); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; cursor: pointer; border: none; }
+        /* Top Mini Header */
+        .cq-mini-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; flex-shrink: 0; }
+        .cq-icon-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(80,80,80,0.9); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; cursor: pointer; border: none; }
         
-        /* Main Game Area */
-        .cq-game-area { width: 100%; max-width: 480px; flex: 1; display: flex; flex-direction: column; align-items: center; }
+        /* Chef Bar */
+        .cq-chef-bar { width: 100%; background: linear-gradient(180deg, #c88080 0%, #a05858 100%); padding: 12px 12px; display: flex; justify-content: space-between; align-items: center; min-height: 110px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); flex-shrink: 0; position: relative; }
         
-        /* The Chef Header Bar - matches reference */
-        .cq-chef-bar { width: 100%; background: linear-gradient(180deg, #c88080 0%, #a05858 100%); padding: 10px 10px 15px 10px; position: relative; display: flex; justify-content: space-between; align-items: center; min-height: 110px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        /* Level Badge */
+        .cq-level-badge { width: 72px; height: 72px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe066 0%, #ffcc33 50%, #e67e00 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(230,126,0,0.6), inset 0 -4px 6px rgba(0,0,0,0.2); flex-shrink: 0; }
+        .cq-level-label { color: white; font-size: 0.6rem; font-weight: 900; letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+        .cq-level-num { color: white; font-size: 1.5rem; font-weight: 900; line-height: 1; text-shadow: 0 2px 3px rgba(0,0,0,0.4); }
         
-        /* Level badge (star burst) */
-        .cq-level-badge { position: relative; width: 70px; height: 70px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-        .cq-level-badge::before { content: ''; position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, #ffcc33 60%, #e67e00 100%); border-radius: 50%; box-shadow: 0 4px 12px rgba(230,126,0,0.6), inset 0 -3px 8px rgba(0,0,0,0.3); }
-        .cq-level-text { position: relative; z-index: 2; color: white; font-weight: 900; text-align: center; line-height: 1; text-shadow: 0 2px 3px rgba(0,0,0,0.4); }
-        .cq-level-text small { font-size: 0.6rem; display: block; }
-        .cq-level-text b { font-size: 1.4rem; }
-        
-        /* Chef Girl (SVG/Emoji character holding moves sign) */
-        .cq-chef-char { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 2; }
-        .cq-chef-icon { font-size: 2.8rem; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5)); line-height: 1; }
-        .cq-moves-sign { background: linear-gradient(180deg, #e8d5f0, #c9a2d8); border: 2px solid white; border-radius: 8px; padding: 2px 10px; margin-top: -8px; position: relative; z-index: 3; box-shadow: 0 2px 4px rgba(0,0,0,0.3); min-width: 60px; text-align: center; }
-        .cq-moves-label { font-size: 0.5rem; font-weight: 900; color: #5a2d6b; letter-spacing: 1px; }
+        /* Chef Center */
+        .cq-chef-center { display: flex; flex-direction: column; align-items: center; flex: 1; margin: 0 10px; }
+        .cq-chef-icon { font-size: 2.5rem; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5)); line-height: 1; margin-bottom: 2px; }
+        .cq-moves-sign { background: linear-gradient(180deg, #e8d5f0, #c9a2d8); border: 2px solid white; border-radius: 8px; padding: 3px 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); text-align: center; }
+        .cq-moves-label { font-size: 0.55rem; font-weight: 900; color: #5a2d6b; letter-spacing: 1px; line-height: 1; }
         .cq-moves-val { font-size: 1.3rem; font-weight: 900; color: #5a2d6b; line-height: 1; }
         
-        /* Objectives Panel (white box with 4 goals) */
-        .cq-objectives { background: white; border-radius: 10px; padding: 6px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); z-index: 3; }
-        .cq-obj { display: flex; align-items: center; gap: 3px; padding: 2px 4px; }
-        .cq-obj-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
-        .cq-obj-count { font-size: 0.75rem; font-weight: 800; color: #333; }
+        /* Objectives */
+        .cq-objectives { background: white; border-radius: 10px; padding: 6px 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); flex-shrink: 0; }
+        .cq-obj { display: flex; align-items: center; gap: 5px; }
+        .cq-obj-dot { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 -2px 3px rgba(0,0,0,0.3); }
+        .cq-obj-count { font-size: 0.85rem; font-weight: 800; color: #333; min-width: 20px; }
         
-        /* Right side: Pause + Score */
-        .cq-pause-score { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; z-index: 2; }
-        .cq-pause-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(180deg, #ff9933, #e67e00); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; cursor: pointer; border: 2px solid white; box-shadow: 0 3px 6px rgba(0,0,0,0.4); }
-        .cq-score-display { color: white; font-size: 1.3rem; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.6); font-family: 'Poppins', sans-serif; }
+        /* Pause + Score */
+        .cq-pause-score { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; margin-left: 8px; }
+        .cq-pause-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(180deg, #ff9933, #e67e00); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; border: 2px solid white; box-shadow: 0 3px 6px rgba(0,0,0,0.4); }
+        .cq-score-display { color: white; font-size: 1.1rem; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
 
-        /* Wooden shelf below header */
-        .cq-shelf { width: 100%; height: 12px; background: linear-gradient(180deg, #d49544 0%, #a86a24 100%); box-shadow: 0 3px 5px rgba(0,0,0,0.4); }
+        /* Wooden Shelf */
+        .cq-shelf { width: 100%; height: 10px; background: linear-gradient(180deg, #d49544 0%, #a86a24 100%); box-shadow: 0 3px 5px rgba(0,0,0,0.4); flex-shrink: 0; }
         
-        /* Game Canvas Container */
-        .cq-board-wrap { flex: 1; width: 100%; background: linear-gradient(180deg, #4a1f5c 0%, #2d1240 100%); display: flex; justify-content: center; align-items: flex-start; padding-top: 5px; position: relative; overflow: hidden;}
+        /* Board */
+        .cq-board-wrap { flex: 1; width: 100%; background: linear-gradient(180deg, #4a1f5c 0%, #2d1240 100%); display: flex; justify-content: center; align-items: flex-start; padding-top: 8px; overflow: hidden; }
         #candy-engine-canvas { display: block; touch-action: none; }
 
-        /* Confirmation Modal */
-        .cq-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); display: none; justify-content: center; align-items: center; z-index: 500; }
+        /* Modals */
+        .cq-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 500; }
         .cq-modal-overlay.active { display: flex; }
         .cq-modal { background: linear-gradient(180deg, #ffffff 0%, #f0e6ff 100%); border-radius: 20px; padding: 25px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(168, 85, 247, 0.5); border: 3px solid #a855f7; }
         .cq-modal h2 { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; color: #4a1f5c; margin-bottom: 10px; }
         .cq-modal p { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
-        .cq-modal-score { font-size: 2rem; font-weight: 900; color: #d49400; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .cq-modal-score { font-size: 2.2rem; font-weight: 900; color: #d49400; margin: 15px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .cq-modal-btns { display: flex; gap: 10px; justify-content: center; }
-        .cq-modal-btn { flex: 1; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
+        .cq-modal-btn { flex: 1; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1rem; font-weight: 700; cursor: pointer; }
         .cq-modal-btn:active { transform: scale(0.95); }
-        .cq-btn-yes { background: linear-gradient(180deg, #ef4444, #dc2626); color: white; box-shadow: 0 4px 10px rgba(220,38,38,0.4); }
-        .cq-btn-no { background: linear-gradient(180deg, #22c55e, #16a34a); color: white; box-shadow: 0 4px 10px rgba(22,163,74,0.4); }
-        .cq-btn-primary { background: linear-gradient(180deg, #3b82f6, #2563eb); color: white; box-shadow: 0 4px 10px rgba(37,99,235,0.4); width: 100%; }
+        .cq-btn-yes { background: linear-gradient(180deg, #ef4444, #dc2626); color: white; }
+        .cq-btn-no { background: linear-gradient(180deg, #22c55e, #16a34a); color: white; }
+        .cq-btn-primary { background: linear-gradient(180deg, #3b82f6, #2563eb); color: white; width: 100%; }
 
         @media (max-width: 360px) {
             .game-card { width: 240px; height: 350px; }
@@ -168,6 +157,9 @@
             .card-bottom { padding: 15px 20px; height: 160px; }
             .card-title { font-size: 1.8rem; }
             .points-value { font-size: 1.5rem; }
+            .cq-objectives { padding: 4px 6px; gap: 3px 6px; }
+            .cq-obj-count { font-size: 0.75rem; }
+            .cq-chef-icon { font-size: 2rem; }
         }
     </style>
 </head>
@@ -175,13 +167,13 @@
 
     <div class="global-bg"><div class="stars-container" id="global-stars"></div></div>
 
-    <!-- LOADING SCREEN -->
+    <!-- LOADING -->
     <div id="loading-screen" class="screen active">
         <div class="logo-box"><span class="title-word jewels-title">Jewels</span><span class="title-word blast-title">Blast</span></div>
         <div class="loading-box"><div class="loading-track"><div class="loading-fill" id="loading-fill"></div></div><p class="loading-text" id="loading-text">LOADING...</p></div>
     </div>
 
-    <!-- MAIN MENU SCREEN -->
+    <!-- MAIN MENU -->
     <div id="menu-screen" class="screen">
         <div class="top-header"><div class="main-title">JEWELS BLAST</div></div>
         <div class="menu-content">
@@ -196,14 +188,13 @@
 
             <div class="carousel-area">
                 <div class="carousel-scroll" id="carousel">
-                    
-                    <div class="game-card card-candy">
+                    <div class="game-card">
                         <div class="card-top">
                             <canvas id="candy-canvas" class="game-canvas"></canvas>
                             <div class="video-overlay"></div>
                             <div class="card-text-content">
                                 <div class="card-title">Candy Quest</div>
-                                <div class="card-level">⭐ Level 45</div>
+                                <div class="card-level">⭐ Level 17</div>
                             </div>
                         </div>
                         <div class="card-bottom">
@@ -213,7 +204,7 @@
                         </div>
                     </div>
 
-                    <div class="game-card card-block">
+                    <div class="game-card">
                         <div class="card-top">
                             <canvas id="block-canvas" class="game-canvas"></canvas>
                             <div class="video-overlay"></div>
@@ -225,11 +216,11 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 8,940</div>
-                            <button class="play-btn" onclick="alert('Block Blast Playable Coming Next!')">New Game</button>
+                            <button class="play-btn" onclick="alert('Coming Next!')">New Game</button>
                         </div>
                     </div>
 
-                    <div class="game-card card-number">
+                    <div class="game-card">
                         <div class="card-top">
                             <canvas id="number-canvas" class="game-canvas"></canvas>
                             <div class="video-overlay"></div>
@@ -241,10 +232,9 @@
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
                             <div class="points-value">🏆 24,000</div>
-                            <button class="play-btn" onclick="alert('Number Match Playable Coming Next!')">New Game</button>
+                            <button class="play-btn" onclick="alert('Coming Next!')">New Game</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -252,15 +242,14 @@
         <div class="bottom-nav">
             <div class="nav-item active" onclick="showPage('menu-screen', this)"><div class="nav-icon">🏠</div><div class="nav-label">Main</div></div>
             <div class="nav-item" onclick="showPage('tournament-screen', this)"><div class="nav-icon">📅</div><div class="nav-label">Tournaments</div></div>
-            <div class="nav-item" onclick="alert('Profile Page Coming Soon!')"><div class="nav-icon">👤</div><div class="nav-label">Me</div></div>
+            <div class="nav-item" onclick="alert('Coming Soon!')"><div class="nav-icon">👤</div><div class="nav-label">Me</div></div>
         </div>
     </div>
 
-    <!-- TOURNAMENT SCREEN -->
+    <!-- TOURNAMENT -->
     <div id="tournament-screen" class="screen">
         <div class="tourney-header"><div class="btn-icon" onclick="showPage('menu-screen', document.querySelectorAll('.nav-item')[0])">❮</div><div>Tournament</div><div class="btn-icon">ℹ</div></div>
         <div class="tourney-content">
-            <div class="confetti-container" id="confetti-box"></div>
             <div class="tourney-top">
                 <div class="tourney-timer">⏱ 2d 01h</div>
                 <div class="medals-box"><div class="medal medal-bronze">🥉</div><div class="medal medal-gold">👑</div><div class="medal medal-silver">🥈</div></div>
@@ -279,52 +268,44 @@
         </div>
     </div>
 
-    <!-- =========================================
-         FULL PLAYABLE CANDY QUEST GAME SCREEN
-         ========================================= -->
+    <!-- CANDY QUEST GAME -->
     <div id="candy-play-screen" class="screen">
         <div class="cq-mini-header">
             <button class="cq-icon-btn" onclick="confirmQuitCandy()">✕</button>
-            <button class="cq-icon-btn" onclick="pauseCandy()">⋮</button>
+            <button class="cq-icon-btn" onclick="confirmQuitCandy()">⋮</button>
         </div>
 
-        <div class="cq-game-area">
-            <!-- Chef Header -->
-            <div class="cq-chef-bar">
-                <!-- Level Badge Left -->
-                <div class="cq-level-badge">
-                    <div class="cq-level-text"><small>LEVEL</small><b>17</b></div>
-                </div>
-                
-                <!-- Chef Character Center -->
-                <div class="cq-chef-char">
-                    <div class="cq-chef-icon">👩‍🍳</div>
-                    <div class="cq-moves-sign">
-                        <div class="cq-moves-label">MOVES</div>
-                        <div class="cq-moves-val" id="cq-moves">35</div>
-                    </div>
-                </div>
-                
-                <!-- Objectives Panel -->
-                <div class="cq-objectives" id="cq-objectives">
-                    <div class="cq-obj"><div class="cq-obj-icon" data-type="1"></div><span class="cq-obj-count" id="obj-1">20</span></div>
-                    <div class="cq-obj"><div class="cq-obj-icon" data-type="3"></div><span class="cq-obj-count" id="obj-3">20</span></div>
-                    <div class="cq-obj"><div class="cq-obj-icon" data-type="2"></div><span class="cq-obj-count" id="obj-2">20</span></div>
-                    <div class="cq-obj"><div class="cq-obj-icon" data-type="0"></div><span class="cq-obj-count" id="obj-0">20</span></div>
-                </div>
-                
-                <!-- Pause + Score Right -->
-                <div class="cq-pause-score">
-                    <button class="cq-pause-btn" onclick="pauseCandy()">⏸</button>
-                    <div class="cq-score-display" id="cq-score">0</div>
+        <div class="cq-chef-bar">
+            <div class="cq-level-badge">
+                <div class="cq-level-label">LEVEL</div>
+                <div class="cq-level-num">17</div>
+            </div>
+            
+            <div class="cq-chef-center">
+                <div class="cq-chef-icon">👩‍🍳</div>
+                <div class="cq-moves-sign">
+                    <div class="cq-moves-label">MOVES</div>
+                    <div class="cq-moves-val" id="cq-moves">35</div>
                 </div>
             </div>
             
-            <div class="cq-shelf"></div>
-            
-            <div class="cq-board-wrap">
-                <canvas id="candy-engine-canvas"></canvas>
+            <div class="cq-objectives">
+                <div class="cq-obj"><div class="cq-obj-dot" style="background: radial-gradient(circle at 35% 30%, #90d8ff, #3bb2f2);"></div><span class="cq-obj-count" id="obj-1">20</span></div>
+                <div class="cq-obj"><div class="cq-obj-dot" style="background: radial-gradient(circle at 35% 30%, #fff085, #f5c91f);"></div><span class="cq-obj-count" id="obj-3">20</span></div>
+                <div class="cq-obj"><div class="cq-obj-dot" style="background: radial-gradient(circle at 35% 30%, #a8e88a, #5fcf3f);"></div><span class="cq-obj-count" id="obj-2">20</span></div>
+                <div class="cq-obj"><div class="cq-obj-dot" style="background: radial-gradient(circle at 35% 30%, #ff8080, #f03838);"></div><span class="cq-obj-count" id="obj-0">20</span></div>
             </div>
+            
+            <div class="cq-pause-score">
+                <button class="cq-pause-btn" onclick="confirmQuitCandy()">⏸</button>
+                <div class="cq-score-display" id="cq-score">0</div>
+            </div>
+        </div>
+        
+        <div class="cq-shelf"></div>
+        
+        <div class="cq-board-wrap">
+            <canvas id="candy-engine-canvas"></canvas>
         </div>
     </div>
 
@@ -335,7 +316,7 @@
             <p>Are you sure you want to quit?<br>Your progress will be lost.</p>
             <div class="cq-modal-btns">
                 <button class="cq-modal-btn cq-btn-no" onclick="closeModal('quit-modal')">No</button>
-                <button class="cq-modal-btn cq-btn-yes" onclick="quitCandyQuestConfirmed()">Yes, Quit</button>
+                <button class="cq-modal-btn cq-btn-yes" onclick="quitCandyConfirmed()">Yes, Quit</button>
             </div>
         </div>
     </div>
@@ -345,731 +326,756 @@
             <h2 id="gameover-title">Game Over!</h2>
             <p>Your Final Score</p>
             <div class="cq-modal-score" id="gameover-score">0</div>
-            <button class="cq-modal-btn cq-btn-primary" onclick="quitCandyQuestConfirmed()">Back to Menu</button>
+            <button class="cq-modal-btn cq-btn-primary" onclick="quitCandyConfirmed()">Back to Menu</button>
         </div>
     </div>
 
     <script>
-        /* ============ STARS & CONFETTI ============ */
-        function createStars(container, count) {
-            if (!container) return;
-            for (let i = 0; i < count; i++) {
-                const star = document.createElement('div'); star.className = 'star';
-                const size = Math.random() * 3 + 1; star.style.width = size + 'px'; star.style.height = size + 'px';
-                star.style.top = Math.random() * 100 + '%'; star.style.left = Math.random() * 100 + '%';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's'; star.style.animationDelay = (Math.random() * 3) + 's';
-                container.appendChild(star);
-            }
-        }
-        function createConfetti() {
-            const container = document.getElementById('confetti-box'); if (!container) return;
-            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
+        /* ===================== STARS ===================== */
+        function createStars() {
+            const container = document.getElementById('global-stars');
             for (let i = 0; i < 40; i++) {
-                const conf = document.createElement('div'); conf.className = 'confetti';
-                conf.style.left = Math.random() * 100 + '%'; conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                conf.style.animationDuration = (Math.random() * 3 + 2) + 's'; conf.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(conf);
+                const s = document.createElement('div');
+                s.className = 'star';
+                const sz = Math.random() * 2 + 1;
+                s.style.width = sz + 'px'; s.style.height = sz + 'px';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                s.style.animationDelay = (Math.random() * 3) + 's';
+                container.appendChild(s);
             }
         }
+
+        /* ===================== LOADING ===================== */
         function animateLoading() {
-            const fill = document.getElementById('loading-fill'); const text = document.getElementById('loading-text');
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 10 + 5; if (progress > 100) progress = 100;
-                fill.style.width = progress + '%'; text.textContent = `LOADING... ${Math.floor(progress)}%`;
-                if (progress >= 100) {
-                    clearInterval(interval);
+            const fill = document.getElementById('loading-fill');
+            const text = document.getElementById('loading-text');
+            let p = 0;
+            const iv = setInterval(() => {
+                p += Math.random() * 10 + 5;
+                if (p > 100) p = 100;
+                fill.style.width = p + '%';
+                text.textContent = `LOADING... ${Math.floor(p)}%`;
+                if (p >= 100) {
+                    clearInterval(iv);
                     setTimeout(() => {
                         document.getElementById('loading-screen').classList.remove('active');
                         document.getElementById('menu-screen').classList.add('active');
-                        init3DCarousel(); startCanvasGamePreviews(); drawObjectiveIcons();
+                        init3DCarousel();
+                        startPreviews();
                     }, 400);
                 }
             }, 100);
         }
 
-        /* ============ 3D CAROUSEL ============ */
+        /* ===================== CAROUSEL ===================== */
         function init3DCarousel() {
-            const carousel = document.getElementById('carousel');
+            const car = document.getElementById('carousel');
             const cards = document.querySelectorAll('.game-card');
-            function update3D() {
-                const centerPosition = carousel.scrollLeft + (carousel.clientWidth / 2);
-                cards.forEach(card => {
-                    const cardCenter = card.offsetLeft + (card.clientWidth / 2);
-                    const distanceFromCenter = centerPosition - cardCenter;
-                    const normalizedDist = distanceFromCenter / carousel.clientWidth; 
-                    const scale = Math.max(0.85, 1 - Math.abs(normalizedDist) * 0.15);
-                    const rotateY = normalizedDist * 35;
-                    card.style.transform = `scale(${scale}) rotateY(${rotateY}deg)`;
+            function update() {
+                const cp = car.scrollLeft + (car.clientWidth / 2);
+                cards.forEach(c => {
+                    const cc = c.offsetLeft + (c.clientWidth / 2);
+                    const d = (cp - cc) / car.clientWidth;
+                    const sc = Math.max(0.85, 1 - Math.abs(d) * 0.15);
+                    const rot = d * 35;
+                    c.style.transform = `scale(${sc}) rotateY(${rot}deg)`;
                 });
             }
-            carousel.addEventListener('scroll', update3D);
-            update3D();
-            setTimeout(() => { carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2); }, 100);
+            car.addEventListener('scroll', update);
+            update();
+            setTimeout(() => {
+                car.scrollLeft = cards[0].offsetLeft - (car.clientWidth/2) + (cards[0].clientWidth/2);
+                update();
+            }, 100);
         }
 
-        /* ============ MENU PREVIEWS ============ */
-        function startCanvasGamePreviews() {
-            initMenuCandyPreview(); initBlockCanvas(); initNumberCanvas();
-        }
-        function initMenuCandyPreview() {
-            const canvas = document.getElementById('candy-canvas'); if(!canvas) return;
-            const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
-            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ec4899'];
-            const cols = 6, rows = 5, cellSize = 38;
-            const offsetX = (canvas.width - cols * cellSize) / 2, offsetY = 10;
-            let frame = 0;
-            function loop() {
-                frame++; ctx.fillStyle = '#4a1f5c'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        let type = Math.floor((r*cols+c+frame/50) % 6);
-                        let cx = offsetX + c * cellSize + cellSize/2;
-                        let cy = offsetY + r * cellSize + cellSize/2;
-                        ctx.fillStyle = colors[type];
-                        ctx.beginPath(); ctx.arc(cx, cy, 14, 0, Math.PI*2); ctx.fill();
-                        ctx.fillStyle = 'rgba(255,255,255,0.5)';
-                        ctx.beginPath(); ctx.arc(cx-4, cy-4, 4, 0, Math.PI*2); ctx.fill();
-                    }
-                }
-                requestAnimationFrame(loop);
-            } loop();
-        }
-        function initBlockCanvas() {
-            const canvas = document.getElementById('block-canvas'); if(!canvas) return;
-            const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
-            let frame = 0;
-            function loop() {
-                frame++; ctx.fillStyle = '#061329'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#00f2fe'; ctx.fillRect(100, (frame%250)-40, 50, 50);
-                requestAnimationFrame(loop);
-            } loop();
-        }
-        function initNumberCanvas() {
-            const canvas = document.getElementById('number-canvas'); if(!canvas) return;
-            const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
-            let frame = 0;
-            function loop() {
-                frame++; ctx.fillStyle = '#05231c'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#38f9d7'; ctx.beginPath(); ctx.arc(135, 105, 20 + Math.sin(frame*0.1)*5, 0, Math.PI*2); ctx.fill();
-                requestAnimationFrame(loop);
-            } loop();
-        }
-
-        /* ============ OBJECTIVE PANEL ICONS ============ */
-        function drawObjectiveIcons() {
-            document.querySelectorAll('.cq-obj-icon').forEach(div => {
-                const type = parseInt(div.dataset.type);
-                const canvas = document.createElement('canvas');
-                canvas.width = 44; canvas.height = 44;
-                const ctx = canvas.getContext('2d');
-                drawCandyShape(ctx, 22, 22, 18, type, 1, 1);
-                div.appendChild(canvas);
-                canvas.style.width = '22px'; canvas.style.height = '22px';
-            });
-        }
-
-        /* =============================================================
-           CANDY QUEST GAME ENGINE (REAL CANDY CRUSH STYLE)
-           ============================================================= */
-        let candyGameState = null;
-
-        // Candy Types (6 shapes/colors matching reference image)
-        // 0: Red Jelly Blob | 1: Blue Drop | 2: Green Clover | 3: Yellow Heart | 4: Purple Flower | 5: Orange Star
+        /* ===================== CANDY DRAWING FUNCTION (SHARED) ===================== */
         const CANDY_COLORS = ['#f03838', '#3bb2f2', '#5fcf3f', '#f5c91f', '#c04fd9', '#ff8a2b'];
         const CANDY_HIGHLIGHT = ['#ff8080', '#90d8ff', '#a8e88a', '#fff085', '#e091f5', '#ffb87a'];
         const CANDY_SHADOW = ['#8c0e0e', '#176ba3', '#2d8018', '#b89010', '#7a1f94', '#c25a0f'];
 
-        // SPECIAL CANDY TYPES
-        // Base: 0-5 regular
-        // 10-15: Striped Horizontal, 20-25: Striped Vertical, 99: Color Bomb
-        function isSpecial(type) { return type >= 10; }
-        function isStripedH(type) { return type >= 10 && type < 20; }
-        function isStripedV(type) { return type >= 20 && type < 30; }
-        function isColorBomb(type) { return type === 99; }
-        function getBaseType(type) {
-            if (type === 99) return -1;
-            if (type >= 20) return type - 20;
-            if (type >= 10) return type - 10;
-            return type;
+        function getBaseType(t) {
+            if (t === 99) return 0;
+            if (t >= 20) return t - 20;
+            if (t >= 10) return t - 10;
+            return t;
         }
+        function isStripedH(t) { return t >= 10 && t < 20; }
+        function isStripedV(t) { return t >= 20 && t < 30; }
+        function isColorBomb(t) { return t === 99; }
 
-        /* --- UNIVERSAL CANDY SHAPE DRAWER (matches reference image exactly) --- */
-        function drawCandyShape(ctx, cx, cy, radius, type, scale, alpha, specialOverlay) {
+        function drawCandy(ctx, cx, cy, r, type, scale = 1, alpha = 1) {
             ctx.save();
             ctx.translate(cx, cy);
             ctx.scale(scale, scale);
             ctx.globalAlpha = alpha;
             
-            let baseType = getBaseType(type);
-            if (baseType < 0 || baseType > 5) baseType = 0;
+            const bt = getBaseType(type);
+            const main = CANDY_COLORS[bt];
+            const high = CANDY_HIGHLIGHT[bt];
+            const shad = CANDY_SHADOW[bt];
             
-            // Drop shadow
-            ctx.shadowColor = 'rgba(0,0,0,0.5)';
-            ctx.shadowBlur = 5;
+            // Drop shadow for all
+            ctx.shadowColor = 'rgba(0,0,0,0.4)';
+            ctx.shadowBlur = 4;
             ctx.shadowOffsetY = 3;
             
-            const mainColor = CANDY_COLORS[baseType];
-            const highlightColor = CANDY_HIGHLIGHT[baseType];
-            const shadowColor = CANDY_SHADOW[baseType];
-            
-            const r = radius;
-            
-            if (baseType === 0) {
-                // RED JELLY BLOB (rounded squircle)
-                let grad = ctx.createRadialGradient(-r*0.3, -r*0.4, r*0.1, 0, 0, r*1.1);
-                grad.addColorStop(0, highlightColor);
-                grad.addColorStop(0.5, mainColor);
-                grad.addColorStop(1, shadowColor);
-                ctx.fillStyle = grad;
+            if (bt === 0) {
+                // RED BLOB
+                const g = ctx.createRadialGradient(-r*0.3, -r*0.35, r*0.1, 0, 0, r);
+                g.addColorStop(0, high); g.addColorStop(0.6, main); g.addColorStop(1, shad);
+                ctx.fillStyle = g;
                 ctx.beginPath();
-                ctx.moveTo(-r*0.8, -r*0.3);
-                ctx.quadraticCurveTo(-r, -r, 0, -r*0.9);
-                ctx.quadraticCurveTo(r, -r, r*0.8, -r*0.3);
-                ctx.quadraticCurveTo(r*1.05, r*0.5, r*0.5, r*0.85);
-                ctx.quadraticCurveTo(0, r*1.0, -r*0.5, r*0.85);
-                ctx.quadraticCurveTo(-r*1.05, r*0.5, -r*0.8, -r*0.3);
-                ctx.closePath();
+                ctx.arc(0, 0, r*0.88, 0, Math.PI*2);
                 ctx.fill();
-            } else if (baseType === 1) {
-                // BLUE DROP/BLOB
-                let grad = ctx.createRadialGradient(-r*0.3, -r*0.4, r*0.1, 0, 0, r*1.1);
-                grad.addColorStop(0, highlightColor);
-                grad.addColorStop(0.5, mainColor);
-                grad.addColorStop(1, shadowColor);
-                ctx.fillStyle = grad;
+            } else if (bt === 1) {
+                // BLUE DROP
+                const g = ctx.createRadialGradient(-r*0.3, -r*0.35, r*0.1, 0, 0, r);
+                g.addColorStop(0, high); g.addColorStop(0.6, main); g.addColorStop(1, shad);
+                ctx.fillStyle = g;
                 ctx.beginPath();
-                ctx.ellipse(0, 0, r*0.95, r*0.9, 0, 0, Math.PI*2);
+                ctx.arc(0, 0, r*0.88, 0, Math.PI*2);
                 ctx.fill();
-            } else if (baseType === 2) {
-                // GREEN CLOVER (4-leaf)
-                let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
-                grad.addColorStop(0, highlightColor);
-                grad.addColorStop(0.6, mainColor);
-                grad.addColorStop(1, shadowColor);
-                ctx.fillStyle = grad;
-                // 4 circles overlapping
-                for (let i=0; i<4; i++) {
-                    let angle = (i*Math.PI/2) + Math.PI/4;
-                    let px = Math.cos(angle) * r*0.4;
-                    let py = Math.sin(angle) * r*0.4;
+            } else if (bt === 2) {
+                // GREEN CLOVER
+                const g = ctx.createRadialGradient(-r*0.3, -r*0.3, r*0.1, 0, 0, r);
+                g.addColorStop(0, high); g.addColorStop(0.6, main); g.addColorStop(1, shad);
+                ctx.fillStyle = g;
+                for (let i = 0; i < 4; i++) {
+                    const a = (i * Math.PI/2) + Math.PI/4;
                     ctx.beginPath();
-                    ctx.arc(px, py, r*0.55, 0, Math.PI*2);
+                    ctx.arc(Math.cos(a) * r*0.38, Math.sin(a) * r*0.38, r*0.5, 0, Math.PI*2);
                     ctx.fill();
                 }
                 ctx.beginPath(); ctx.arc(0, 0, r*0.3, 0, Math.PI*2); ctx.fill();
-            } else if (baseType === 3) {
+            } else if (bt === 3) {
                 // YELLOW HEART
-                let grad = ctx.createRadialGradient(-r*0.2, -r*0.4, r*0.1, 0, 0, r);
-                grad.addColorStop(0, highlightColor);
-                grad.addColorStop(0.5, mainColor);
-                grad.addColorStop(1, shadowColor);
-                ctx.fillStyle = grad;
+                const g = ctx.createRadialGradient(-r*0.2, -r*0.3, r*0.1, 0, 0, r);
+                g.addColorStop(0, high); g.addColorStop(0.6, main); g.addColorStop(1, shad);
+                ctx.fillStyle = g;
                 ctx.beginPath();
-                ctx.moveTo(0, r*0.7);
-                ctx.bezierCurveTo(-r*1.2, r*0.1, -r*0.7, -r*0.9, 0, -r*0.3);
-                ctx.bezierCurveTo(r*0.7, -r*0.9, r*1.2, r*0.1, 0, r*0.7);
+                ctx.moveTo(0, r*0.6);
+                ctx.bezierCurveTo(-r*1.15, r*0.1, -r*0.6, -r*0.9, 0, -r*0.3);
+                ctx.bezierCurveTo(r*0.6, -r*0.9, r*1.15, r*0.1, 0, r*0.6);
                 ctx.closePath();
                 ctx.fill();
-            } else if (baseType === 4) {
-                // PURPLE FLOWER (5 petals)
-                let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
-                grad.addColorStop(0, highlightColor);
-                grad.addColorStop(0.6, mainColor);
-                grad.addColorStop(1, shadowColor);
-                ctx.fillStyle = grad;
-                for (let i=0; i<5; i++) {
-                    let angle = (i * (Math.PI*2/5)) - Math.PI/2;
-                    let px = Math.cos(angle) * r*0.45;
-                    let py = Math.sin(angle) * r*0.45;
+            } else if (bt === 4) {
+                // PURPLE FLOWER
+                const g = ctx.createRadialGradient(-r*0.2, -r*0.2, 0, 0, 0, r);
+                g.addColorStop(0, high); g.addColorStop(0.6, main); g.addColorStop(1, shad);
+                ctx.fillStyle = g;
+                for (let i = 0; i < 5; i++) {
+                    const a = (i * (Math.PI*2/5)) - Math.PI/2;
                     ctx.beginPath();
-                    ctx.arc(px, py, r*0.5, 0, Math.PI*2);
+                    ctx.arc(Math.cos(a) * r*0.4, Math.sin(a) * r*0.4, r*0.45, 0, Math.PI*2);
                     ctx.fill();
                 }
-                ctx.beginPath(); ctx.arc(0, 0, r*0.35, 0, Math.PI*2); ctx.fill();
-            } else if (baseType === 5) {
-                // ORANGE STAR (5-point)
-                let grad = ctx.createRadialGradient(0, -r*0.2, 0, 0, 0, r);
-                grad.addColorStop(0, highlightColor);
-                grad.addColorStop(0.5, mainColor);
-                grad.addColorStop(1, shadowColor);
-                ctx.fillStyle = grad;
+                ctx.beginPath(); ctx.arc(0, 0, r*0.3, 0, Math.PI*2); ctx.fill();
+            } else if (bt === 5) {
+                // ORANGE STAR
+                const g = ctx.createRadialGradient(0, -r*0.2, 0, 0, 0, r);
+                g.addColorStop(0, high); g.addColorStop(0.6, main); g.addColorStop(1, shad);
+                ctx.fillStyle = g;
                 ctx.beginPath();
-                for (let i=0; i<10; i++) {
-                    let angle = (i * Math.PI/5) - Math.PI/2;
-                    let rad = (i%2===0) ? r : r*0.5;
-                    ctx.lineTo(Math.cos(angle)*rad, Math.sin(angle)*rad);
+                for (let i = 0; i < 10; i++) {
+                    const a = (i * Math.PI/5) - Math.PI/2;
+                    const rd = (i % 2 === 0) ? r*0.95 : r*0.45;
+                    const x = Math.cos(a) * rd, y = Math.sin(a) * rd;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
                 }
                 ctx.closePath();
                 ctx.fill();
             }
             
             // Specular highlight (gloss)
-            ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
-            ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
             ctx.beginPath();
-            ctx.ellipse(-r*0.3, -r*0.4, r*0.3, r*0.15, -Math.PI/5, 0, Math.PI*2);
+            ctx.ellipse(-r*0.3, -r*0.4, r*0.28, r*0.14, -Math.PI/5, 0, Math.PI*2);
             ctx.fill();
             
-            // Special candy overlay
-            if (isStripedH(type)) {
-                ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 2;
-                for (let i=-1; i<=1; i++) { ctx.beginPath(); ctx.moveTo(-r*0.7, i*r*0.3); ctx.lineTo(r*0.7, i*r*0.3); ctx.stroke(); }
-            } else if (isStripedV(type)) {
-                ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 2;
-                for (let i=-1; i<=1; i++) { ctx.beginPath(); ctx.moveTo(i*r*0.3, -r*0.7); ctx.lineTo(i*r*0.3, r*0.7); ctx.stroke(); }
+            // Special overlays
+            if (isStripedH(type) || isStripedV(type)) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+                ctx.lineWidth = 2.5;
+                if (isStripedH(type)) {
+                    for (let i = -1; i <= 1; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(-r*0.6, i * r*0.3);
+                        ctx.lineTo(r*0.6, i * r*0.3);
+                        ctx.stroke();
+                    }
+                } else {
+                    for (let i = -1; i <= 1; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(i * r*0.3, -r*0.6);
+                        ctx.lineTo(i * r*0.3, r*0.6);
+                        ctx.stroke();
+                    }
+                }
             } else if (isColorBomb(type)) {
-                // Rainbow sphere
-                let bombGrad = ctx.createRadialGradient(-r*0.3, -r*0.3, r*0.1, 0, 0, r);
-                bombGrad.addColorStop(0, '#fff');
-                bombGrad.addColorStop(0.3, '#ff00ff');
-                bombGrad.addColorStop(0.6, '#00ffff');
-                bombGrad.addColorStop(1, '#000');
-                ctx.fillStyle = bombGrad;
-                ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI*2); ctx.fill();
-                // Multi-color dots
-                ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'].forEach((c, i) => {
+                const g2 = ctx.createRadialGradient(-r*0.3, -r*0.3, 0, 0, 0, r);
+                g2.addColorStop(0, '#fff');
+                g2.addColorStop(0.3, '#ff00ff');
+                g2.addColorStop(0.6, '#00ffff');
+                g2.addColorStop(1, '#000');
+                ctx.fillStyle = g2;
+                ctx.beginPath();
+                ctx.arc(0, 0, r*0.9, 0, Math.PI*2);
+                ctx.fill();
+                const cols = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+                cols.forEach((c, i) => {
                     ctx.fillStyle = c;
-                    let a = (i/5)*Math.PI*2;
-                    ctx.beginPath(); ctx.arc(Math.cos(a)*r*0.4, Math.sin(a)*r*0.4, r*0.15, 0, Math.PI*2); ctx.fill();
+                    const a = (i / 5) * Math.PI * 2;
+                    ctx.beginPath();
+                    ctx.arc(Math.cos(a) * r*0.4, Math.sin(a) * r*0.4, r*0.12, 0, Math.PI*2);
+                    ctx.fill();
                 });
             }
             
             ctx.restore();
         }
 
-        /* ============ GAME CONTROL ============ */
+        /* ===================== PREVIEWS ===================== */
+        function startPreviews() {
+            previewCandy();
+            previewBlock();
+            previewNumber();
+        }
+        function previewCandy() {
+            const c = document.getElementById('candy-canvas');
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            c.width = 270; c.height = 210;
+            const cols = 6, rows = 5, cs = 38;
+            const ox = (c.width - cols * cs) / 2, oy = 10;
+            let frame = 0;
+            function loop() {
+                frame++;
+                ctx.fillStyle = '#4a1f5c';
+                ctx.fillRect(0, 0, c.width, c.height);
+                for (let r = 0; r < rows; r++) {
+                    for (let col = 0; col < cols; col++) {
+                        const t = Math.floor((r + col + frame/60) % 6);
+                        drawCandy(ctx, ox + col*cs + cs/2, oy + r*cs + cs/2, 15, t);
+                    }
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+        function previewBlock() {
+            const c = document.getElementById('block-canvas');
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            c.width = 270; c.height = 210;
+            let f = 0;
+            function loop() {
+                f++;
+                ctx.fillStyle = '#061329';
+                ctx.fillRect(0, 0, c.width, c.height);
+                ctx.fillStyle = '#00f2fe';
+                ctx.fillRect(100, (f%250)-40, 50, 50);
+                requestAnimationFrame(loop);
+            } loop();
+        }
+        function previewNumber() {
+            const c = document.getElementById('number-canvas');
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            c.width = 270; c.height = 210;
+            let f = 0;
+            function loop() {
+                f++;
+                ctx.fillStyle = '#05231c';
+                ctx.fillRect(0, 0, c.width, c.height);
+                ctx.fillStyle = '#38f9d7';
+                ctx.beginPath();
+                ctx.arc(135, 105, 20 + Math.sin(f*0.1)*5, 0, Math.PI*2);
+                ctx.fill();
+                requestAnimationFrame(loop);
+            } loop();
+        }
+
+        /* ===================== GAME STATE ===================== */
+        let game = null;
+
         function startPlayableCandyQuest() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('candy-play-screen').classList.add('active');
-            initCandyGame();
+            setTimeout(initGame, 50);
         }
-
         function confirmQuitCandy() {
             document.getElementById('quit-modal').classList.add('active');
         }
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
         }
-        function quitCandyQuestConfirmed() {
-            if (candyGameState) {
-                candyGameState.running = false;
-                // Save high score
-                let highScoreEl = document.getElementById('candy-high-score');
-                let currentHigh = parseInt(highScoreEl.innerText.replace(/,/g,''));
-                if (candyGameState.score > currentHigh) {
-                    highScoreEl.innerText = candyGameState.score.toLocaleString();
-                }
+        function quitCandyConfirmed() {
+            if (game) {
+                game.running = false;
+                const hsEl = document.getElementById('candy-high-score');
+                const cur = parseInt(hsEl.innerText.replace(/,/g,'')) || 0;
+                if (game.score > cur) hsEl.innerText = game.score.toLocaleString();
+                game = null;
             }
-            closeModal('quit-modal'); closeModal('gameover-modal');
+            closeModal('quit-modal');
+            closeModal('gameover-modal');
             document.getElementById('candy-play-screen').classList.remove('active');
             document.getElementById('menu-screen').classList.add('active');
         }
-        function pauseCandy() { confirmQuitCandy(); }
 
-        /* ============ MAIN GAME ENGINE ============ */
-        function initCandyGame() {
+        /* ===================== GAME ENGINE ===================== */
+        function initGame() {
             const canvas = document.getElementById('candy-engine-canvas');
             const ctx = canvas.getContext('2d');
             
-            const COLS = 9, ROWS = 9;
-            let boardSize = Math.min(window.innerWidth, 480) - 10;
-            const cellSize = boardSize / COLS;
-            canvas.width = boardSize;
+            const ROWS = 9, COLS = 9;
+            const wrapW = document.querySelector('.cq-board-wrap').clientWidth;
+            const wrapH = document.querySelector('.cq-board-wrap').clientHeight;
+            const maxBoard = Math.min(wrapW - 10, wrapH - 10);
+            const cellSize = Math.floor(maxBoard / COLS);
+            canvas.width = cellSize * COLS;
             canvas.height = cellSize * ROWS;
-
-            // Reset state
-            candyGameState = {
-                grid: [], score: 0, moves: 35, running: true,
-                particles: [], isAnimating: false,
-                dragStart: null, lastInteraction: Date.now(),
+            
+            game = {
+                grid: [], score: 0, moves: 35,
+                running: true, isAnimating: false,
+                particles: [], dragStart: null,
+                lastInteraction: Date.now(),
                 hintPair: null, hintPulse: 0,
-                objectives: { 0: 20, 1: 20, 2: 20, 3: 20 }
+                objectives: { 0: 20, 1: 20, 2: 20, 3: 20 },
+                lastGroups: []
             };
-            const state = candyGameState;
-
-            // Create initial grid without matches
-            function createCandy(r, c) {
-                let type;
+            
+            // Initialize grid without matches
+            function makeType(r, c) {
+                let t;
+                let tries = 0;
                 do {
-                    type = Math.floor(Math.random() * 6);
+                    t = Math.floor(Math.random() * 6);
+                    tries++;
+                    if (tries > 50) break;
                 } while (
-                    (c >= 2 && state.grid[r][c-1] && state.grid[r][c-1].type === type && state.grid[r][c-2] && state.grid[r][c-2].type === type) ||
-                    (r >= 2 && state.grid[r-1] && state.grid[r-1][c].type === type && state.grid[r-2] && state.grid[r-2][c].type === type)
+                    (c >= 2 && game.grid[r][c-1] && game.grid[r][c-2] && game.grid[r][c-1].type === t && game.grid[r][c-2].type === t) ||
+                    (r >= 2 && game.grid[r-1] && game.grid[r-2] && game.grid[r-1][c] && game.grid[r-2][c] && game.grid[r-1][c].type === t && game.grid[r-2][c].type === t)
                 );
-                return { r, c, x: c*cellSize, y: r*cellSize, type, scale: 1, alpha: 1 };
+                return t;
             }
-
             for (let r = 0; r < ROWS; r++) {
-                state.grid[r] = [];
+                game.grid[r] = [];
                 for (let c = 0; c < COLS; c++) {
-                    state.grid[r][c] = createCandy(r, c);
+                    game.grid[r][c] = {
+                        r, c,
+                        x: c * cellSize, y: r * cellSize,
+                        type: makeType(r, c),
+                        scale: 1, alpha: 1
+                    };
                 }
             }
-
-            function updateUI() {
-                document.getElementById('cq-score').innerText = state.score.toLocaleString();
-                document.getElementById('cq-moves').innerText = state.moves;
-                for (let i = 0; i < 4; i++) {
-                    document.getElementById('obj-'+i).innerText = Math.max(0, state.objectives[i]);
-                }
-            }
+            
             updateUI();
-
-            /* --- INPUT HANDLING --- */
+            
+            /* ---- INPUT ---- */
             function getPos(e) {
                 const rect = canvas.getBoundingClientRect();
                 const cx = e.touches ? e.touches[0].clientX : e.clientX;
                 const cy = e.touches ? e.touches[0].clientY : e.clientY;
                 return { x: cx - rect.left, y: cy - rect.top };
             }
-
-            canvas.onmousedown = startDrag;
-            canvas.ontouchstart = startDrag;
-            canvas.onmousemove = moveDrag;
-            canvas.ontouchmove = moveDrag;
-            window.onmouseup = endDrag;
-            window.ontouchend = endDrag;
-
+            
+            canvas.addEventListener('mousedown', startDrag);
+            canvas.addEventListener('touchstart', startDrag, { passive: false });
+            window.addEventListener('mousemove', moveDrag);
+            window.addEventListener('touchmove', moveDrag, { passive: false });
+            window.addEventListener('mouseup', endDrag);
+            window.addEventListener('touchend', endDrag);
+            
             function startDrag(e) {
-                if (state.isAnimating || !state.running) return;
-                state.lastInteraction = Date.now();
-                state.hintPair = null;
+                if (!game || !game.running || game.isAnimating) return;
+                e.preventDefault();
+                game.lastInteraction = Date.now();
+                game.hintPair = null;
                 const p = getPos(e);
-                let c = Math.floor(p.x / cellSize);
-                let r = Math.floor(p.y / cellSize);
-                if (r>=0 && r<ROWS && c>=0 && c<COLS) {
-                    state.dragStart = { r, c, sx: p.x, sy: p.y };
+                const c = Math.floor(p.x / cellSize);
+                const r = Math.floor(p.y / cellSize);
+                if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+                    game.dragStart = { r, c, sx: p.x, sy: p.y };
                 }
             }
-
             function moveDrag(e) {
-                if (!state.dragStart || state.isAnimating) return;
+                if (!game || !game.dragStart || game.isAnimating) return;
                 e.preventDefault();
                 const p = getPos(e);
-                const dx = p.x - state.dragStart.sx;
-                const dy = p.y - state.dragStart.sy;
-                if (Math.abs(dx) > cellSize*0.3 || Math.abs(dy) > cellSize*0.3) {
-                    let tr = state.dragStart.r, tc = state.dragStart.c;
+                const dx = p.x - game.dragStart.sx;
+                const dy = p.y - game.dragStart.sy;
+                if (Math.abs(dx) > cellSize * 0.3 || Math.abs(dy) > cellSize * 0.3) {
+                    let tr = game.dragStart.r, tc = game.dragStart.c;
                     if (Math.abs(dx) > Math.abs(dy)) tc += (dx > 0 ? 1 : -1);
                     else tr += (dy > 0 ? 1 : -1);
                     if (tr >= 0 && tr < ROWS && tc >= 0 && tc < COLS) {
-                        attemptSwap(state.dragStart.r, state.dragStart.c, tr, tc);
+                        trySwap(game.dragStart.r, game.dragStart.c, tr, tc);
                     }
-                    state.dragStart = null;
+                    game.dragStart = null;
                 }
             }
-
-            function endDrag() { state.dragStart = null; }
-
-            async function attemptSwap(r1, c1, r2, c2) {
-                state.isAnimating = true;
-                let a = state.grid[r1][c1], b = state.grid[r2][c2];
+            function endDrag() { if (game) game.dragStart = null; }
+            
+            function updateUI() {
+                document.getElementById('cq-score').innerText = game.score.toLocaleString();
+                document.getElementById('cq-moves').innerText = game.moves;
+                for (let i = 0; i < 4; i++) {
+                    const el = document.getElementById('obj-' + i);
+                    if (el) el.innerText = Math.max(0, game.objectives[i]);
+                }
+            }
+            
+            async function trySwap(r1, c1, r2, c2) {
+                if (!game.grid[r1][c1] || !game.grid[r2][c2]) return;
+                game.isAnimating = true;
+                const a = game.grid[r1][c1];
+                const b = game.grid[r2][c2];
                 
-                // Color bomb + anything = clear all of that type
+                // Color bomb logic
                 if (isColorBomb(a.type) || isColorBomb(b.type)) {
-                    let targetType = isColorBomb(a.type) ? getBaseType(b.type) : getBaseType(a.type);
+                    const target = isColorBomb(a.type) ? getBaseType(b.type) : getBaseType(a.type);
                     await animateSwap(a, b, r1, c1, r2, c2);
-                    state.grid[r1][c1] = b; b.r = r1; b.c = c1;
-                    state.grid[r2][c2] = a; a.r = r2; a.c = c2;
-                    // Clear all of targetType
-                    let toClear = [];
-                    for (let r=0; r<ROWS; r++) for (let c=0; c<COLS; c++) {
-                        if (state.grid[r][c] && getBaseType(state.grid[r][c].type) === targetType) toClear.push(state.grid[r][c]);
+                    game.grid[r1][c1] = b; b.r = r1; b.c = c1;
+                    game.grid[r2][c2] = a; a.r = r2; a.c = c2;
+                    const clear = [];
+                    for (let rr = 0; rr < ROWS; rr++) {
+                        for (let cc = 0; cc < COLS; cc++) {
+                            if (game.grid[rr][cc] && getBaseType(game.grid[rr][cc].type) === target) {
+                                clear.push(game.grid[rr][cc]);
+                            }
+                        }
                     }
-                    toClear.push(a); toClear.push(b);
-                    await processMatches(toClear);
-                    state.moves--; updateUI();
+                    clear.push(a); clear.push(b);
+                    game.moves--;
+                    updateUI();
+                    await processMatches([...new Set(clear)]);
                     checkGameOver();
                     return;
                 }
-
+                
                 await animateSwap(a, b, r1, c1, r2, c2);
-                state.grid[r1][c1] = b; b.r = r1; b.c = c1;
-                state.grid[r2][c2] = a; a.r = r2; a.c = c2;
-
-                let matches = findMatches();
+                game.grid[r1][c1] = b; b.r = r1; b.c = c1;
+                game.grid[r2][c2] = a; a.r = r2; a.c = c2;
+                
+                const matches = findMatches();
                 if (matches.length > 0) {
-                    state.moves--; updateUI();
+                    game.moves--;
+                    updateUI();
                     await processMatches(matches);
                     checkGameOver();
                 } else {
-                    // swap back
-                    await animateSwap(state.grid[r1][c1], state.grid[r2][c2], r1, c1, r2, c2);
-                    let t = state.grid[r1][c1];
-                    state.grid[r1][c1] = state.grid[r2][c2]; state.grid[r1][c1].r=r1; state.grid[r1][c1].c=c1;
-                    state.grid[r2][c2] = t; state.grid[r2][c2].r=r2; state.grid[r2][c2].c=c2;
-                    state.isAnimating = false;
+                    // Swap back
+                    await animateSwap(game.grid[r1][c1], game.grid[r2][c2], r1, c1, r2, c2);
+                    const tmp = game.grid[r1][c1];
+                    game.grid[r1][c1] = game.grid[r2][c2];
+                    game.grid[r1][c1].r = r1; game.grid[r1][c1].c = c1;
+                    game.grid[r2][c2] = tmp;
+                    game.grid[r2][c2].r = r2; game.grid[r2][c2].c = c2;
+                    game.isAnimating = false;
                 }
             }
-
+            
             function animateSwap(a, b, r1, c1, r2, c2) {
                 return new Promise(res => {
-                    let frames = 12, cur = 0;
-                    let sx1=a.x, sy1=a.y, tx1=c2*cellSize, ty1=r2*cellSize;
-                    let sx2=b.x, sy2=b.y, tx2=c1*cellSize, ty2=r1*cellSize;
+                    const frames = 12;
+                    let cur = 0;
+                    const sx1 = a.x, sy1 = a.y;
+                    const tx1 = c2 * cellSize, ty1 = r2 * cellSize;
+                    const sx2 = b.x, sy2 = b.y;
+                    const tx2 = c1 * cellSize, ty2 = r1 * cellSize;
                     function step() {
-                        cur++; let t = cur/frames; t = t*(2-t);
-                        a.x = sx1+(tx1-sx1)*t; a.y = sy1+(ty1-sy1)*t;
-                        b.x = sx2+(tx2-sx2)*t; b.y = sy2+(ty2-sy2)*t;
-                        if (cur < frames) requestAnimationFrame(step); else res();
+                        cur++;
+                        let t = cur / frames;
+                        t = t * (2 - t);
+                        a.x = sx1 + (tx1 - sx1) * t;
+                        a.y = sy1 + (ty1 - sy1) * t;
+                        b.x = sx2 + (tx2 - sx2) * t;
+                        b.y = sy2 + (ty2 - sy2) * t;
+                        if (cur < frames) requestAnimationFrame(step);
+                        else res();
                     }
                     step();
                 });
             }
-
+            
             function findMatches() {
-                let matches = [];
-                let groups = []; // Track groups for special candy generation
+                const matches = [];
+                const groups = [];
                 
                 // Horizontal
                 for (let r = 0; r < ROWS; r++) {
-                    let run = [state.grid[r][0]];
+                    let run = [game.grid[r][0]];
                     for (let c = 1; c < COLS; c++) {
-                        let cur = state.grid[r][c];
-                        let last = run[run.length-1];
-                        if (cur && last && getBaseType(cur.type) === getBaseType(last.type) && !isColorBomb(cur.type) && !isColorBomb(last.type)) {
+                        const cur = game.grid[r][c];
+                        const last = run[run.length - 1];
+                        if (cur && last && !isColorBomb(cur.type) && !isColorBomb(last.type) && getBaseType(cur.type) === getBaseType(last.type)) {
                             run.push(cur);
                         } else {
-                            if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'h'}); }
+                            if (run.length >= 3) {
+                                matches.push(...run);
+                                groups.push({ items: [...run], dir: 'h' });
+                            }
                             run = [cur];
                         }
                     }
-                    if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'h'}); }
+                    if (run.length >= 3) {
+                        matches.push(...run);
+                        groups.push({ items: [...run], dir: 'h' });
+                    }
                 }
+                
                 // Vertical
                 for (let c = 0; c < COLS; c++) {
-                    let run = [state.grid[0][c]];
+                    let run = [game.grid[0][c]];
                     for (let r = 1; r < ROWS; r++) {
-                        let cur = state.grid[r][c];
-                        let last = run[run.length-1];
-                        if (cur && last && getBaseType(cur.type) === getBaseType(last.type) && !isColorBomb(cur.type) && !isColorBomb(last.type)) {
+                        const cur = game.grid[r][c];
+                        const last = run[run.length - 1];
+                        if (cur && last && !isColorBomb(cur.type) && !isColorBomb(last.type) && getBaseType(cur.type) === getBaseType(last.type)) {
                             run.push(cur);
                         } else {
-                            if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'v'}); }
+                            if (run.length >= 3) {
+                                matches.push(...run);
+                                groups.push({ items: [...run], dir: 'v' });
+                            }
                             run = [cur];
                         }
                     }
-                    if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'v'}); }
+                    if (run.length >= 3) {
+                        matches.push(...run);
+                        groups.push({ items: [...run], dir: 'v' });
+                    }
                 }
                 
-                // Save group info for special candy creation
-                state.lastGroups = groups;
+                game.lastGroups = groups;
                 return [...new Set(matches)];
             }
-
+            
             function spawnParticles(x, y, type) {
-                let color = CANDY_COLORS[getBaseType(type)] || '#fff';
-                for (let i=0; i<10; i++) {
-                    state.particles.push({
-                        x: x+cellSize/2, y: y+cellSize/2,
-                        vx: (Math.random()-0.5)*12, vy: (Math.random()-0.5)*12-3,
-                        life: 1, color, size: Math.random()*4+2
+                const color = CANDY_COLORS[getBaseType(type)] || '#fff';
+                for (let i = 0; i < 10; i++) {
+                    game.particles.push({
+                        x: x + cellSize/2, y: y + cellSize/2,
+                        vx: (Math.random() - 0.5) * 12,
+                        vy: (Math.random() - 0.5) * 12 - 3,
+                        life: 1, color,
+                        size: Math.random() * 4 + 2
                     });
                 }
             }
-
+            
             async function processMatches(matches) {
-                // Determine special candies to create
-                let specialsToCreate = [];
-                if (state.lastGroups) {
-                    state.lastGroups.forEach(grp => {
-                        if (grp.items.length === 4) {
-                            // Create striped
-                            let center = grp.items[Math.floor(grp.items.length/2)];
-                            let newType = grp.dir === 'h' ? (10 + getBaseType(center.type)) : (20 + getBaseType(center.type));
-                            specialsToCreate.push({ r: center.r, c: center.c, type: newType });
-                        } else if (grp.items.length >= 5) {
-                            // Create color bomb
-                            let center = grp.items[Math.floor(grp.items.length/2)];
-                            specialsToCreate.push({ r: center.r, c: center.c, type: 99 });
-                        }
-                    });
-                }
+                // Determine specials
+                const specials = [];
+                game.lastGroups.forEach(grp => {
+                    if (grp.items.length === 4) {
+                        const center = grp.items[Math.floor(grp.items.length / 2)];
+                        const newType = grp.dir === 'h' ? (10 + getBaseType(center.type)) : (20 + getBaseType(center.type));
+                        specials.push({ r: center.r, c: center.c, type: newType });
+                    } else if (grp.items.length >= 5) {
+                        const center = grp.items[Math.floor(grp.items.length / 2)];
+                        specials.push({ r: center.r, c: center.c, type: 99 });
+                    }
+                });
                 
-                // Handle special triggers (striped candies create lines)
-                let extraClears = [];
+                // Trigger striped candies
+                const extras = [];
                 matches.forEach(m => {
                     if (isStripedH(m.type)) {
                         for (let cc = 0; cc < COLS; cc++) {
-                            if (state.grid[m.r][cc] && !matches.includes(state.grid[m.r][cc])) extraClears.push(state.grid[m.r][cc]);
+                            if (game.grid[m.r][cc] && !matches.includes(game.grid[m.r][cc])) extras.push(game.grid[m.r][cc]);
                         }
                     } else if (isStripedV(m.type)) {
                         for (let rr = 0; rr < ROWS; rr++) {
-                            if (state.grid[rr][m.c] && !matches.includes(state.grid[rr][m.c])) extraClears.push(state.grid[rr][m.c]);
+                            if (game.grid[rr][m.c] && !matches.includes(game.grid[rr][m.c])) extras.push(game.grid[rr][m.c]);
                         }
                     }
                 });
-                matches = [...new Set([...matches, ...extraClears])];
+                matches = [...new Set([...matches, ...extras])];
                 
-                state.score += matches.length * 60;
+                game.score += matches.length * 60;
                 matches.forEach(m => {
-                    let bt = getBaseType(m.type);
-                    if (bt >= 0 && bt < 4 && state.objectives[bt] > 0) state.objectives[bt]--;
+                    const bt = getBaseType(m.type);
+                    if (bt >= 0 && bt < 4 && game.objectives[bt] > 0) game.objectives[bt]--;
                 });
                 updateUI();
-
-                // Shrink animation
-                for (let s = 1; s >= 0; s -= 0.12) {
+                
+                // Shrink
+                for (let s = 1; s >= 0; s -= 0.15) {
                     matches.forEach(m => { m.scale = s; m.alpha = s; });
                     await new Promise(r => setTimeout(r, 16));
                 }
+                
                 matches.forEach(m => {
-                    // Don't remove if a special was spawned here
-                    let keep = specialsToCreate.find(sp => sp.r === m.r && sp.c === m.c);
+                    const keep = specials.find(sp => sp.r === m.r && sp.c === m.c);
                     if (!keep) {
                         spawnParticles(m.x, m.y, m.type);
-                        state.grid[m.r][m.c] = null;
+                        game.grid[m.r][m.c] = null;
                     } else {
-                        state.grid[m.r][m.c] = { r: m.r, c: m.c, x: m.c*cellSize, y: m.r*cellSize, type: keep.type, scale: 1, alpha: 1 };
+                        game.grid[m.r][m.c] = {
+                            r: m.r, c: m.c,
+                            x: m.c * cellSize, y: m.r * cellSize,
+                            type: keep.type, scale: 1, alpha: 1
+                        };
                     }
                 });
-
+                
                 // Gravity
                 let dropped = false;
                 for (let c = 0; c < COLS; c++) {
                     let empty = 0;
-                    for (let r = ROWS-1; r >= 0; r--) {
-                        if (!state.grid[r][c]) empty++;
+                    for (let r = ROWS - 1; r >= 0; r--) {
+                        if (!game.grid[r][c]) empty++;
                         else if (empty > 0) {
-                            let item = state.grid[r][c];
-                            state.grid[r+empty][c] = item;
-                            item.r = r+empty;
-                            state.grid[r][c] = null;
+                            const it = game.grid[r][c];
+                            game.grid[r + empty][c] = it;
+                            it.r = r + empty;
+                            game.grid[r][c] = null;
                             dropped = true;
                         }
                     }
                     for (let i = 0; i < empty; i++) {
-                        let r = empty-1-i;
-                        state.grid[r][c] = {
-                            r, c, x: c*cellSize, y: -(i+1)*cellSize,
-                            type: Math.floor(Math.random()*6), scale: 1, alpha: 1
+                        const r = empty - 1 - i;
+                        game.grid[r][c] = {
+                            r, c,
+                            x: c * cellSize, y: -(i + 1) * cellSize,
+                            type: Math.floor(Math.random() * 6),
+                            scale: 1, alpha: 1
                         };
                         dropped = true;
                     }
                 }
-
+                
                 if (dropped) {
                     await animateDrops();
-                    let more = findMatches();
+                    const more = findMatches();
                     if (more.length > 0) await processMatches(more);
-                    else state.isAnimating = false;
+                    else game.isAnimating = false;
                 } else {
-                    state.isAnimating = false;
+                    game.isAnimating = false;
                 }
             }
-
+            
             function animateDrops() {
                 return new Promise(res => {
                     function step() {
                         let moving = false;
-                        for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-                            let it = state.grid[r][c];
-                            if (!it) continue;
-                            let ty = r*cellSize;
-                            if (it.y < ty) {
-                                it.y += 15;
-                                if (it.y > ty) it.y = ty;
-                                moving = true;
+                        for (let r = 0; r < ROWS; r++) {
+                            for (let c = 0; c < COLS; c++) {
+                                const it = game.grid[r][c];
+                                if (!it) continue;
+                                const ty = r * cellSize;
+                                if (it.y < ty) {
+                                    it.y += 15;
+                                    if (it.y > ty) it.y = ty;
+                                    moving = true;
+                                }
                             }
                         }
-                        if (moving) requestAnimationFrame(step); else res();
+                        if (moving) requestAnimationFrame(step);
+                        else res();
                     }
                     step();
                 });
             }
-
+            
             function checkGameOver() {
-                let objDone = Object.values(state.objectives).every(v => v <= 0);
-                if (objDone) {
+                const done = Object.values(game.objectives).every(v => v <= 0);
+                if (done) {
                     setTimeout(() => {
                         document.getElementById('gameover-title').innerText = 'Level Complete! 🎉';
-                        document.getElementById('gameover-score').innerText = state.score.toLocaleString();
+                        document.getElementById('gameover-score').innerText = game.score.toLocaleString();
                         document.getElementById('gameover-modal').classList.add('active');
                     }, 500);
-                } else if (state.moves <= 0) {
+                } else if (game.moves <= 0) {
                     setTimeout(() => {
-                        document.getElementById('gameover-title').innerText = 'Game Over!';
-                        document.getElementById('gameover-score').innerText = state.score.toLocaleString();
+                        document.getElementById('gameover-title').innerText = 'Out of Moves!';
+                        document.getElementById('gameover-score').innerText = game.score.toLocaleString();
                         document.getElementById('gameover-modal').classList.add('active');
                     }, 500);
                 }
             }
-
-            // Hint system - find a valid move after idle
+            
             function findHint() {
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) {
-                        // Try swap right
-                        if (c < COLS-1) {
-                            swapTypes(r, c, r, c+1);
+                        if (c < COLS - 1) {
+                            swapT(r, c, r, c+1);
                             if (findMatches().length > 0) {
-                                swapTypes(r, c, r, c+1);
-                                return [state.grid[r][c], state.grid[r][c+1]];
+                                swapT(r, c, r, c+1);
+                                return [game.grid[r][c], game.grid[r][c+1]];
                             }
-                            swapTypes(r, c, r, c+1);
+                            swapT(r, c, r, c+1);
                         }
-                        // Try swap down
-                        if (r < ROWS-1) {
-                            swapTypes(r, c, r+1, c);
+                        if (r < ROWS - 1) {
+                            swapT(r, c, r+1, c);
                             if (findMatches().length > 0) {
-                                swapTypes(r, c, r+1, c);
-                                return [state.grid[r][c], state.grid[r+1][c]];
+                                swapT(r, c, r+1, c);
+                                return [game.grid[r][c], game.grid[r+1][c]];
                             }
-                            swapTypes(r, c, r+1, c);
+                            swapT(r, c, r+1, c);
                         }
                     }
                 }
                 return null;
             }
-            function swapTypes(r1, c1, r2, c2) {
-                let t = state.grid[r1][c1].type;
-                state.grid[r1][c1].type = state.grid[r2][c2].type;
-                state.grid[r2][c2].type = t;
+            function swapT(r1, c1, r2, c2) {
+                const t = game.grid[r1][c1].type;
+                game.grid[r1][c1].type = game.grid[r2][c2].type;
+                game.grid[r2][c2].type = t;
             }
-
-            /* --- RENDER LOOP --- */
+            
+            /* ---- RENDER ---- */
             function render() {
-                if (!state.running) return;
+                if (!game || !game.running) return;
                 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Board background
+                // Checker board
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) {
-                        ctx.fillStyle = (r+c)%2===0 ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.1)';
-                        ctx.fillRect(c*cellSize, r*cellSize, cellSize, cellSize);
+                        ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.15)';
+                        ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
                     }
                 }
                 
-                // Hint check (every frame)
-                if (!state.isAnimating && Date.now() - state.lastInteraction > 5000 && !state.hintPair) {
-                    state.hintPair = findHint();
+                // Hint
+                if (!game.isAnimating && Date.now() - game.lastInteraction > 5000 && !game.hintPair) {
+                    game.hintPair = findHint();
                 }
-                state.hintPulse += 0.1;
+                game.hintPulse += 0.12;
                 
                 // Draw candies
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) {
-                        let it = state.grid[r][c];
+                        const it = game.grid[r][c];
                         if (it) {
-                            let extraScale = 1;
-                            if (state.hintPair && (state.hintPair[0] === it || state.hintPair[1] === it)) {
-                                extraScale = 1 + Math.sin(state.hintPulse) * 0.12;
+                            let ex = 1;
+                            if (game.hintPair && (game.hintPair[0] === it || game.hintPair[1] === it)) {
+                                ex = 1 + Math.sin(game.hintPulse) * 0.12;
                             }
-                            drawCandyShape(ctx, it.x + cellSize/2, it.y + cellSize/2, cellSize*0.42, it.type, it.scale * extraScale, it.alpha);
+                            drawCandy(ctx, it.x + cellSize/2, it.y + cellSize/2, cellSize*0.4, it.type, it.scale * ex, it.alpha);
                         }
                     }
                 }
                 
                 // Particles
-                for (let i = state.particles.length-1; i >= 0; i--) {
-                    let p = state.particles[i];
+                for (let i = game.particles.length - 1; i >= 0; i--) {
+                    const p = game.particles[i];
                     p.x += p.vx; p.y += p.vy; p.vy += 0.4;
                     p.life -= 0.04;
-                    if (p.life <= 0) { state.particles.splice(i, 1); continue; }
-                    ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2); ctx.fill();
+                    if (p.life <= 0) { game.particles.splice(i, 1); continue; }
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.life;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                    ctx.fill();
                     ctx.globalAlpha = 1;
                 }
                 
@@ -1078,18 +1084,17 @@
             render();
         }
 
-        function showPage(pageId, navElement) {
+        function showPage(id, nav) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if(navElement) {
-                const nav = document.querySelector('.bottom-nav');
-                if(nav) { nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); navElement.classList.add('active'); }
+            document.getElementById(id).classList.add('active');
+            if (nav) {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                nav.classList.add('active');
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => { 
-            createStars(document.getElementById('global-stars'), 50); 
-            createConfetti(); 
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
             animateLoading();
         });
     </script>
