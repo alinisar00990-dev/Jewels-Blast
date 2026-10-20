@@ -1,1363 +1,605 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jewels Blast - mystery world 3</title>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <style>
-    /* ==========================================
-       1. GLOBAL RESET & BASE STYLES
-       ========================================== */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="theme-color" content="#0d0726">
+    <title>Jewels Blast</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; background: #070514; position: fixed; }
+        
+        .screen { display: none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1; }
+        .screen.active { display: flex; flex-direction: column; }
 
-    body {
-      background: #070514;
-      font-family: 'Poppins', sans-serif;
-      color: #ffffff;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+        /* ============================================
+           GLOBAL BACKGROUND (STARS)
+           ============================================ */
+        .global-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%); z-index: -1; }
+        .stars-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; }
+        .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 6px #fff, 0 0 12px #a855f7; animation: twinkle linear infinite; }
+        
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.3); } }
 
-    #app-wrapper {
-      width: 100%;
-      max-width: 480px;
-      height: 100%;
-      max-height: 920px;
-      background: radial-gradient(circle at top, #1a0b36 0%, #090518 70%, #03010a 100%);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    }
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
+        #loading-screen { justify-content: center; align-items: center; }
+        .logo-box { text-align: center; position: relative; z-index: 10; margin-bottom: 90px; }
+        .title-word { font-family: 'Cinzel Decorative', serif; font-weight: 900; display: block; line-height: 1.1; }
+        .jewels-title { font-size: 3.8rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 35%, #d49400 65%, #8a5a00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9)); }
+        .blast-title { font-size: 4rem; background: linear-gradient(180deg, #fff9d4 0%, #ffe066 30%, #e6a100 65%, #996300 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9)); margin-top: -10px; }
+        .loading-box { position: absolute; bottom: 15%; width: 75%; max-width: 320px; text-align: center; z-index: 10; }
+        .loading-track { width: 100%; height: 18px; background: rgba(10, 6, 28, 0.85); border-radius: 20px; padding: 3px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .loading-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #c084fc, #e879f9, #f43f5e); border-radius: 20px; transition: width 0.2s ease-out; }
+        .loading-text { color: rgba(237, 215, 156, 0.75); font-size: 0.8rem; margin-top: 12px; letter-spacing: 2px; }
 
-    /* ==========================================
-       2. SCREEN MANAGEMENT
-       ========================================== */
-    .screen {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      z-index: 1;
-    }
+        /* ============================================
+           HEADER & BANNERS
+           ============================================ */
+        .top-header { width: 100%; padding: 20px 20px 10px 20px; text-align: center; flex-shrink: 0; position: relative; z-index: 10; }
+        .main-title { font-family: 'Cinzel Decorative', serif; font-weight: 900; font-size: 2rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 50%, #d49400 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8)); letter-spacing: 3px; }
 
-    .screen.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 10;
-    }
+        .menu-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 5; padding-bottom: 80px; }
+        .banners-wrapper { padding: 5px 0 10px 0; flex-shrink: 0; }
+        .banners-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+        .banners-scroll::-webkit-scrollbar { display: none; }
+        .new-banner { min-width: 160px; height: 90px; border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0; scroll-snap-align: start; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); color: white; }
+        .nb-daily { background: linear-gradient(135deg, #4da7ff, #1d7afc); }
+        .nb-water { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+        .nb-world { background: linear-gradient(135deg, #d946ef, #a855f7); }
+        .nb-mansion { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
+        .nb-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; font-weight: 600; }
+        .nb-badge { background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 8px; display: flex; align-items: center; gap: 4px;}
+        .nb-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .nb-title { font-size: 0.95rem; font-weight: 700; line-height: 1.1; max-width: 70%; text-transform: capitalize;}
+        .nb-icon { font-size: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); margin-bottom: -5px; margin-right: -5px;}
 
-    /* ==========================================
-       3. SCREEN 1: LOADING SCREEN
-       ========================================== */
-    #loading-screen {
-      background: radial-gradient(circle at center, #240a4c 0%, #0a0318 100%);
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 30px;
-    }
+        /* ============================================
+           3D COVERFLOW & GAMEPLAY CANVAS CARDS
+           ============================================ */
+        .carousel-area { flex: 1; position: relative; display: flex; align-items: center; width: 100%; min-height: 0; perspective: 1200px; }
+        .carousel-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 calc(50vw - 135px); gap: 20px; width: 100%; height: 100%; align-items: center; scrollbar-width: none; transform-style: preserve-3d; }
+        .carousel-scroll::-webkit-scrollbar { display: none; }
+        
+        .game-card {
+            scroll-snap-align: center; flex-shrink: 0;
+            width: 270px; height: 390px; border-radius: 20px; background: #ffffff;
+            overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            transition: transform 0.1s; transform-origin: center center;
+        }
 
-    .loading-logo-box {
-      margin-bottom: 40px;
-      position: relative;
-    }
+        /* CARD CANVAS CONTAINER */
+        .card-top { height: 210px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; overflow: hidden; background: #111; }
+        
+        /* The Canvas Engine */
+        .game-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-    .loading-title {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 2.4rem;
-      font-weight: 900;
-      background: linear-gradient(180deg, #fff7bd 0%, #ffd700 40%, #ff8800 80%, #994400 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 10px 20px rgba(255, 170, 0, 0.3);
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
-      letter-spacing: 1.5px;
-      line-height: 1.1;
-    }
+        /* Overlay shadow for crystal clear text readability */
+        .video-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 75%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); z-index: 2; pointer-events: none; }
 
-    .loading-subtitle {
-      font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      color: #d1b3ff;
-      letter-spacing: 4px;
-      text-transform: lowercase;
-      margin-top: 8px;
-      text-shadow: 0 0 10px rgba(180, 100, 255, 0.6);
-    }
+        .card-text-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 18px; pointer-events: none; }
+        .card-title { color: #ffffff; font-size: 2.1rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9); letter-spacing: 1px; text-align: center; line-height: 1.1; }
+        .card-level { background: rgba(255,255,255,0.95); color: #111; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-top: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 5px; }
 
-    .loading-bar-container {
-      width: 80%;
-      height: 18px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 2px solid rgba(255, 215, 0, 0.4);
-      border-radius: 20px;
-      padding: 2px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.8);
-      position: relative;
-      overflow: hidden;
-    }
+        /* CARD BOTTOM */
+        .card-bottom { height: 180px; background: #ffffff; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+        .points-label { color: #888888; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .points-value { color: #111111; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-top: -2px; }
+        .play-btn { width: 100%; background: #2563eb; color: #ffffff; border: none; border-radius: 25px; padding: 14px 0; font-size: 1.05rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.1s; }
+        .play-btn:active { transform: scale(0.96); }
 
-    .loading-bar-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff007f, #ff00ff, #00d4ff);
-      border-radius: 15px;
-      box-shadow: 0 0 12px #ff00ff;
-      transition: width 0.1s linear;
-    }
+        /* ============================================
+           TOURNAMENT & NAV
+           ============================================ */
+        #tournament-screen { background: transparent; z-index: 50; }
+        .tourney-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; position: relative; z-index: 10; }
+        .btn-icon { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .tourney-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(180deg, #ea580c 0%, #f97316 25%, #ffffff 25.1%, #ffffff 100%); position: relative; }
+        
+        .tourney-top { height: 25%; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .tourney-timer { background: rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .medals-box { display: flex; align-items: flex-end; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .medal { border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 5px 10px rgba(255,255,255,0.5); font-size: 2rem; position: relative; }
+        .medal-silver { width: 70px; height: 70px; background: linear-gradient(135deg, #e2e8f0, #94a3b8); margin-bottom: 10px;}
+        .medal-gold { width: 90px; height: 90px; background: linear-gradient(135deg, #fef08a, #eab308); z-index: 2;}
+        .medal-bronze { width: 70px; height: 70px; background: linear-gradient(135deg, #fdba74, #ea580c); margin-bottom: 10px;}
 
-    .loading-text-percent {
-      margin-top: 12px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #a892ee;
-      letter-spacing: 1px;
-    }
+        .tourney-bottom { flex: 1; background: #ffffff; display: flex; flex-direction: column; overflow: hidden; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 15px 20px; }
+        .tourney-tabs { display: flex; background: #f1f5f9; border-radius: 25px; padding: 4px; margin-bottom: 15px; }
+        .tab-btn { flex: 1; text-align: center; padding: 8px 0; font-size: 0.9rem; font-weight: 700; color: #64748b; border-radius: 20px; cursor: pointer; }
+        .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+        .leaderboard-list { flex: 1; overflow-y: auto; padding-bottom: 80px; }
+        .leaderboard-list::-webkit-scrollbar { display: none; }
+        
+        .lb-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .lb-item.me { background: #f8fafc; border-radius: 12px; padding: 12px 10px; margin: 0 -10px; border: 1px solid #e2e8f0; }
+        .lb-rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: white; margin-right: 15px; }
+        .rank-1 { background: #eab308; } .rank-2 { background: #94a3b8; } .rank-3 { background: #ea580c; } .rank-other { background: #fca5a5; }
+        .lb-name { flex: 1; font-weight: 600; color: #334155; font-size: 0.95rem; }
+        .lb-score { font-weight: 800; color: #0f172a; font-size: 0.95rem; }
+        .tourney-play-btn { position: absolute; bottom: 20px; left: 20px; right: 20px; background: #3b82f6; color: white; border: none; border-radius: 25px; padding: 15px; font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); cursor: pointer; }
 
-    /* ==========================================
-       4. SCREEN 2: MAIN MENU
-       ========================================== */
-    #main-menu-screen {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding-bottom: 70px; /* space for bottom nav */
-    }
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; overflow: hidden; }
+        .confetti { position: absolute; width: 8px; height: 15px; animation: fallConfetti linear infinite; }
+        @keyframes fallConfetti { 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; } 100% { transform: translateY(800px) rotate(720deg); opacity: 0; } }
 
-    /* Header */
-    .app-header {
-      padding: 16px;
-      text-align: center;
-      position: relative;
-      z-index: 5;
-    }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #eeeeee; display: flex; justify-content: space-around; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 10px; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px 15px; cursor: pointer; }
+        .nav-icon { font-size: 1.5rem; color: #94a3b8; } .nav-label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; }
+        .nav-item.active .nav-icon, .nav-item.active .nav-label { color: #2563eb; transform: scale(1.1); }
 
-    .header-main-title {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.8rem;
-      font-weight: 900;
-      background: linear-gradient(180deg, #ffffff 0%, #ffd700 50%, #ff9900 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.9));
-      letter-spacing: 2px;
-    }
-
-    /* Top Mini Game Banners (Horizontal Scroll) */
-    .mini-banners-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 5px 16px 15px 16px;
-      display: flex;
-      gap: 12px;
-      scrollbar-width: none;
-    }
-    .mini-banners-wrapper::-webkit-scrollbar { display: none; }
-
-    .mini-banner-card {
-      min-width: 130px;
-      height: 70px;
-      border-radius: 14px;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 8px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .mini-banner-card:active { transform: scale(0.96); }
-
-    .banner-1 { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
-    .banner-2 { background: linear-gradient(135deg, #00c6ff, #0072ff); }
-    .banner-3 { background: linear-gradient(135deg, #f7971e, #ffd200); }
-    .banner-4 { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
-
-    .mini-banner-title {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-      line-height: 1.1;
-      z-index: 2;
-    }
-
-    .mini-banner-badge {
-      position: absolute;
-      top: 6px; left: 6px;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      padding: 2px 6px;
-      border-radius: 8px;
-      font-size: 0.6rem;
-      font-weight: 700;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    /* 3D Coverflow Carousel Area */
-    .carousel-container {
-      flex: 1;
-      width: 100%;
-      position: relative;
-      perspective: 1000px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-
-    .carousel-track {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .carousel-card {
-      position: absolute;
-      width: 270px;
-      height: 390px;
-      border-radius: 24px;
-      background: #ffffff;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), filter 0.45s ease, opacity 0.45s ease;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    /* Upper half of card (Game View / Canvas) */
-    .card-top {
-      height: 70%;
-      width: 100%;
-      position: relative;
-      background: #110926;
-      overflow: hidden;
-    }
-
-    .card-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .card-top-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%);
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      pointer-events: none;
-    }
-
-    .card-game-title {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-
-    .card-level-badge {
-      align-self: flex-start;
-      background: linear-gradient(90deg, #ff007f, #7928ca);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    /* Lower half of card (White details) */
-    .card-bottom {
-      height: 30%;
-      width: 100%;
-      background: #ffffff;
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-high-score-box {
-      text-align: center;
-    }
-    .card-high-score-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: #8888aa;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .card-high-score-val {
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: #1a0b36;
-    }
-
-    .card-play-btn {
-      width: 100%;
-      padding: 10px 0;
-      background: linear-gradient(180deg, #00d2ff 0%, #0072ff 100%);
-      border: none;
-      border-radius: 14px;
-      color: #ffffff;
-      font-size: 0.95rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      box-shadow: 0 6px 16px rgba(0, 114, 255, 0.4);
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-    .card-play-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 3px 8px rgba(0, 114, 255, 0.4);
-    }
-
-    /* ==========================================
-       5. SCREEN 3: TOURNAMENT SCREEN
-       ========================================== */
-    #tournament-screen {
-      background: #090518;
-      padding-bottom: 70px;
-      overflow-y: auto;
-    }
-
-    .tournament-header {
-      background: linear-gradient(180deg, #ff6b00 0%, #ff3b00 100%);
-      padding: 24px 16px 30px 16px;
-      border-bottom-left-radius: 28px;
-      border-bottom-right-radius: 28px;
-      box-shadow: 0 10px 25px rgba(255, 59, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    #confetti-canvas {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-    }
-
-    .tournament-title {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 3px 6px rgba(0,0,0,0.4);
-      margin-bottom: 16px;
-    }
-
-    /* Medals Podium */
-    .podium-container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 14px;
-      margin-top: 10px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .podium-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .podium-avatar {
-      width: 50px; height: 50px;
-      border-radius: 50%;
-      background: #fff;
-      border: 3px solid #ffd700;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-    }
-
-    .podium-1 .podium-avatar { width: 64px; height: 64px; border-color: #ffe600; font-size: 1.8rem; }
-    .podium-2 .podium-avatar { border-color: #d7d7d7; }
-    .podium-3 .podium-avatar { border-color: #ff9d6c; }
-
-    .podium-badge {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: #fff;
-      background: rgba(0,0,0,0.4);
-      padding: 2px 8px;
-      border-radius: 10px;
-    }
-
-    /* Leaderboard List */
-    .leaderboard-container {
-      padding: 20px 16px;
-    }
-
-    .leaderboard-title {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: #a892ee;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .leaderboard-row {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .leaderboard-row.me {
-      background: linear-gradient(90deg, rgba(121, 40, 202, 0.3), rgba(255, 0, 127, 0.3));
-      border: 1px solid #ff007f;
-      box-shadow: 0 4px 15px rgba(255, 0, 127, 0.2);
-    }
-
-    .rank-num {
-      font-weight: 900;
-      font-size: 1rem;
-      width: 24px;
-      color: #ffd700;
-    }
-
-    .player-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1;
-    }
-
-    .player-name {
-      font-weight: 700;
-      font-size: 0.88rem;
-    }
-
-    .player-score {
-      font-weight: 800;
-      color: #00d4ff;
-      font-size: 0.95rem;
-    }
-
-    .tournament-play-btn {
-      width: 100%;
-      margin-top: 10px;
-      padding: 14px;
-      background: linear-gradient(180deg, #00d2ff 0%, #0072ff 100%);
-      border: none;
-      border-radius: 16px;
-      color: #fff;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 1px;
-      box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
-      cursor: pointer;
-    }
-
-    /* ==========================================
-       6. SCREEN 4: GAMEPLAY SCREEN (Placeholder/Engine Ready)
-       ========================================== */
-    #gameplay-screen {
-      background: #090518;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 16px 30px 16px;
-    }
-
-    .gameplay-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .back-btn {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      width: 40px; height: 40px;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    .gameplay-title {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #ffd700;
-    }
-
-    .gameplay-board-wrapper {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      max-width: 400px;
-      background: rgba(255,255,255,0.03);
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-    }
-
-    /* ==========================================
-       7. BOTTOM NAVIGATION BAR
-       ========================================== */
-    .bottom-nav {
-      position: absolute;
-      bottom: 0; left: 0; width: 100%;
-      height: 65px;
-      background: #ffffff;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      box-shadow: 0 -5px 25px rgba(0,0,0,0.3);
-      z-index: 100;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      color: #8e8e93;
-      font-size: 0.68rem;
-      font-weight: 700;
-      cursor: pointer;
-      width: 33%;
-      height: 100%;
-      transition: color 0.2s ease;
-    }
-
-    .nav-item.active {
-      color: #7928ca;
-    }
-
-    .nav-icon {
-      font-size: 1.4rem;
-    }
-
-  </style>
+        @media (max-width: 360px) {
+            .game-card { width: 240px; height: 350px; }
+            .carousel-scroll { padding: 0 calc(50vw - 120px); }
+            .card-bottom { padding: 15px 20px; height: 160px; }
+            .card-title { font-size: 1.8rem; }
+            .points-value { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <div id="app-wrapper">
-    
-    <!-- ==========================================
-         SCREEN 1: LOADING SCREEN
-         ========================================== -->
+    <div class="global-bg"><div class="stars-container" id="global-stars"></div></div>
+
+    <!-- LOADING SCREEN -->
     <div id="loading-screen" class="screen active">
-      <div class="loading-logo-box">
-        <h1 class="loading-title">JEWELS BLAST</h1>
-        <div class="loading-subtitle">mystery world 3</div>
-      </div>
-      
-      <div class="loading-bar-container">
-        <div id="loading-bar-fill" class="loading-bar-fill"></div>
-      </div>
-      <div id="loading-percent" class="loading-text-percent">0%</div>
+        <div class="logo-box"><span class="title-word jewels-title">Jewels</span><span class="title-word blast-title">Blast</span></div>
+        <div class="loading-box"><div class="loading-track"><div class="loading-fill" id="loading-fill"></div></div><p class="loading-text" id="loading-text">LOADING...</p></div>
     </div>
 
-    <!-- ==========================================
-         SCREEN 2: MAIN MENU SCREEN
-         ========================================== -->
-    <div id="main-menu-screen" class="screen">
-      <!-- Header -->
-      <div class="app-header">
-        <h1 class="header-main-title">JEWELS BLAST</h1>
-      </div>
+    <!-- MAIN MENU SCREEN -->
+    <div id="menu-screen" class="screen">
+        <div class="top-header"><div class="main-title">JEWELS BLAST</div></div>
+        <div class="menu-content">
+            
+            <div class="banners-wrapper">
+                <div class="banners-scroll">
+                    <div class="new-banner nb-daily" onclick="showPage('tournament-screen')"><div class="nb-top"><span>DAILY CHALLENGE</span></div><div class="nb-bottom"><div class="nb-title">October 20</div><div class="nb-icon">📅</div></div></div>
+                    <div class="new-banner nb-water"><div class="nb-top"><span class="nb-badge">🪙 3</span><span class="nb-badge">⏱ 6d 02h</span></div><div class="nb-bottom"><div class="nb-title">Water Sort</div><div class="nb-icon">🌱</div></div></div>
+                    <div class="new-banner nb-world"><div class="nb-top"><span class="nb-badge">🔑 115</span><span class="nb-badge">⏱ 2d 02h</span></div><div class="nb-bottom"><div class="nb-title">World of Games</div><div class="nb-icon">🧩</div></div></div>
+                    <div class="new-banner nb-mansion"><div class="nb-top"><span class="nb-badge">💎 3</span><span class="nb-badge">⏱ 2d 02h</span></div><div class="nb-bottom"><div class="nb-title">Haunted Mansion</div><div class="nb-icon">🕰️</div></div></div>
+                </div>
+            </div>
 
-      <!-- Top Mini Game Banners -->
-      <div class="mini-banners-wrapper">
-        <div class="mini-banner-card banner-1">
-          <span class="mini-banner-badge">⏱️ 04h 12m</span>
-          <div class="mini-banner-title">Daily Challenge</div>
-        </div>
-        <div class="mini-banner-card banner-2">
-          <span class="mini-banner-badge">HOT</span>
-          <div class="mini-banner-title">Water Sort</div>
-        </div>
-        <div class="mini-banner-card banner-3">
-          <span class="mini-banner-badge">NEW</span>
-          <div class="mini-banner-title">World of Games</div>
-        </div>
-        <div class="mini-banner-card banner-4">
-          <span class="mini-banner-badge">EVENT</span>
-          <div class="mini-banner-title">Haunted Mansion</div>
-        </div>
-      </div>
+            <!-- 3D COVERFLOW CAROUSEL WITH REAL-TIME CANVAS GAMEPLAY VIDEO PREVIEWS -->
+            <div class="carousel-area">
+                <div class="carousel-scroll" id="carousel">
+                    
+                    <!-- CANDY QUEST -->
+                    <div class="game-card card-candy">
+                        <div class="card-top">
+                            <!-- Real 60FPS Candy Crush Gameplay Canvas -->
+                            <canvas id="candy-canvas" class="game-canvas"></canvas>
+                            <div class="video-overlay"></div>
+                            <div class="card-text-content">
+                                <div class="card-title">Candy Quest</div>
+                                <div class="card-level">⭐ Level 45</div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="points-label">High Score</div>
+                            <div class="points-value">🏆 14,250</div>
+                            <button class="play-btn" onclick="alert('Starting Candy Quest!')">New Game</button>
+                        </div>
+                    </div>
 
-      <!-- 3D Coverflow Carousel Area -->
-      <div class="carousel-container" id="carousel-container">
-        <div class="carousel-track" id="carousel-track">
-          
-          <!-- Card 1: Candy Quest -->
-          <div class="carousel-card" data-index="0">
-            <div class="card-top">
-              <canvas id="canvas-candy" class="card-canvas"></canvas>
-              <div class="card-top-overlay">
-                <span class="card-level-badge">⭐ Level 45</span>
-                <div class="card-game-title">Candy Quest</div>
-              </div>
-            </div>
-            <div class="card-bottom">
-              <div class="card-high-score-box">
-                <div class="card-high-score-label">High Score</div>
-                <div class="card-high-score-val">🏆 14,250</div>
-              </div>
-              <button class="card-play-btn" onclick="launchGame('Candy Quest')">New Game</button>
-            </div>
-          </div>
+                    <!-- BLOCK BLAST -->
+                    <div class="game-card card-block">
+                        <div class="card-top">
+                            <!-- Real 60FPS Block Blast Gameplay Canvas -->
+                            <canvas id="block-canvas" class="game-canvas"></canvas>
+                            <div class="video-overlay"></div>
+                            <div class="card-text-content">
+                                <div class="card-title">Block Blast</div>
+                                <div class="card-level">⭐ Level 28</div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="points-label">High Score</div>
+                            <div class="points-value">🏆 8,940</div>
+                            <button class="play-btn" onclick="alert('Starting Block Blast!')">New Game</button>
+                        </div>
+                    </div>
 
-          <!-- Card 2: Block Blast -->
-          <div class="carousel-card" data-index="1">
-            <div class="card-top">
-              <canvas id="canvas-block" class="card-canvas"></canvas>
-              <div class="card-top-overlay">
-                <span class="card-level-badge">⭐ Level 28</span>
-                <div class="card-game-title">Block Blast</div>
-              </div>
-            </div>
-            <div class="card-bottom">
-              <div class="card-high-score-box">
-                <div class="card-high-score-label">High Score</div>
-                <div class="card-high-score-val">🏆 8,920</div>
-              </div>
-              <button class="card-play-btn" onclick="launchGame('Block Blast')">New Game</button>
-            </div>
-          </div>
+                    <!-- NUMBER MATCH -->
+                    <div class="game-card card-number">
+                        <div class="card-top">
+                            <!-- Real 60FPS Number Match Gameplay Canvas -->
+                            <canvas id="number-canvas" class="game-canvas"></canvas>
+                            <div class="video-overlay"></div>
+                            <div class="card-text-content">
+                                <div class="card-title">Number<br>Match</div>
+                                <div class="card-level">⭐ Level 15</div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="points-label">High Score</div>
+                            <div class="points-value">🏆 24,000</div>
+                            <button class="play-btn" onclick="alert('Starting Number Match!')">New Game</button>
+                        </div>
+                    </div>
 
-          <!-- Card 3: Number Match -->
-          <div class="carousel-card" data-index="2">
-            <div class="card-top">
-              <canvas id="canvas-number" class="card-canvas"></canvas>
-              <div class="card-top-overlay">
-                <span class="card-level-badge">⭐ Level 15</span>
-                <div class="card-game-title">Number Match</div>
-              </div>
+                </div>
             </div>
-            <div class="card-bottom">
-              <div class="card-high-score-box">
-                <div class="card-high-score-label">High Score</div>
-                <div class="card-high-score-val">🏆 5,400</div>
-              </div>
-              <button class="card-play-btn" onclick="launchGame('Number Match')">New Game</button>
-            </div>
-          </div>
-
         </div>
-      </div>
+        
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="showPage('menu-screen', this)"><div class="nav-icon">🏠</div><div class="nav-label">Main</div></div>
+            <div class="nav-item" onclick="showPage('tournament-screen', this)"><div class="nav-icon">📅</div><div class="nav-label">Tournaments</div></div>
+            <div class="nav-item" onclick="alert('Profile Page Coming Soon!')"><div class="nav-icon">👤</div><div class="nav-label">Me</div></div>
+        </div>
     </div>
 
-    <!-- ==========================================
-         SCREEN 3: TOURNAMENT SCREEN
-         ========================================== -->
+    <!-- TOURNAMENT SCREEN -->
     <div id="tournament-screen" class="screen">
-      <div class="tournament-header">
-        <canvas id="confetti-canvas"></canvas>
-        <div class="tournament-title">CHAMPIONS CUP</div>
-        
-        <div class="podium-container">
-          <!-- 2nd Place -->
-          <div class="podium-item podium-2">
-            <div class="podium-avatar">🥈</div>
-            <span class="podium-badge">2nd</span>
-          </div>
-          <!-- 1st Place -->
-          <div class="podium-item podium-1">
-            <div class="podium-avatar">👑</div>
-            <span class="podium-badge">1st</span>
-          </div>
-          <!-- 3rd Place -->
-          <div class="podium-item podium-3">
-            <div class="podium-avatar">🥉</div>
-            <span class="podium-badge">3rd</span>
-          </div>
+        <div class="tourney-header"><div class="btn-icon" onclick="showPage('menu-screen', document.querySelectorAll('.nav-item')[0])">❮</div><div>Tournament</div><div class="btn-icon">ℹ</div></div>
+        <div class="tourney-content">
+            <div class="confetti-container" id="confetti-box"></div>
+            <div class="tourney-top">
+                <div class="tourney-timer">⏱ 2d 01h</div>
+                <div class="medals-box"><div class="medal medal-bronze">🥉</div><div class="medal medal-gold">👑</div><div class="medal medal-silver">🥈</div></div>
+            </div>
+            <div class="tourney-bottom">
+                <div class="tourney-tabs"><div class="tab-btn active">Total Score</div><div class="tab-btn">Best Score</div></div>
+                <div class="leaderboard-list">
+                    <div class="lb-item"><div class="lb-rank rank-1">1</div><div class="lb-name">Blushing Quail</div><div class="lb-score">150,365</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-2">2</div><div class="lb-name">Thankful Chicken</div><div class="lb-score">128,060</div></div>
+                    <div class="lb-item me"><div class="lb-rank rank-3">3</div><div class="lb-name">Me</div><div class="lb-score">125,324</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">4</div><div class="lb-name">Embarrassed Tamarin</div><div class="lb-score">115,400</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">5</div><div class="lb-name">Real Penguin</div><div class="lb-score">87,612</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">6</div><div class="lb-name">Tough Warbler</div><div class="lb-score">79,720</div></div>
+                    <div class="lb-item"><div class="lb-rank rank-other">7</div><div class="lb-name">Precious Albatross</div><div class="lb-score">77,640</div></div>
+                </div>
+                <button class="tourney-play-btn">Play</button>
+            </div>
         </div>
-      </div>
-
-      <div class="leaderboard-container">
-        <div class="leaderboard-title">Global Leaderboard</div>
-        
-        <div class="leaderboard-row">
-          <span class="rank-num">1</span>
-          <div class="player-info">
-            <span style="font-size:1.2rem">👑</span>
-            <span class="player-name">Alex_Master</span>
-          </div>
-          <span class="player-score">98,450</span>
-        </div>
-
-        <div class="leaderboard-row">
-          <span class="rank-num">2</span>
-          <div class="player-info">
-            <span style="font-size:1.2rem">🥈</span>
-            <span class="player-name">Elena_Gems</span>
-          </div>
-          <span class="player-score">87,200</span>
-        </div>
-
-        <!-- User Rank -->
-        <div class="leaderboard-row me">
-          <span class="rank-num" style="color:#ff007f;">3</span>
-          <div class="player-info">
-            <span style="font-size:1.2rem">🥉</span>
-            <span class="player-name">Me (You)</span>
-          </div>
-          <span class="player-score">74,850</span>
-        </div>
-
-        <div class="leaderboard-row">
-          <span class="rank-num" style="color:#aaa;">4</span>
-          <div class="player-info">
-            <span style="font-size:1.2rem">👤</span>
-            <span class="player-name">ShadowKing</span>
-          </div>
-          <span class="player-score">62,100</span>
-        </div>
-
-        <button class="tournament-play-btn" onclick="launchGame('Tournament Match')">Enter Tournament</button>
-      </div>
     </div>
 
-    <!-- ==========================================
-         SCREEN 4: GAMEPLAY SCREEN
-         ========================================== -->
-    <div id="gameplay-screen" class="screen">
-      <div class="gameplay-header">
-        <button class="back-btn" onclick="switchTab('main')">←</button>
-        <div class="gameplay-title" id="active-game-title">Candy Quest</div>
-        <div style="width: 40px;"></div>
-      </div>
-
-      <div class="gameplay-board-wrapper">
-        <div style="text-align: center; color: #a892ee;">
-          <div style="font-size: 3rem; margin-bottom: 10px;">🎮</div>
-          <h3>Game Engine Loading...</h3>
-          <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Match-3 Logic Ready</p>
-        </div>
-      </div>
-
-      <button class="card-play-btn" style="width: 80%; margin-bottom: 60px;" onclick="switchTab('main')">Back to Menu</button>
-    </div>
-
-    <!-- ==========================================
-         BOTTOM NAVIGATION BAR
-         ========================================== -->
-    <div class="bottom-nav">
-      <div class="nav-item active" id="nav-main" onclick="switchTab('main')">
-        <span class="nav-icon">🏠</span>
-        <span>Main</span>
-      </div>
-      <div class="nav-item" id="nav-tournaments" onclick="switchTab('tournaments')">
-        <span class="nav-icon">📅</span>
-        <span>Tournaments</span>
-      </div>
-      <div class="nav-item" id="nav-me" onclick="switchTab('me')">
-        <span class="nav-icon">👤</span>
-        <span>Me</span>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    /* ==========================================
-       1. INITIALIZATION & LOADING SCREEN
-       ========================================== */
-    window.addEventListener('DOMContentLoaded', () => {
-      let progress = 0;
-      const fill = document.getElementById('loading-bar-fill');
-      const percentText = document.getElementById('loading-percent');
-      
-      const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 8) + 4;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          setTimeout(() => {
-            document.getElementById('loading-screen').classList.remove('active');
-            document.getElementById('main-menu-screen').classList.add('active');
-            initCarousel();
-            startCanvasAnimations();
-          }, 300);
-        }
-        fill.style.width = progress + '%';
-        percentText.innerText = progress + '%';
-      }, 70);
-    });
-
-    /* ==========================================
-       2. TAB NAVIGATION
-       ========================================== */
-    function switchTab(tab) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-      if (tab === 'main') {
-        document.getElementById('main-menu-screen').classList.add('active');
-        document.getElementById('nav-main').classList.add('active');
-      } else if (tab === 'tournaments') {
-        document.getElementById('tournament-screen').classList.add('active');
-        document.getElementById('nav-tournaments').classList.add('active');
-        initConfetti();
-      } else if (tab === 'me') {
-        document.getElementById('tournament-screen').classList.add('active');
-        document.getElementById('nav-me').classList.add('active');
-      }
-    }
-
-    function launchGame(title) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('gameplay-screen').classList.add('active');
-      document.getElementById('active-game-title').innerText = title;
-    }
-
-    /* ==========================================
-       3. 3D COVERFLOW CAROUSEL LOGIC
-       ========================================== */
-    let currentIndex = 0;
-    const cards = document.querySelectorAll('.carousel-card');
-    const totalCards = cards.length;
-    let startX = 0;
-    let currentTranslate = 0;
-    let isDragging = false;
-
-    function initCarousel() {
-      updateCoverflow();
-      const container = document.getElementById('carousel-container');
-
-      container.addEventListener('touchstart', touchStart);
-      container.addEventListener('touchmove', touchMove);
-      container.addEventListener('touchend', touchEnd);
-
-      container.addEventListener('mousedown', touchStart);
-      container.addEventListener('mousemove', touchMove);
-      container.addEventListener('mouseup', touchEnd);
-      container.addEventListener('mouseleave', touchEnd);
-    }
-
-    function updateCoverflow() {
-      cards.forEach((card, index) => {
-        const offset = index - currentIndex;
-        if (offset === 0) {
-          card.style.transform = `translateX(0px) scale(1) rotateY(0deg)`;
-          card.style.opacity = '1';
-          card.style.zIndex = '10';
-          card.style.filter = 'none';
-        } else if (offset === -1) {
-          card.style.transform = `translateX(-140px) scale(0.82) rotateY(25deg)`;
-          card.style.opacity = '0.75';
-          card.style.zIndex = '5';
-          card.style.filter = 'brightness(0.6)';
-        } else if (offset === 1) {
-          card.style.transform = `translateX(140px) scale(0.82) rotateY(-25deg)`;
-          card.style.opacity = '0.75';
-          card.style.zIndex = '5';
-          card.style.filter = 'brightness(0.6)';
-        } else {
-          card.style.transform = `translateX(${offset * 180}px) scale(0.6) rotateY(0deg)`;
-          card.style.opacity = '0';
-          card.style.zIndex = '1';
-        }
-      });
-    }
-
-    function touchStart(e) {
-      isDragging = true;
-      startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    }
-
-    function touchMove(e) {
-      if (!isDragging) return;
-      const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-      currentTranslate = currentX - startX;
-    }
-
-    function touchEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      if (currentTranslate < -40 && currentIndex < totalCards - 1) {
-        currentIndex++;
-      } else if (currentTranslate > 40 && currentIndex > 0) {
-        currentIndex--;
-      }
-      currentTranslate = 0;
-      updateCoverflow();
-    }
-
-    /* ==========================================
-       4. HIGH-END 60FPS CANVASES (ULTRA REAL)
-       ========================================== */
-    function startCanvasAnimations() {
-      initCandyCanvas();
-      initBlockCanvas();
-      initNumberCanvas();
-    }
-
-    /* --- CANVAS 1: ULTRA-REAL CANDY QUEST ENGINE --- */
-    function initCandyCanvas() {
-      const canvas = document.getElementById('canvas-candy');
-      const ctx = canvas.getContext('2d');
-      canvas.width = 270 * 2;
-      canvas.height = 273 * 2;
-      const w = canvas.width;
-      const h = canvas.height;
-
-      const cols = 6, rows = 6;
-      const cellSize = w / cols;
-      const jewelColors = ['#ff0055', '#00d4ff', '#ffcc00', '#00ff66', '#aa00ff'];
-      
-      let grid = [];
-      let particles = [];
-      let floatingTexts = [];
-      let timer = 0;
-      let swapping = false;
-
-      // Initialize Grid
-      for(let r=0; r<rows; r++) {
-        grid[r] = [];
-        for(let c=0; c<cols; c++) {
-          grid[r][c] = {
-            type: Math.floor(Math.random()*jewelColors.length),
-            scale: 1,
-            offsetY: 0
-          };
-        }
-      }
-
-      function draw3DJewel(x, y, radius, colorIdx) {
-        ctx.save();
-        ctx.translate(x, y);
-
-        const color = jewelColors[colorIdx];
-        
-        // Outer Shadow
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 12;
-
-        // Base Gem Sphere Gradient
-        let grad = ctx.createRadialGradient(-radius*0.3, -radius*0.3, radius*0.1, 0, 0, radius);
-        grad.addColorStop(0, '#ffffff');
-        grad.addColorStop(0.3, color);
-        grad.addColorStop(1, '#000000');
-
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        if (colorIdx === 0) { // Ruby Diamond
-          ctx.moveTo(0, -radius); ctx.lineTo(radius, 0); ctx.lineTo(0, radius); ctx.lineTo(-radius, 0);
-        } else if (colorIdx === 1) { // Sapphire Hexagon
-          for (let i = 0; i < 6; i++) {
-            let a = (i * Math.PI) / 3;
-            ctx.lineTo(radius * Math.cos(a), radius * Math.sin(a));
-          }
-        } else { // Circle Sphere
-          ctx.arc(0, 0, radius, 0, Math.PI * 2);
-        }
-        ctx.closePath();
-        ctx.fill();
-
-        // Facet Specular Highlight
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
-        ctx.beginPath();
-        ctx.ellipse(-radius*0.3, -radius*0.3, radius*0.35, radius*0.18, -Math.PI/4, 0, Math.PI*2);
-        ctx.fill();
-
-        ctx.restore();
-      }
-
-      function triggerExplosion(c, r) {
-        const px = c * cellSize + cellSize/2;
-        const py = r * cellSize + cellSize/2;
-        const color = jewelColors[grid[r][c].type];
-
-        for(let i=0; i<15; i++) {
-          particles.push({
-            x: px, y: py,
-            vx: (Math.random()-0.5)*12,
-            vy: (Math.random()-0.5)*12,
-            size: Math.random()*8 + 4,
-            color: color,
-            life: 1
-          });
-        }
-        floatingTexts.push({
-          x: px, y: py,
-          text: "SWEET! +500",
-          life: 1
-        });
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, w, h);
-        timer++;
-
-        // Draw Dark Board Grid
-        ctx.fillStyle = 'rgba(15, 8, 35, 0.7)';
-        ctx.fillRect(0, 0, w, h);
-        ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-        for(let i=0; i<=cols; i++) {
-          ctx.beginPath(); ctx.moveTo(i*cellSize, 0); ctx.lineTo(i*cellSize, h); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(0, i*cellSize); ctx.lineTo(w, i*cellSize); ctx.stroke();
-        }
-
-        // Action Cycle: Simulate Game Swapping & Matching
-        if (timer % 120 === 0) {
-          let r = Math.floor(Math.random()*(rows-1));
-          let c = Math.floor(Math.random()*(cols-1));
-          triggerExplosion(c, r);
-          triggerExplosion(c+1, r);
-          grid[r][c].type = Math.floor(Math.random()*jewelColors.length);
-          grid[r][c+1].type = Math.floor(Math.random()*jewelColors.length);
-        }
-
-        // Render Jewels
-        for(let r=0; r<rows; r++) {
-          for(let c=0; c<cols; c++) {
-            const j = grid[r][c];
-            const x = c * cellSize + cellSize/2;
-            const y = r * cellSize + cellSize/2 + j.offsetY;
-            draw3DJewel(x, y, cellSize*0.36, j.type);
-          }
-        }
-
-        // Render Burst Particles
-        for(let i=particles.length-1; i>=0; i--) {
-          let p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life -= 0.03;
-          if (p.life <= 0) { particles.splice(i, 1); continue; }
-          ctx.save();
-          ctx.globalAlpha = p.life;
-          ctx.fillStyle = p.color;
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur = 8;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-          ctx.fill();
-          ctx.restore();
-        }
-
-        // Render Floating Texts
-        for(let i=floatingTexts.length-1; i>=0; i--) {
-          let ft = floatingTexts[i];
-          ft.y -= 1.5;
-          ft.life -= 0.02;
-          if (ft.life <= 0) { floatingTexts.splice(i, 1); continue; }
-          ctx.save();
-          ctx.globalAlpha = ft.life;
-          ctx.font = '900 22px Poppins';
-          ctx.fillStyle = '#ffd700';
-          ctx.shadowColor = '#ff0055';
-          ctx.shadowBlur = 10;
-          ctx.textAlign = 'center';
-          ctx.fillText(ft.text, ft.x, ft.y);
-          ctx.restore();
-        }
-
-        requestAnimationFrame(animate);
-      }
-      animate();
-    }
-
-    /* --- CANVAS 2: ULTRA-REAL BLOCK BLAST ENGINE --- */
-    function initBlockCanvas() {
-      const canvas = document.getElementById('canvas-block');
-      const ctx = canvas.getContext('2d');
-      canvas.width = 270 * 2;
-      canvas.height = 273 * 2;
-      const w = canvas.width;
-      const h = canvas.height;
-
-      const gridDim = 8;
-      const cellSize = w / gridDim;
-      let grid = Array(gridDim).fill(0).map(() => Array(gridDim).fill(null));
-      const colors = ['#00d4ff', '#ff007f', '#ffcc00', '#9900ff', '#00ff88'];
-
-      // Pre-fill some blocks
-      for(let r=3; r<8; r++) {
-        for(let c=0; c<8; c++) {
-          if (Math.random() > 0.35 && !(r === 6 && c > 2 && c < 7)) {
-            grid[r][c] = colors[Math.floor(Math.random()*colors.length)];
-          }
-        }
-      }
-
-      let timer = 0;
-      let lineClearing = false;
-      let clearAlpha = 0;
-
-      function drawGlassBlock(x, y, size, color) {
-        ctx.save();
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 10;
-        
-        // Block Body
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.roundRect(x+3, y+3, size-6, size-6, 8);
-        ctx.fill();
-
-        // Inner Bevel Highlight
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.beginPath();
-        ctx.roundRect(x+5, y+5, size-10, (size-10)/2, [5, 5, 0, 0]);
-        ctx.fill();
-
-        ctx.restore();
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, w, h);
-        timer++;
-
-        // Draw Dark Wooden/Glass Grid Base
-        ctx.fillStyle = '#0b081a';
-        ctx.fillRect(0, 0, w, h);
-
-        for(let r=0; r<gridDim; r++) {
-          for(let c=0; c<gridDim; c++) {
-            ctx.fillStyle = 'rgba(255,255,255,0.03)';
-            ctx.beginPath();
-            ctx.roundRect(c*cellSize+2, r*cellSize+2, cellSize-4, cellSize-4, 6);
-            ctx.fill();
-
-            if (grid[r][c]) {
-              drawGlassBlock(c*cellSize, r*cellSize, cellSize, grid[r][c]);
+    <script>
+        /* ============ STARS & CONFETTI ============ */
+        function createStars(container, count) {
+            if (!container) return;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div'); star.className = 'star';
+                const size = Math.random() * 3 + 1; star.style.width = size + 'px'; star.style.height = size + 'px';
+                star.style.top = Math.random() * 100 + '%'; star.style.left = Math.random() * 100 + '%';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's'; star.style.animationDelay = (Math.random() * 3) + 's';
+                container.appendChild(star);
             }
-          }
         }
 
-        // Simulate Falling Drag-Shape Placement
-        let placeY = 6 * cellSize;
-        if (timer % 140 < 80) {
-          let progress = (timer % 140) / 80;
-          let dropY = progress * placeY;
-          drawGlassBlock(3*cellSize, dropY, cellSize, '#ffcc00');
-          drawGlassBlock(4*cellSize, dropY, cellSize, '#ffcc00');
-          drawGlassBlock(5*cellSize, dropY, cellSize, '#ffcc00');
-        } else if (timer % 140 === 80) {
-          // Trigger Line Clear Beam Effect
-          lineClearing = true;
-          clearAlpha = 1;
-        }
-
-        if (lineClearing) {
-          clearAlpha -= 0.03;
-          ctx.save();
-          ctx.globalAlpha = Math.max(0, clearAlpha);
-          ctx.fillStyle = '#ffffff';
-          ctx.shadowColor = '#00d4ff';
-          ctx.shadowBlur = 20;
-          ctx.fillRect(0, 6*cellSize, w, cellSize);
-
-          ctx.font = '900 24px Poppins';
-          ctx.fillStyle = '#00d4ff';
-          ctx.textAlign = 'center';
-          ctx.fillText("COMBO CLEAR! +800", w/2, 6*cellSize - 10);
-          ctx.restore();
-
-          if (clearAlpha <= 0) lineClearing = false;
-        }
-
-        requestAnimationFrame(animate);
-      }
-      animate();
-    }
-
-    /* --- CANVAS 3: ULTRA-REAL NUMBER MATCH ENGINE --- */
-    function initNumberCanvas() {
-      const canvas = document.getElementById('canvas-number');
-      const ctx = canvas.getContext('2d');
-      canvas.width = 270 * 2;
-      canvas.height = 273 * 2;
-      const w = canvas.width;
-      const h = canvas.height;
-
-      const cols = 5, rows = 5;
-      const cellSize = w / cols;
-      let grid = [];
-
-      for(let r=0; r<rows; r++) {
-        grid[r] = [];
-        for(let c=0; c<cols; c++) {
-          grid[r][c] = {
-            val: Math.floor(Math.random()*9) + 1,
-            matched: false
-          };
-        }
-      }
-
-      let timer = 0;
-
-      function animate() {
-        ctx.clearRect(0, 0, w, h);
-        timer++;
-
-        ctx.fillStyle = '#080518';
-        ctx.fillRect(0, 0, w, h);
-
-        // Render Glowing Number Tiles
-        for(let r=0; r<rows; r++) {
-          for(let c=0; c<cols; c++) {
-            const x = c * cellSize;
-            const y = r * cellSize;
-            const tile = grid[r][c];
-
-            ctx.save();
-            ctx.fillStyle = tile.matched ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.08)';
-            ctx.strokeStyle = tile.matched ? 'transparent' : 'rgba(0, 212, 255, 0.3)';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.roundRect(x+6, y+6, cellSize-12, cellSize-12, 12);
-            ctx.fill();
-            ctx.stroke();
-
-            if (!tile.matched) {
-              ctx.font = '700 28px Poppins';
-              ctx.fillStyle = '#ffffff';
-              ctx.shadowColor = '#00d4ff';
-              ctx.shadowBlur = 8;
-              ctx.textAlign = 'center';
-              ctx.textBaseline = 'middle';
-              ctx.fillText(tile.val, x + cellSize/2, y + cellSize/2);
+        function createConfetti() {
+            const container = document.getElementById('confetti-box'); if (!container) return;
+            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
+            for (let i = 0; i < 40; i++) {
+                const conf = document.createElement('div'); conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + '%'; conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animationDuration = (Math.random() * 3 + 2) + 's'; conf.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(conf);
             }
-            ctx.restore();
-          }
         }
 
-        // Electric Lightning Arc Connection
-        let p1 = { x: 1 * cellSize + cellSize/2, y: 1 * cellSize + cellSize/2 };
-        let p2 = { x: 3 * cellSize + cellSize/2, y: 1 * cellSize + cellSize/2 };
+        function animateLoading() {
+            const fill = document.getElementById('loading-fill'); const text = document.getElementById('loading-text');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10 + 5; if (progress > 100) progress = 100;
+                fill.style.width = progress + '%'; text.textContent = `LOADING... ${Math.floor(progress)}%`;
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').classList.remove('active');
+                        document.getElementById('menu-screen').classList.add('active');
+                        init3DCarousel();
+                        startCanvasGamePreviews();
+                    }, 400);
+                }
+            }, 100);
+        }
 
-        ctx.save();
-        ctx.strokeStyle = '#00ffff';
-        ctx.shadowColor = '#00ffff';
-        ctx.shadowBlur = 15;
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        
-        // Jittery electric beam
-        let midX = (p1.x + p2.x) / 2;
-        let midY = (p1.y + p2.y) / 2 + (Math.random()-0.5)*16;
-        ctx.lineTo(midX, midY);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
-        ctx.restore();
+        /* ============ 3D COVERFLOW SWIPE ============ */
+        function init3DCarousel() {
+            const carousel = document.getElementById('carousel');
+            const cards = document.querySelectorAll('.game-card');
+            
+            function update3D() {
+                const centerPosition = carousel.scrollLeft + (carousel.clientWidth / 2);
+                cards.forEach(card => {
+                    const cardCenter = card.offsetLeft + (card.clientWidth / 2);
+                    const distanceFromCenter = centerPosition - cardCenter;
+                    const normalizedDist = distanceFromCenter / carousel.clientWidth; 
+                    const scale = Math.max(0.85, 1 - Math.abs(normalizedDist) * 0.15);
+                    const rotateY = normalizedDist * 35;
+                    card.style.transform = `scale(${scale}) rotateY(${rotateY}deg)`;
+                });
+            }
 
-        // Pulsing Match Nodes
-        [p1, p2].forEach(p => {
-          ctx.save();
-          ctx.fillStyle = '#ff00ff';
-          ctx.shadowColor = '#ff00ff';
-          ctx.shadowBlur = 12;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 8 + Math.sin(timer*0.2)*3, 0, Math.PI*2);
-          ctx.fill();
-          ctx.restore();
-        });
+            carousel.addEventListener('scroll', update3D);
+            update3D();
+            setTimeout(() => { carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2); }, 100);
+        }
 
-        requestAnimationFrame(animate);
-      }
-      animate();
-    }
+        /* ==========================================================================
+           REAL-TIME 60FPS AUTONOMOUS GAME PLAYBACK PREVIEWS (CANVAS ENGINES)
+           ========================================================================== */
+        function startCanvasGamePreviews() {
+            initCandyCanvas();
+            initBlockCanvas();
+            initNumberCanvas();
+        }
 
-    /* ==========================================
-       5. CONFETTI ENGINE (TOURNAMENT)
-       ========================================== */
-    function initConfetti() {
-      const canvas = document.getElementById('confetti-canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+        /* 1. CANDY QUEST REAL GAMEPLAY ENGINE */
+        function initCandyCanvas() {
+            const canvas = document.getElementById('candy-canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = 270; canvas.height = 210;
 
-      const particles = [];
-      const colors = ['#ffd700', '#ff007f', '#00d4ff', '#00ff66', '#ffffff'];
+            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
+            const shapes = ['circle', 'diamond', 'square', 'star'];
+            const cols = 6, rows = 5;
+            const cellSize = 38;
+            const offsetX = (canvas.width - cols * cellSize) / 2;
+            const offsetY = 10;
 
-      for (let i = 0; i < 40; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          size: Math.random() * 6 + 4,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          vy: Math.random() * 2 + 1,
-          vx: (Math.random() - 0.5) * 1
-        });
-      }
+            let grid = [];
+            for (let r = 0; r < rows; r++) {
+                grid[r] = [];
+                for (let c = 0; c < cols; c++) {
+                    grid[r][c] = {
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        shape: shapes[Math.floor(Math.random() * shapes.length)],
+                        scale: 1, opacity: 1, offsetY: 0
+                    };
+                }
+            }
 
-      function render() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-          p.y += p.vy;
-          p.x += p.vx;
-          if (p.y > canvas.height) p.y = -10;
-          ctx.fillStyle = p.color;
-          ctx.fillRect(p.x, p.y, p.size, p.size);
-        });
-        requestAnimationFrame(render);
-      }
-      render();
-    }
-  </script>
+            let particles = [];
+            let frame = 0;
+
+            function drawCandy(x, y, color, shape, scale = 1) {
+                ctx.save();
+                ctx.translate(x + cellSize / 2, y + cellSize / 2);
+                ctx.scale(scale, scale);
+
+                ctx.fillStyle = color;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 8;
+
+                ctx.beginPath();
+                if (shape === 'circle') ctx.arc(0, 0, 14, 0, Math.PI * 2);
+                else if (shape === 'square') { ctx.roundRect(-12, -12, 24, 24, 6); }
+                else if (shape === 'diamond') { ctx.moveTo(0, -14); ctx.lineTo(14, 0); ctx.lineTo(0, 14); ctx.lineTo(-14, 0); ctx.closePath(); }
+                else { ctx.arc(0, 0, 12, 0, Math.PI * 2); }
+                ctx.fill();
+
+                // Gloss Highlight
+                ctx.fillStyle = 'rgba(255,255,255,0.45)';
+                ctx.beginPath();
+                ctx.arc(-4, -4, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function loop() {
+                frame++;
+                ctx.fillStyle = '#160826';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Grid background
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)';
+                        ctx.fillRect(offsetX + c * cellSize, offsetY + r * cellSize, cellSize, cellSize);
+                        
+                        let item = grid[r][c];
+                        drawCandy(offsetX + c * cellSize, offsetY + r * cellSize + item.offsetY, item.color, item.shape, item.scale);
+                    }
+                }
+
+                // Simulate Matches & Explosions every 60 frames
+                if (frame % 70 === 0) {
+                    let matchR = Math.floor(Math.random() * (rows - 1));
+                    let matchC = Math.floor(Math.random() * (cols - 2));
+                    let matchColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    for (let i = 0; i < 3; i++) {
+                        grid[matchR][matchC + i].color = matchColor;
+                        // Spawn particles
+                        for(let p = 0; p < 8; p++) {
+                            particles.push({
+                                x: offsetX + (matchC + i) * cellSize + 19,
+                                y: offsetY + matchR * cellSize + 19,
+                                vx: (Math.random() - 0.5) * 6,
+                                vy: (Math.random() - 0.5) * 6,
+                                color: matchColor,
+                                size: Math.random() * 4 + 2,
+                                life: 1
+                            });
+                        }
+                    }
+                }
+
+                // Update & Render Particle Physics
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    let p = particles[i];
+                    p.x += p.vx; p.y += p.vy;
+                    p.life -= 0.04;
+                    if (p.life <= 0) { particles.splice(i, 1); continue; }
+                    
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.life;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        /* 2. BLOCK BLAST REAL GAMEPLAY ENGINE */
+        function initBlockCanvas() {
+            const canvas = document.getElementById('block-canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = 270; canvas.height = 210;
+
+            const cols = 8, rows = 6;
+            const cellSize = 26;
+            const offsetX = (canvas.width - cols * cellSize) / 2;
+            const offsetY = 15;
+            const colors = ['#00f2fe', '#4facfe', '#ff0844', '#ffb199', '#f6d365'];
+
+            let grid = Array(rows).fill().map(() => Array(cols).fill(null));
+
+            // Fill initial random blocks
+            for(let r = 2; r < rows; r++) {
+                for(let c = 0; c < cols; c++) {
+                    if(Math.random() > 0.4) grid[r][c] = colors[Math.floor(Math.random() * colors.length)];
+                }
+            }
+
+            let activePiece = {
+                shape: [[1,1],[1,1]],
+                x: 10, y: -40, targetY: offsetY + 0 * cellSize, targetX: offsetX + 3 * cellSize,
+                color: '#00f2fe'
+            };
+
+            let frame = 0;
+            let clearingRow = -1;
+
+            function loop() {
+                frame++;
+                ctx.fillStyle = '#061329';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Grid lines
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(offsetX + c * cellSize, offsetY + r * cellSize, cellSize, cellSize);
+
+                        if(grid[r][c]) {
+                            ctx.fillStyle = grid[r][c];
+                            ctx.shadowColor = grid[r][c]; ctx.shadowBlur = 4;
+                            ctx.fillRect(offsetX + c * cellSize + 1, offsetY + r * cellSize + 1, cellSize - 2, cellSize - 2);
+                            ctx.shadowBlur = 0;
+                        }
+                    }
+                }
+
+                // Animate Falling Piece
+                if (activePiece.y < activePiece.targetY) {
+                    activePiece.y += 3;
+                } else {
+                    // Place Piece & Reset
+                    if (frame % 60 === 0) {
+                        activePiece.y = -40;
+                        activePiece.color = colors[Math.floor(Math.random() * colors.length)];
+                        clearingRow = Math.floor(Math.random() * (rows - 2)) + 2;
+                        
+                        // Clear a row animation
+                        for(let c = 0; c < cols; c++) grid[clearingRow][c] = '#ffffff';
+                        setTimeout(() => {
+                            for(let c = 0; c < cols; c++) grid[clearingRow][c] = null;
+                        }, 200);
+                    }
+                }
+
+                // Render Active Piece
+                ctx.fillStyle = activePiece.color;
+                ctx.shadowColor = activePiece.color; ctx.shadowBlur = 10;
+                for(let pr = 0; pr < activePiece.shape.length; pr++) {
+                    for(let pc = 0; pc < activePiece.shape[pr].length; pc++) {
+                        if(activePiece.shape[pr][pc]) {
+                            ctx.fillRect(activePiece.targetX + pc * cellSize + 1, activePiece.y + pr * cellSize + 1, cellSize - 2, cellSize - 2);
+                        }
+                    }
+                }
+                ctx.shadowBlur = 0;
+
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        /* 3. NUMBER LINK REAL GAMEPLAY ENGINE */
+        function initNumberCanvas() {
+            const canvas = document.getElementById('number-canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = 270; canvas.height = 210;
+
+            const nodes = [
+                { x: 50, y: 50, num: 1, color: '#38f9d7' },
+                { x: 220, y: 50, num: 1, color: '#38f9d7' },
+                { x: 70, y: 150, num: 4, color: '#ff758c' },
+                { x: 200, y: 150, num: 4, color: '#ff758c' }
+            ];
+
+            let progress = 0;
+
+            function loop() {
+                progress += 0.015;
+                if (progress > 1.4) progress = 0;
+
+                ctx.fillStyle = '#05231c';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw Connecting Beam between matching 1s
+                if (progress <= 1) {
+                    ctx.strokeStyle = '#38f9d7';
+                    ctx.lineWidth = 6;
+                    ctx.shadowColor = '#38f9d7';
+                    ctx.shadowBlur = 15;
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[0].x, nodes[0].y);
+                    
+                    let currentX = nodes[0].x + (nodes[1].x - nodes[0].x) * Math.min(progress, 1);
+                    let currentY = nodes[0].y + (nodes[1].y - nodes[0].y) * Math.min(progress, 1);
+                    ctx.lineTo(currentX, currentY);
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+
+                // Render Number Nodes
+                nodes.forEach(node => {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.shadowColor = node.color; ctx.shadowBlur = 10;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, 22, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = 'bold 18px Poppins';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(node.num, node.x, node.y);
+                });
+
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        function showPage(pageId, navElement) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if(navElement) {
+                const nav = document.querySelector('.bottom-nav');
+                if(nav) { nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); navElement.classList.add('active'); }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { createStars(document.getElementById('global-stars'), 50); createConfetti(); animateLoading(); });
+    </script>
 </body>
 </html>
