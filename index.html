@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <meta name="theme-color" content="#0d0726">
     <title>Jewels Blast</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -14,18 +14,13 @@
         .screen { display: none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1; }
         .screen.active { display: flex; flex-direction: column; }
 
-        /* ============================================
-           GLOBAL BACKGROUND (STARS)
-           ============================================ */
+        /* ============================================ GLOBAL BG ============================================ */
         .global-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%); z-index: -1; }
         .stars-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; }
         .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 6px #fff, 0 0 12px #a855f7; animation: twinkle linear infinite; }
-        
         @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.3); } }
 
-        /* ============================================
-           LOADING SCREEN
-           ============================================ */
+        /* ============================================ LOADING ============================================ */
         #loading-screen { justify-content: center; align-items: center; }
         .logo-box { text-align: center; position: relative; z-index: 10; margin-bottom: 90px; }
         .title-word { font-family: 'Cinzel Decorative', serif; font-weight: 900; display: block; line-height: 1.1; }
@@ -36,12 +31,9 @@
         .loading-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #c084fc, #e879f9, #f43f5e); border-radius: 20px; transition: width 0.2s ease-out; }
         .loading-text { color: rgba(237, 215, 156, 0.75); font-size: 0.8rem; margin-top: 12px; letter-spacing: 2px; }
 
-        /* ============================================
-           HEADER & BANNERS
-           ============================================ */
+        /* ============================================ MENU ============================================ */
         .top-header { width: 100%; padding: 20px 20px 10px 20px; text-align: center; flex-shrink: 0; position: relative; z-index: 10; }
         .main-title { font-family: 'Cinzel Decorative', serif; font-weight: 900; font-size: 2rem; background: linear-gradient(180deg, #fff6bb 0%, #ffd700 50%, #d49400 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8)); letter-spacing: 3px; }
-
         .menu-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 5; padding-bottom: 80px; }
         .banners-wrapper { padding: 5px 0 10px 0; flex-shrink: 0; }
         .banners-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 5px 20px; scrollbar-width: none; scroll-snap-type: x mandatory; }
@@ -57,9 +49,6 @@
         .nb-title { font-size: 0.95rem; font-weight: 700; line-height: 1.1; max-width: 70%; text-transform: capitalize;}
         .nb-icon { font-size: 2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); margin-bottom: -5px; margin-right: -5px;}
 
-        /* ============================================
-           3D COVERFLOW & GAMEPLAY CANVAS CARDS
-           ============================================ */
         .carousel-area { flex: 1; position: relative; display: flex; align-items: center; width: 100%; min-height: 0; perspective: 1200px; }
         .carousel-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 calc(50vw - 135px); gap: 20px; width: 100%; height: 100%; align-items: center; scrollbar-width: none; transform-style: preserve-3d; }
         .carousel-scroll::-webkit-scrollbar { display: none; }
@@ -71,16 +60,13 @@
         .card-text-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 18px; pointer-events: none; }
         .card-title { color: #ffffff; font-size: 2.1rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9); letter-spacing: 1px; text-align: center; line-height: 1.1; }
         .card-level { background: rgba(255,255,255,0.95); color: #111; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-top: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 5px; }
-
         .card-bottom { height: 180px; background: #ffffff; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
         .points-label { color: #888888; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .points-value { color: #111111; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-top: -2px; }
         .play-btn { width: 100%; background: #2563eb; color: #ffffff; border: none; border-radius: 25px; padding: 14px 0; font-size: 1.05rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.1s; }
         .play-btn:active { transform: scale(0.96); }
 
-        /* ============================================
-           TOURNAMENT & NAV
-           ============================================ */
+        /* ============================================ TOURNAMENT ============================================ */
         #tournament-screen { background: transparent; z-index: 50; }
         .tourney-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; position: relative; z-index: 10; }
         .btn-icon { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
@@ -115,18 +101,66 @@
         .nav-item.active .nav-icon, .nav-item.active .nav-label { color: #2563eb; transform: scale(1.1); }
 
         /* ============================================
-           CANDY QUEST PLAYABLE GAME SCREEN (NEW)
+           CANDY QUEST PLAYABLE (REAL CANDY CRUSH LAYOUT)
            ============================================ */
-        #candy-play-screen { background: radial-gradient(circle at top, #24164c 0%, #110926 70%, #080312 100%); z-index: 200; display: none; flex-direction: column; }
+        #candy-play-screen { background: #000; z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: flex-start; }
         #candy-play-screen.active { display: flex; }
-        .candy-game-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0,0,0,0.5); border-bottom: 2px solid rgba(255,255,255,0.1); color: white; z-index: 10; }
-        .cg-back { font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; }
-        .cg-score-box { text-align: right; }
-        .cg-score-label { font-size: 0.7rem; color: #a855f7; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .cg-score-val { font-size: 1.5rem; font-weight: 900; color: #ffd700; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.4); line-height: 1; }
-        .candy-board-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px; position: relative; }
-        /* Playable Canvas Engine */
-        #candy-engine-canvas { background: rgba(0,0,0,0.4); border-radius: 12px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.6); touch-action: none; /* Prevents scrolling while swiping */ border: 2px solid rgba(255,255,255,0.05); }
+        
+        /* Top Mini-Header: X button, 3-dot menu */
+        .cq-mini-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; z-index: 20; }
+        .cq-icon-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(80,80,80,0.9); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; cursor: pointer; border: none; }
+        
+        /* Main Game Area */
+        .cq-game-area { width: 100%; max-width: 480px; flex: 1; display: flex; flex-direction: column; align-items: center; }
+        
+        /* The Chef Header Bar - matches reference */
+        .cq-chef-bar { width: 100%; background: linear-gradient(180deg, #c88080 0%, #a05858 100%); padding: 10px 10px 15px 10px; position: relative; display: flex; justify-content: space-between; align-items: center; min-height: 110px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        
+        /* Level badge (star burst) */
+        .cq-level-badge { position: relative; width: 70px; height: 70px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .cq-level-badge::before { content: ''; position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, #ffcc33 60%, #e67e00 100%); border-radius: 50%; box-shadow: 0 4px 12px rgba(230,126,0,0.6), inset 0 -3px 8px rgba(0,0,0,0.3); }
+        .cq-level-text { position: relative; z-index: 2; color: white; font-weight: 900; text-align: center; line-height: 1; text-shadow: 0 2px 3px rgba(0,0,0,0.4); }
+        .cq-level-text small { font-size: 0.6rem; display: block; }
+        .cq-level-text b { font-size: 1.4rem; }
+        
+        /* Chef Girl (SVG/Emoji character holding moves sign) */
+        .cq-chef-char { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 2; }
+        .cq-chef-icon { font-size: 2.8rem; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5)); line-height: 1; }
+        .cq-moves-sign { background: linear-gradient(180deg, #e8d5f0, #c9a2d8); border: 2px solid white; border-radius: 8px; padding: 2px 10px; margin-top: -8px; position: relative; z-index: 3; box-shadow: 0 2px 4px rgba(0,0,0,0.3); min-width: 60px; text-align: center; }
+        .cq-moves-label { font-size: 0.5rem; font-weight: 900; color: #5a2d6b; letter-spacing: 1px; }
+        .cq-moves-val { font-size: 1.3rem; font-weight: 900; color: #5a2d6b; line-height: 1; }
+        
+        /* Objectives Panel (white box with 4 goals) */
+        .cq-objectives { background: white; border-radius: 10px; padding: 6px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); z-index: 3; }
+        .cq-obj { display: flex; align-items: center; gap: 3px; padding: 2px 4px; }
+        .cq-obj-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+        .cq-obj-count { font-size: 0.75rem; font-weight: 800; color: #333; }
+        
+        /* Right side: Pause + Score */
+        .cq-pause-score { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; z-index: 2; }
+        .cq-pause-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(180deg, #ff9933, #e67e00); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; cursor: pointer; border: 2px solid white; box-shadow: 0 3px 6px rgba(0,0,0,0.4); }
+        .cq-score-display { color: white; font-size: 1.3rem; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.6); font-family: 'Poppins', sans-serif; }
+
+        /* Wooden shelf below header */
+        .cq-shelf { width: 100%; height: 12px; background: linear-gradient(180deg, #d49544 0%, #a86a24 100%); box-shadow: 0 3px 5px rgba(0,0,0,0.4); }
+        
+        /* Game Canvas Container */
+        .cq-board-wrap { flex: 1; width: 100%; background: linear-gradient(180deg, #4a1f5c 0%, #2d1240 100%); display: flex; justify-content: center; align-items: flex-start; padding-top: 5px; position: relative; overflow: hidden;}
+        #candy-engine-canvas { display: block; touch-action: none; }
+
+        /* Confirmation Modal */
+        .cq-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); display: none; justify-content: center; align-items: center; z-index: 500; }
+        .cq-modal-overlay.active { display: flex; }
+        .cq-modal { background: linear-gradient(180deg, #ffffff 0%, #f0e6ff 100%); border-radius: 20px; padding: 25px; width: 85%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(168, 85, 247, 0.5); border: 3px solid #a855f7; }
+        .cq-modal h2 { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; color: #4a1f5c; margin-bottom: 10px; }
+        .cq-modal p { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
+        .cq-modal-score { font-size: 2rem; font-weight: 900; color: #d49400; margin: 10px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .cq-modal-btns { display: flex; gap: 10px; justify-content: center; }
+        .cq-modal-btn { flex: 1; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
+        .cq-modal-btn:active { transform: scale(0.95); }
+        .cq-btn-yes { background: linear-gradient(180deg, #ef4444, #dc2626); color: white; box-shadow: 0 4px 10px rgba(220,38,38,0.4); }
+        .cq-btn-no { background: linear-gradient(180deg, #22c55e, #16a34a); color: white; box-shadow: 0 4px 10px rgba(22,163,74,0.4); }
+        .cq-btn-primary { background: linear-gradient(180deg, #3b82f6, #2563eb); color: white; box-shadow: 0 4px 10px rgba(37,99,235,0.4); width: 100%; }
 
         @media (max-width: 360px) {
             .game-card { width: 240px; height: 350px; }
@@ -160,11 +194,9 @@
                 </div>
             </div>
 
-            <!-- 3D CAROUSEL -->
             <div class="carousel-area">
                 <div class="carousel-scroll" id="carousel">
                     
-                    <!-- CANDY QUEST -->
                     <div class="game-card card-candy">
                         <div class="card-top">
                             <canvas id="candy-canvas" class="game-canvas"></canvas>
@@ -176,12 +208,11 @@
                         </div>
                         <div class="card-bottom">
                             <div class="points-label">High Score</div>
-                            <div class="points-value">🏆 14,250</div>
+                            <div class="points-value">🏆 <span id="candy-high-score">14,250</span></div>
                             <button class="play-btn" onclick="startPlayableCandyQuest()">New Game</button>
                         </div>
                     </div>
 
-                    <!-- BLOCK BLAST -->
                     <div class="game-card card-block">
                         <div class="card-top">
                             <canvas id="block-canvas" class="game-canvas"></canvas>
@@ -198,7 +229,6 @@
                         </div>
                     </div>
 
-                    <!-- NUMBER MATCH -->
                     <div class="game-card card-number">
                         <div class="card-top">
                             <canvas id="number-canvas" class="game-canvas"></canvas>
@@ -249,17 +279,73 @@
         </div>
     </div>
 
-    <!-- FULL PLAYABLE CANDY QUEST GAME SCREEN -->
+    <!-- =========================================
+         FULL PLAYABLE CANDY QUEST GAME SCREEN
+         ========================================= -->
     <div id="candy-play-screen" class="screen">
-        <div class="candy-game-header">
-            <div class="cg-back" onclick="quitCandyQuest()">❮ Quit</div>
-            <div class="cg-score-box">
-                <div class="cg-score-label">Score</div>
-                <div class="cg-score-val" id="playable-candy-score">0</div>
+        <div class="cq-mini-header">
+            <button class="cq-icon-btn" onclick="confirmQuitCandy()">✕</button>
+            <button class="cq-icon-btn" onclick="pauseCandy()">⋮</button>
+        </div>
+
+        <div class="cq-game-area">
+            <!-- Chef Header -->
+            <div class="cq-chef-bar">
+                <!-- Level Badge Left -->
+                <div class="cq-level-badge">
+                    <div class="cq-level-text"><small>LEVEL</small><b>17</b></div>
+                </div>
+                
+                <!-- Chef Character Center -->
+                <div class="cq-chef-char">
+                    <div class="cq-chef-icon">👩‍🍳</div>
+                    <div class="cq-moves-sign">
+                        <div class="cq-moves-label">MOVES</div>
+                        <div class="cq-moves-val" id="cq-moves">35</div>
+                    </div>
+                </div>
+                
+                <!-- Objectives Panel -->
+                <div class="cq-objectives" id="cq-objectives">
+                    <div class="cq-obj"><div class="cq-obj-icon" data-type="1"></div><span class="cq-obj-count" id="obj-1">20</span></div>
+                    <div class="cq-obj"><div class="cq-obj-icon" data-type="3"></div><span class="cq-obj-count" id="obj-3">20</span></div>
+                    <div class="cq-obj"><div class="cq-obj-icon" data-type="2"></div><span class="cq-obj-count" id="obj-2">20</span></div>
+                    <div class="cq-obj"><div class="cq-obj-icon" data-type="0"></div><span class="cq-obj-count" id="obj-0">20</span></div>
+                </div>
+                
+                <!-- Pause + Score Right -->
+                <div class="cq-pause-score">
+                    <button class="cq-pause-btn" onclick="pauseCandy()">⏸</button>
+                    <div class="cq-score-display" id="cq-score">0</div>
+                </div>
+            </div>
+            
+            <div class="cq-shelf"></div>
+            
+            <div class="cq-board-wrap">
+                <canvas id="candy-engine-canvas"></canvas>
             </div>
         </div>
-        <div class="candy-board-wrapper">
-            <canvas id="candy-engine-canvas"></canvas>
+    </div>
+
+    <!-- Modals -->
+    <div id="quit-modal" class="cq-modal-overlay">
+        <div class="cq-modal">
+            <h2>Quit Game?</h2>
+            <p>Are you sure you want to quit?<br>Your progress will be lost.</p>
+            <div class="cq-modal-btns">
+                <button class="cq-modal-btn cq-btn-no" onclick="closeModal('quit-modal')">No</button>
+                <button class="cq-modal-btn cq-btn-yes" onclick="quitCandyQuestConfirmed()">Yes, Quit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameover-modal" class="cq-modal-overlay">
+        <div class="cq-modal">
+            <h2 id="gameover-title">Game Over!</h2>
+            <p>Your Final Score</p>
+            <div class="cq-modal-score" id="gameover-score">0</div>
+            <button class="cq-modal-btn cq-btn-primary" onclick="quitCandyQuestConfirmed()">Back to Menu</button>
         </div>
     </div>
 
@@ -275,7 +361,6 @@
                 container.appendChild(star);
             }
         }
-
         function createConfetti() {
             const container = document.getElementById('confetti-box'); if (!container) return;
             const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
@@ -286,7 +371,6 @@
                 container.appendChild(conf);
             }
         }
-
         function animateLoading() {
             const fill = document.getElementById('loading-fill'); const text = document.getElementById('loading-text');
             let progress = 0;
@@ -298,18 +382,16 @@
                     setTimeout(() => {
                         document.getElementById('loading-screen').classList.remove('active');
                         document.getElementById('menu-screen').classList.add('active');
-                        init3DCarousel();
-                        startCanvasGamePreviews();
+                        init3DCarousel(); startCanvasGamePreviews(); drawObjectiveIcons();
                     }, 400);
                 }
             }, 100);
         }
 
-        /* ============ 3D COVERFLOW SWIPE ============ */
+        /* ============ 3D CAROUSEL ============ */
         function init3DCarousel() {
             const carousel = document.getElementById('carousel');
             const cards = document.querySelectorAll('.game-card');
-            
             function update3D() {
                 const centerPosition = carousel.scrollLeft + (carousel.clientWidth / 2);
                 cards.forEach(card => {
@@ -321,47 +403,38 @@
                     card.style.transform = `scale(${scale}) rotateY(${rotateY}deg)`;
                 });
             }
-
             carousel.addEventListener('scroll', update3D);
             update3D();
             setTimeout(() => { carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2); }, 100);
         }
 
-        /* ==========================================================================
-           1. MENU PREVIEW CANVASES (AUTONOMOUS 60FPS)
-           ========================================================================== */
+        /* ============ MENU PREVIEWS ============ */
         function startCanvasGamePreviews() {
             initMenuCandyPreview(); initBlockCanvas(); initNumberCanvas();
         }
-
-        /* -- Menu Candy Preview -- */
         function initMenuCandyPreview() {
             const canvas = document.getElementById('candy-canvas'); if(!canvas) return;
             const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
-            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#a855f7'];
+            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ec4899'];
             const cols = 6, rows = 5, cellSize = 38;
             const offsetX = (canvas.width - cols * cellSize) / 2, offsetY = 10;
             let frame = 0;
-
-            function drawShape(x, y, color) {
-                ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x+cellSize/2, y+cellSize/2, 14, 0, Math.PI*2); ctx.fill();
-            }
-
             function loop() {
-                frame++; ctx.fillStyle = '#160826'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                frame++; ctx.fillStyle = '#4a1f5c'; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 for (let r = 0; r < rows; r++) {
                     for (let c = 0; c < cols; c++) {
-                        ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)';
-                        ctx.fillRect(offsetX + c * cellSize, offsetY + r * cellSize, cellSize, cellSize);
-                        drawShape(offsetX + c * cellSize, offsetY + r * cellSize, colors[(r+c+frame/40)%colors.length | 0]);
+                        let type = Math.floor((r*cols+c+frame/50) % 6);
+                        let cx = offsetX + c * cellSize + cellSize/2;
+                        let cy = offsetY + r * cellSize + cellSize/2;
+                        ctx.fillStyle = colors[type];
+                        ctx.beginPath(); ctx.arc(cx, cy, 14, 0, Math.PI*2); ctx.fill();
+                        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                        ctx.beginPath(); ctx.arc(cx-4, cy-4, 4, 0, Math.PI*2); ctx.fill();
                     }
                 }
                 requestAnimationFrame(loop);
-            }
-            loop();
+            } loop();
         }
-
-        /* -- Block Blast Preview -- */
         function initBlockCanvas() {
             const canvas = document.getElementById('block-canvas'); if(!canvas) return;
             const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
@@ -372,8 +445,6 @@
                 requestAnimationFrame(loop);
             } loop();
         }
-
-        /* -- Number Match Preview -- */
         function initNumberCanvas() {
             const canvas = document.getElementById('number-canvas'); if(!canvas) return;
             const ctx = canvas.getContext('2d'); canvas.width = 270; canvas.height = 210;
@@ -385,239 +456,363 @@
             } loop();
         }
 
-        /* ==========================================================================
-           2. FULL PLAYABLE CANDY QUEST MATCH-3 ENGINE (ULTRA-REAL)
-           ========================================================================== */
-        let candyEngineRun = false;
+        /* ============ OBJECTIVE PANEL ICONS ============ */
+        function drawObjectiveIcons() {
+            document.querySelectorAll('.cq-obj-icon').forEach(div => {
+                const type = parseInt(div.dataset.type);
+                const canvas = document.createElement('canvas');
+                canvas.width = 44; canvas.height = 44;
+                const ctx = canvas.getContext('2d');
+                drawCandyShape(ctx, 22, 22, 18, type, 1, 1);
+                div.appendChild(canvas);
+                canvas.style.width = '22px'; canvas.style.height = '22px';
+            });
+        }
 
+        /* =============================================================
+           CANDY QUEST GAME ENGINE (REAL CANDY CRUSH STYLE)
+           ============================================================= */
+        let candyGameState = null;
+
+        // Candy Types (6 shapes/colors matching reference image)
+        // 0: Red Jelly Blob | 1: Blue Drop | 2: Green Clover | 3: Yellow Heart | 4: Purple Flower | 5: Orange Star
+        const CANDY_COLORS = ['#f03838', '#3bb2f2', '#5fcf3f', '#f5c91f', '#c04fd9', '#ff8a2b'];
+        const CANDY_HIGHLIGHT = ['#ff8080', '#90d8ff', '#a8e88a', '#fff085', '#e091f5', '#ffb87a'];
+        const CANDY_SHADOW = ['#8c0e0e', '#176ba3', '#2d8018', '#b89010', '#7a1f94', '#c25a0f'];
+
+        // SPECIAL CANDY TYPES
+        // Base: 0-5 regular
+        // 10-15: Striped Horizontal, 20-25: Striped Vertical, 99: Color Bomb
+        function isSpecial(type) { return type >= 10; }
+        function isStripedH(type) { return type >= 10 && type < 20; }
+        function isStripedV(type) { return type >= 20 && type < 30; }
+        function isColorBomb(type) { return type === 99; }
+        function getBaseType(type) {
+            if (type === 99) return -1;
+            if (type >= 20) return type - 20;
+            if (type >= 10) return type - 10;
+            return type;
+        }
+
+        /* --- UNIVERSAL CANDY SHAPE DRAWER (matches reference image exactly) --- */
+        function drawCandyShape(ctx, cx, cy, radius, type, scale, alpha, specialOverlay) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.scale(scale, scale);
+            ctx.globalAlpha = alpha;
+            
+            let baseType = getBaseType(type);
+            if (baseType < 0 || baseType > 5) baseType = 0;
+            
+            // Drop shadow
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.shadowBlur = 5;
+            ctx.shadowOffsetY = 3;
+            
+            const mainColor = CANDY_COLORS[baseType];
+            const highlightColor = CANDY_HIGHLIGHT[baseType];
+            const shadowColor = CANDY_SHADOW[baseType];
+            
+            const r = radius;
+            
+            if (baseType === 0) {
+                // RED JELLY BLOB (rounded squircle)
+                let grad = ctx.createRadialGradient(-r*0.3, -r*0.4, r*0.1, 0, 0, r*1.1);
+                grad.addColorStop(0, highlightColor);
+                grad.addColorStop(0.5, mainColor);
+                grad.addColorStop(1, shadowColor);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.moveTo(-r*0.8, -r*0.3);
+                ctx.quadraticCurveTo(-r, -r, 0, -r*0.9);
+                ctx.quadraticCurveTo(r, -r, r*0.8, -r*0.3);
+                ctx.quadraticCurveTo(r*1.05, r*0.5, r*0.5, r*0.85);
+                ctx.quadraticCurveTo(0, r*1.0, -r*0.5, r*0.85);
+                ctx.quadraticCurveTo(-r*1.05, r*0.5, -r*0.8, -r*0.3);
+                ctx.closePath();
+                ctx.fill();
+            } else if (baseType === 1) {
+                // BLUE DROP/BLOB
+                let grad = ctx.createRadialGradient(-r*0.3, -r*0.4, r*0.1, 0, 0, r*1.1);
+                grad.addColorStop(0, highlightColor);
+                grad.addColorStop(0.5, mainColor);
+                grad.addColorStop(1, shadowColor);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, r*0.95, r*0.9, 0, 0, Math.PI*2);
+                ctx.fill();
+            } else if (baseType === 2) {
+                // GREEN CLOVER (4-leaf)
+                let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+                grad.addColorStop(0, highlightColor);
+                grad.addColorStop(0.6, mainColor);
+                grad.addColorStop(1, shadowColor);
+                ctx.fillStyle = grad;
+                // 4 circles overlapping
+                for (let i=0; i<4; i++) {
+                    let angle = (i*Math.PI/2) + Math.PI/4;
+                    let px = Math.cos(angle) * r*0.4;
+                    let py = Math.sin(angle) * r*0.4;
+                    ctx.beginPath();
+                    ctx.arc(px, py, r*0.55, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                ctx.beginPath(); ctx.arc(0, 0, r*0.3, 0, Math.PI*2); ctx.fill();
+            } else if (baseType === 3) {
+                // YELLOW HEART
+                let grad = ctx.createRadialGradient(-r*0.2, -r*0.4, r*0.1, 0, 0, r);
+                grad.addColorStop(0, highlightColor);
+                grad.addColorStop(0.5, mainColor);
+                grad.addColorStop(1, shadowColor);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.moveTo(0, r*0.7);
+                ctx.bezierCurveTo(-r*1.2, r*0.1, -r*0.7, -r*0.9, 0, -r*0.3);
+                ctx.bezierCurveTo(r*0.7, -r*0.9, r*1.2, r*0.1, 0, r*0.7);
+                ctx.closePath();
+                ctx.fill();
+            } else if (baseType === 4) {
+                // PURPLE FLOWER (5 petals)
+                let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+                grad.addColorStop(0, highlightColor);
+                grad.addColorStop(0.6, mainColor);
+                grad.addColorStop(1, shadowColor);
+                ctx.fillStyle = grad;
+                for (let i=0; i<5; i++) {
+                    let angle = (i * (Math.PI*2/5)) - Math.PI/2;
+                    let px = Math.cos(angle) * r*0.45;
+                    let py = Math.sin(angle) * r*0.45;
+                    ctx.beginPath();
+                    ctx.arc(px, py, r*0.5, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                ctx.beginPath(); ctx.arc(0, 0, r*0.35, 0, Math.PI*2); ctx.fill();
+            } else if (baseType === 5) {
+                // ORANGE STAR (5-point)
+                let grad = ctx.createRadialGradient(0, -r*0.2, 0, 0, 0, r);
+                grad.addColorStop(0, highlightColor);
+                grad.addColorStop(0.5, mainColor);
+                grad.addColorStop(1, shadowColor);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                for (let i=0; i<10; i++) {
+                    let angle = (i * Math.PI/5) - Math.PI/2;
+                    let rad = (i%2===0) ? r : r*0.5;
+                    ctx.lineTo(Math.cos(angle)*rad, Math.sin(angle)*rad);
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            // Specular highlight (gloss)
+            ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+            ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            ctx.beginPath();
+            ctx.ellipse(-r*0.3, -r*0.4, r*0.3, r*0.15, -Math.PI/5, 0, Math.PI*2);
+            ctx.fill();
+            
+            // Special candy overlay
+            if (isStripedH(type)) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 2;
+                for (let i=-1; i<=1; i++) { ctx.beginPath(); ctx.moveTo(-r*0.7, i*r*0.3); ctx.lineTo(r*0.7, i*r*0.3); ctx.stroke(); }
+            } else if (isStripedV(type)) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 2;
+                for (let i=-1; i<=1; i++) { ctx.beginPath(); ctx.moveTo(i*r*0.3, -r*0.7); ctx.lineTo(i*r*0.3, r*0.7); ctx.stroke(); }
+            } else if (isColorBomb(type)) {
+                // Rainbow sphere
+                let bombGrad = ctx.createRadialGradient(-r*0.3, -r*0.3, r*0.1, 0, 0, r);
+                bombGrad.addColorStop(0, '#fff');
+                bombGrad.addColorStop(0.3, '#ff00ff');
+                bombGrad.addColorStop(0.6, '#00ffff');
+                bombGrad.addColorStop(1, '#000');
+                ctx.fillStyle = bombGrad;
+                ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI*2); ctx.fill();
+                // Multi-color dots
+                ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'].forEach((c, i) => {
+                    ctx.fillStyle = c;
+                    let a = (i/5)*Math.PI*2;
+                    ctx.beginPath(); ctx.arc(Math.cos(a)*r*0.4, Math.sin(a)*r*0.4, r*0.15, 0, Math.PI*2); ctx.fill();
+                });
+            }
+            
+            ctx.restore();
+        }
+
+        /* ============ GAME CONTROL ============ */
         function startPlayableCandyQuest() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('candy-play-screen').classList.add('active');
-            candyEngineRun = true;
-            initRealCandyMatchEngine();
+            initCandyGame();
         }
 
-        function quitCandyQuest() {
-            candyEngineRun = false;
+        function confirmQuitCandy() {
+            document.getElementById('quit-modal').classList.add('active');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+        function quitCandyQuestConfirmed() {
+            if (candyGameState) {
+                candyGameState.running = false;
+                // Save high score
+                let highScoreEl = document.getElementById('candy-high-score');
+                let currentHigh = parseInt(highScoreEl.innerText.replace(/,/g,''));
+                if (candyGameState.score > currentHigh) {
+                    highScoreEl.innerText = candyGameState.score.toLocaleString();
+                }
+            }
+            closeModal('quit-modal'); closeModal('gameover-modal');
             document.getElementById('candy-play-screen').classList.remove('active');
             document.getElementById('menu-screen').classList.add('active');
         }
+        function pauseCandy() { confirmQuitCandy(); }
 
-        function initRealCandyMatchEngine() {
+        /* ============ MAIN GAME ENGINE ============ */
+        function initCandyGame() {
             const canvas = document.getElementById('candy-engine-canvas');
             const ctx = canvas.getContext('2d');
-            const scoreEl = document.getElementById('playable-candy-score');
             
-            // Setup sizing based on screen wrapper
-            let boardSize = Math.min(window.innerWidth - 20, 400); // Max 400px width
+            const COLS = 9, ROWS = 9;
+            let boardSize = Math.min(window.innerWidth, 480) - 10;
+            const cellSize = boardSize / COLS;
             canvas.width = boardSize;
-            canvas.height = boardSize; // Square grid
+            canvas.height = cellSize * ROWS;
 
-            const rows = 8;
-            const cols = 8;
-            const cellSize = boardSize / cols;
-            
-            // Types: 0: Red Jelly, 1: Blue Gem, 2: Green Block, 3: Yellow Diamond, 4: Purple Orb
-            const TYPES = 5;
-            let grid = [];
-            let score = 0;
-            let particles = [];
-            
-            // Game State
-            let isAnimating = false;
-            let dragStart = null;
-            let dragCurrent = null;
+            // Reset state
+            candyGameState = {
+                grid: [], score: 0, moves: 35, running: true,
+                particles: [], isAnimating: false,
+                dragStart: null, lastInteraction: Date.now(),
+                hintPair: null, hintPulse: 0,
+                objectives: { 0: 20, 1: 20, 2: 20, 3: 20 }
+            };
+            const state = candyGameState;
 
-            // Initialize Grid
-            function createGrid() {
-                for (let r = 0; r < rows; r++) {
-                    grid[r] = [];
-                    for (let c = 0; c < cols; c++) {
-                        let type;
-                        do {
-                            type = Math.floor(Math.random() * TYPES);
-                        } while (
-                            (c >= 2 && grid[r][c-1].type === type && grid[r][c-2].type === type) ||
-                            (r >= 2 && grid[r-1][c].type === type && grid[r-2][c].type === type)
-                        );
-                        grid[r][c] = { r, c, x: c * cellSize, y: r * cellSize, type: type, scale: 1, alpha: 1, markedForDelete: false };
-                    }
-                }
-            }
-            createGrid();
-
-            /* --- HIGH-END PROCEDURAL CANDY DRAWING --- */
-            function drawRealisticCandy(x, y, size, type, scale, alpha) {
-                ctx.save();
-                ctx.translate(x + size/2, y + size/2);
-                ctx.scale(scale, scale);
-                ctx.globalAlpha = alpha;
-                
-                let r = (size/2) * 0.8; // Radius/bounds
-                
-                // Drop Shadow
-                ctx.shadowColor = 'rgba(0,0,0,0.6)';
-                ctx.shadowBlur = 8;
-                ctx.shadowOffsetY = 4;
-
-                ctx.beginPath();
-                
-                if (type === 0) {
-                    // RED JELLY BEAN (Circle)
-                    let grad = ctx.createRadialGradient(-r*0.3, -r*0.3, r*0.1, 0, 0, r);
-                    grad.addColorStop(0, '#ff7a7a'); grad.addColorStop(0.3, '#f90000'); grad.addColorStop(1, '#660000');
-                    ctx.fillStyle = grad;
-                    ctx.arc(0, 0, r, 0, Math.PI*2);
-                    ctx.fill();
-                    // Specular Highlight
-                    ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(255,255,255,0.7)';
-                    ctx.beginPath(); ctx.ellipse(-r*0.3, -r*0.3, r*0.35, r*0.15, -Math.PI/4, 0, Math.PI*2); ctx.fill();
-                
-                } else if (type === 1) {
-                    // BLUE SAPPHIRE (Hexagon)
-                    let grad = ctx.createLinearGradient(-r, -r, r, r);
-                    grad.addColorStop(0, '#80dfff'); grad.addColorStop(0.5, '#0088cc'); grad.addColorStop(1, '#003366');
-                    ctx.fillStyle = grad;
-                    for (let i=0; i<6; i++) { let a = (i*Math.PI)/3; ctx.lineTo(r*Math.cos(a), r*Math.sin(a)); }
-                    ctx.closePath(); ctx.fill();
-                    // Inner Facets
-                    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1.5;
-                    ctx.beginPath(); for(let i=0; i<6; i++){ let a = (i*Math.PI)/3; ctx.moveTo(0,0); ctx.lineTo(r*Math.cos(a), r*Math.sin(a)); } ctx.stroke();
-                
-                } else if (type === 2) {
-                    // GREEN JELLY BLOCK (Rounded Square)
-                    let grad = ctx.createLinearGradient(0, -r, 0, r);
-                    grad.addColorStop(0, '#66ff66'); grad.addColorStop(1, '#008000');
-                    ctx.fillStyle = grad;
-                    ctx.roundRect(-r*0.9, -r*0.9, r*1.8, r*1.8, r*0.3); ctx.fill();
-                    // Inner Glow Bevel
-                    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2;
-                    ctx.strokeRect(-r*0.7, -r*0.7, r*1.4, r*1.4);
-                
-                } else if (type === 3) {
-                    // YELLOW DIAMOND / STAR
-                    let grad = ctx.createRadialGradient(0, -r*0.2, 0, 0, 0, r);
-                    grad.addColorStop(0, '#ffff99'); grad.addColorStop(0.4, '#ffcc00'); grad.addColorStop(1, '#997300');
-                    ctx.fillStyle = grad;
-                    ctx.moveTo(0, -r*1.1); ctx.lineTo(r*1.1, 0); ctx.lineTo(0, r*1.1); ctx.lineTo(-r*1.1, 0); ctx.closePath(); ctx.fill();
-                    // Highlight point
-                    ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(255,255,255,0.8)';
-                    ctx.beginPath(); ctx.arc(0, -r*0.4, r*0.15, 0, Math.PI*2); ctx.fill();
-                
-                } else if (type === 4) {
-                    // PURPLE MAGIC ORB (Oval)
-                    let grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
-                    grad.addColorStop(0, '#ff99ff'); grad.addColorStop(0.5, '#aa00ff'); grad.addColorStop(1, '#330066');
-                    ctx.fillStyle = grad;
-                    ctx.ellipse(0, 0, r, r*0.85, 0, 0, Math.PI*2); ctx.fill();
-                    // Magic swirl
-                    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 2;
-                    ctx.beginPath(); ctx.arc(0, 0, r*0.5, Math.PI, Math.PI*2.5); ctx.stroke();
-                }
-
-                ctx.restore();
+            // Create initial grid without matches
+            function createCandy(r, c) {
+                let type;
+                do {
+                    type = Math.floor(Math.random() * 6);
+                } while (
+                    (c >= 2 && state.grid[r][c-1] && state.grid[r][c-1].type === type && state.grid[r][c-2] && state.grid[r][c-2].type === type) ||
+                    (r >= 2 && state.grid[r-1] && state.grid[r-1][c].type === type && state.grid[r-2] && state.grid[r-2][c].type === type)
+                );
+                return { r, c, x: c*cellSize, y: r*cellSize, type, scale: 1, alpha: 1 };
             }
 
-            /* --- INPUT HANDLING (SWIPE / DRAG) --- */
-            function getEventPos(e) {
+            for (let r = 0; r < ROWS; r++) {
+                state.grid[r] = [];
+                for (let c = 0; c < COLS; c++) {
+                    state.grid[r][c] = createCandy(r, c);
+                }
+            }
+
+            function updateUI() {
+                document.getElementById('cq-score').innerText = state.score.toLocaleString();
+                document.getElementById('cq-moves').innerText = state.moves;
+                for (let i = 0; i < 4; i++) {
+                    document.getElementById('obj-'+i).innerText = Math.max(0, state.objectives[i]);
+                }
+            }
+            updateUI();
+
+            /* --- INPUT HANDLING --- */
+            function getPos(e) {
                 const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return { x: clientX - rect.left, y: clientY - rect.top };
+                const cx = e.touches ? e.touches[0].clientX : e.clientX;
+                const cy = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: cx - rect.left, y: cy - rect.top };
             }
 
-            canvas.addEventListener('mousedown', handleStart);
-            canvas.addEventListener('touchstart', handleStart, {passive: false});
-            canvas.addEventListener('mousemove', handleMove);
-            canvas.addEventListener('touchmove', handleMove, {passive: false});
-            window.addEventListener('mouseup', handleEnd);
-            window.addEventListener('touchend', handleEnd);
+            canvas.onmousedown = startDrag;
+            canvas.ontouchstart = startDrag;
+            canvas.onmousemove = moveDrag;
+            canvas.ontouchmove = moveDrag;
+            window.onmouseup = endDrag;
+            window.ontouchend = endDrag;
 
-            function handleStart(e) {
-                if (isAnimating) return;
-                const pos = getEventPos(e);
-                let c = Math.floor(pos.x / cellSize);
-                let r = Math.floor(pos.y / cellSize);
-                if (c >= 0 && c < cols && r >= 0 && r < rows) {
-                    dragStart = { r, c, startX: pos.x, startY: pos.y };
+            function startDrag(e) {
+                if (state.isAnimating || !state.running) return;
+                state.lastInteraction = Date.now();
+                state.hintPair = null;
+                const p = getPos(e);
+                let c = Math.floor(p.x / cellSize);
+                let r = Math.floor(p.y / cellSize);
+                if (r>=0 && r<ROWS && c>=0 && c<COLS) {
+                    state.dragStart = { r, c, sx: p.x, sy: p.y };
                 }
             }
 
-            function handleMove(e) {
-                if (!dragStart || isAnimating) return;
-                e.preventDefault(); // Stop scrolling
-                dragCurrent = getEventPos(e);
-                
-                let dx = dragCurrent.x - dragStart.startX;
-                let dy = dragCurrent.y - dragStart.startY;
-                
-                // If dragged far enough, trigger swap
-                if (Math.abs(dx) > cellSize * 0.4 || Math.abs(dy) > cellSize * 0.4) {
-                    let targetR = dragStart.r;
-                    let targetC = dragStart.c;
-                    
-                    if (Math.abs(dx) > Math.abs(dy)) {
-                        targetC += (dx > 0) ? 1 : -1;
-                    } else {
-                        targetR += (dy > 0) ? 1 : -1;
+            function moveDrag(e) {
+                if (!state.dragStart || state.isAnimating) return;
+                e.preventDefault();
+                const p = getPos(e);
+                const dx = p.x - state.dragStart.sx;
+                const dy = p.y - state.dragStart.sy;
+                if (Math.abs(dx) > cellSize*0.3 || Math.abs(dy) > cellSize*0.3) {
+                    let tr = state.dragStart.r, tc = state.dragStart.c;
+                    if (Math.abs(dx) > Math.abs(dy)) tc += (dx > 0 ? 1 : -1);
+                    else tr += (dy > 0 ? 1 : -1);
+                    if (tr >= 0 && tr < ROWS && tc >= 0 && tc < COLS) {
+                        attemptSwap(state.dragStart.r, state.dragStart.c, tr, tc);
                     }
-                    
-                    if (targetC >= 0 && targetC < cols && targetR >= 0 && targetR < rows) {
-                        attemptSwap(dragStart.r, dragStart.c, targetR, targetC);
-                    }
-                    dragStart = null;
+                    state.dragStart = null;
                 }
             }
 
-            function handleEnd() { dragStart = null; }
+            function endDrag() { state.dragStart = null; }
 
-            /* --- LOGIC & ANIMATION --- */
             async function attemptSwap(r1, c1, r2, c2) {
-                isAnimating = true;
-                let item1 = grid[r1][c1];
-                let item2 = grid[r2][c2];
-
-                // Visual Swap
-                await animateSwap(item1, item2, r1, c1, r2, c2);
+                state.isAnimating = true;
+                let a = state.grid[r1][c1], b = state.grid[r2][c2];
                 
-                // Logical Swap
-                grid[r1][c1] = item2; grid[r1][c1].r = r1; grid[r1][c1].c = c1;
-                grid[r2][c2] = item1; grid[r2][c2].r = r2; grid[r2][c2].c = c2;
+                // Color bomb + anything = clear all of that type
+                if (isColorBomb(a.type) || isColorBomb(b.type)) {
+                    let targetType = isColorBomb(a.type) ? getBaseType(b.type) : getBaseType(a.type);
+                    await animateSwap(a, b, r1, c1, r2, c2);
+                    state.grid[r1][c1] = b; b.r = r1; b.c = c1;
+                    state.grid[r2][c2] = a; a.r = r2; a.c = c2;
+                    // Clear all of targetType
+                    let toClear = [];
+                    for (let r=0; r<ROWS; r++) for (let c=0; c<COLS; c++) {
+                        if (state.grid[r][c] && getBaseType(state.grid[r][c].type) === targetType) toClear.push(state.grid[r][c]);
+                    }
+                    toClear.push(a); toClear.push(b);
+                    await processMatches(toClear);
+                    state.moves--; updateUI();
+                    checkGameOver();
+                    return;
+                }
+
+                await animateSwap(a, b, r1, c1, r2, c2);
+                state.grid[r1][c1] = b; b.r = r1; b.c = c1;
+                state.grid[r2][c2] = a; a.r = r2; a.c = c2;
 
                 let matches = findMatches();
                 if (matches.length > 0) {
+                    state.moves--; updateUI();
                     await processMatches(matches);
+                    checkGameOver();
                 } else {
-                    // Invalid move, swap back
-                    await animateSwap(grid[r1][c1], grid[r2][c2], r1, c1, r2, c2);
-                    let temp = grid[r1][c1];
-                    grid[r1][c1] = grid[r2][c2]; grid[r1][c1].r = r1; grid[r1][c1].c = c1;
-                    grid[r2][c2] = temp; grid[r2][c2].r = r2; grid[r2][c2].c = c2;
-                    isAnimating = false;
+                    // swap back
+                    await animateSwap(state.grid[r1][c1], state.grid[r2][c2], r1, c1, r2, c2);
+                    let t = state.grid[r1][c1];
+                    state.grid[r1][c1] = state.grid[r2][c2]; state.grid[r1][c1].r=r1; state.grid[r1][c1].c=c1;
+                    state.grid[r2][c2] = t; state.grid[r2][c2].r=r2; state.grid[r2][c2].c=c2;
+                    state.isAnimating = false;
                 }
             }
 
-            function animateSwap(i1, i2, r1, c1, r2, c2) {
-                return new Promise(resolve => {
-                    let frames = 15;
-                    let current = 0;
-                    let startX1 = i1.x, startY1 = i1.y;
-                    let targetX1 = c2 * cellSize, targetY1 = r2 * cellSize;
-                    let startX2 = i2.x, startY2 = i2.y;
-                    let targetX2 = c1 * cellSize, targetY2 = r1 * cellSize;
-
+            function animateSwap(a, b, r1, c1, r2, c2) {
+                return new Promise(res => {
+                    let frames = 12, cur = 0;
+                    let sx1=a.x, sy1=a.y, tx1=c2*cellSize, ty1=r2*cellSize;
+                    let sx2=b.x, sy2=b.y, tx2=c1*cellSize, ty2=r1*cellSize;
                     function step() {
-                        current++;
-                        let t = current / frames;
-                        // Smoothstep ease out
-                        t = t * (2 - t);
-                        i1.x = startX1 + (targetX1 - startX1) * t;
-                        i1.y = startY1 + (targetY1 - startY1) * t;
-                        i2.x = startX2 + (targetX2 - startX2) * t;
-                        i2.y = startY2 + (targetY2 - startY2) * t;
-
-                        if (current < frames) requestAnimationFrame(step);
-                        else resolve();
+                        cur++; let t = cur/frames; t = t*(2-t);
+                        a.x = sx1+(tx1-sx1)*t; a.y = sy1+(ty1-sy1)*t;
+                        b.x = sx2+(tx2-sx2)*t; b.y = sy2+(ty2-sy2)*t;
+                        if (cur < frames) requestAnimationFrame(step); else res();
                     }
                     step();
                 });
@@ -625,157 +820,259 @@
 
             function findMatches() {
                 let matches = [];
+                let groups = []; // Track groups for special candy generation
+                
                 // Horizontal
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols - 2; c++) {
-                        let type = grid[r][c].type;
-                        if (type === -1) continue;
-                        if (grid[r][c+1].type === type && grid[r][c+2].type === type) {
-                            matches.push(grid[r][c], grid[r][c+1], grid[r][c+2]);
+                for (let r = 0; r < ROWS; r++) {
+                    let run = [state.grid[r][0]];
+                    for (let c = 1; c < COLS; c++) {
+                        let cur = state.grid[r][c];
+                        let last = run[run.length-1];
+                        if (cur && last && getBaseType(cur.type) === getBaseType(last.type) && !isColorBomb(cur.type) && !isColorBomb(last.type)) {
+                            run.push(cur);
+                        } else {
+                            if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'h'}); }
+                            run = [cur];
                         }
                     }
+                    if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'h'}); }
                 }
                 // Vertical
-                for (let c = 0; c < cols; c++) {
-                    for (let r = 0; r < rows - 2; r++) {
-                        let type = grid[r][c].type;
-                        if (type === -1) continue;
-                        if (grid[r+1][c].type === type && grid[r+2][c].type === type) {
-                            matches.push(grid[r][c], grid[r+1][c], grid[r+2][c]);
+                for (let c = 0; c < COLS; c++) {
+                    let run = [state.grid[0][c]];
+                    for (let r = 1; r < ROWS; r++) {
+                        let cur = state.grid[r][c];
+                        let last = run[run.length-1];
+                        if (cur && last && getBaseType(cur.type) === getBaseType(last.type) && !isColorBomb(cur.type) && !isColorBomb(last.type)) {
+                            run.push(cur);
+                        } else {
+                            if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'v'}); }
+                            run = [cur];
                         }
                     }
+                    if (run.length >= 3) { matches.push(...run); groups.push({items: [...run], dir: 'v'}); }
                 }
-                return [...new Set(matches)]; // Unique items
+                
+                // Save group info for special candy creation
+                state.lastGroups = groups;
+                return [...new Set(matches)];
             }
 
-            function spawnParticles(x, y, colorCode) {
-                const colors = ['#f90000', '#0088cc', '#008000', '#ffcc00', '#aa00ff'];
-                let color = colors[colorCode] || '#fff';
-                for(let i=0; i<8; i++) {
-                    particles.push({
-                        x: x + cellSize/2, y: y + cellSize/2,
-                        vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10,
-                        life: 1, color: color
+            function spawnParticles(x, y, type) {
+                let color = CANDY_COLORS[getBaseType(type)] || '#fff';
+                for (let i=0; i<10; i++) {
+                    state.particles.push({
+                        x: x+cellSize/2, y: y+cellSize/2,
+                        vx: (Math.random()-0.5)*12, vy: (Math.random()-0.5)*12-3,
+                        life: 1, color, size: Math.random()*4+2
                     });
                 }
             }
 
             async function processMatches(matches) {
-                score += matches.length * 100;
-                scoreEl.innerText = score.toLocaleString();
-
-                // Shrink out animation & particles
-                for(let i=1.0; i>=0; i-=0.15) {
-                    matches.forEach(m => { m.scale = i; m.alpha = i; });
-                    await new Promise(r => setTimeout(r, 16));
+                // Determine special candies to create
+                let specialsToCreate = [];
+                if (state.lastGroups) {
+                    state.lastGroups.forEach(grp => {
+                        if (grp.items.length === 4) {
+                            // Create striped
+                            let center = grp.items[Math.floor(grp.items.length/2)];
+                            let newType = grp.dir === 'h' ? (10 + getBaseType(center.type)) : (20 + getBaseType(center.type));
+                            specialsToCreate.push({ r: center.r, c: center.c, type: newType });
+                        } else if (grp.items.length >= 5) {
+                            // Create color bomb
+                            let center = grp.items[Math.floor(grp.items.length/2)];
+                            specialsToCreate.push({ r: center.r, c: center.c, type: 99 });
+                        }
+                    });
                 }
-
+                
+                // Handle special triggers (striped candies create lines)
+                let extraClears = [];
                 matches.forEach(m => {
-                    spawnParticles(m.x, m.y, m.type);
-                    grid[m.r][m.c] = null;
-                });
-
-                // Apply Gravity Drop
-                let dropping = false;
-                for (let c = 0; c < cols; c++) {
-                    let emptySpaces = 0;
-                    for (let r = rows - 1; r >= 0; r--) {
-                        if (grid[r][c] === null) {
-                            emptySpaces++;
-                        } else if (emptySpaces > 0) {
-                            let item = grid[r][c];
-                            grid[r + emptySpaces][c] = item;
-                            item.r = r + emptySpaces;
-                            grid[r][c] = null;
-                            dropping = true;
+                    if (isStripedH(m.type)) {
+                        for (let cc = 0; cc < COLS; cc++) {
+                            if (state.grid[m.r][cc] && !matches.includes(state.grid[m.r][cc])) extraClears.push(state.grid[m.r][cc]);
+                        }
+                    } else if (isStripedV(m.type)) {
+                        for (let rr = 0; rr < ROWS; rr++) {
+                            if (state.grid[rr][m.c] && !matches.includes(state.grid[rr][m.c])) extraClears.push(state.grid[rr][m.c]);
                         }
                     }
-                    // Spawn new at top
-                    for (let i = 0; i < emptySpaces; i++) {
-                        let r = emptySpaces - 1 - i;
-                        grid[r][c] = {
-                            r: r, c: c,
-                            x: c * cellSize, y: -(i + 1) * cellSize,
-                            type: Math.floor(Math.random() * TYPES),
-                            scale: 1, alpha: 1
+                });
+                matches = [...new Set([...matches, ...extraClears])];
+                
+                state.score += matches.length * 60;
+                matches.forEach(m => {
+                    let bt = getBaseType(m.type);
+                    if (bt >= 0 && bt < 4 && state.objectives[bt] > 0) state.objectives[bt]--;
+                });
+                updateUI();
+
+                // Shrink animation
+                for (let s = 1; s >= 0; s -= 0.12) {
+                    matches.forEach(m => { m.scale = s; m.alpha = s; });
+                    await new Promise(r => setTimeout(r, 16));
+                }
+                matches.forEach(m => {
+                    // Don't remove if a special was spawned here
+                    let keep = specialsToCreate.find(sp => sp.r === m.r && sp.c === m.c);
+                    if (!keep) {
+                        spawnParticles(m.x, m.y, m.type);
+                        state.grid[m.r][m.c] = null;
+                    } else {
+                        state.grid[m.r][m.c] = { r: m.r, c: m.c, x: m.c*cellSize, y: m.r*cellSize, type: keep.type, scale: 1, alpha: 1 };
+                    }
+                });
+
+                // Gravity
+                let dropped = false;
+                for (let c = 0; c < COLS; c++) {
+                    let empty = 0;
+                    for (let r = ROWS-1; r >= 0; r--) {
+                        if (!state.grid[r][c]) empty++;
+                        else if (empty > 0) {
+                            let item = state.grid[r][c];
+                            state.grid[r+empty][c] = item;
+                            item.r = r+empty;
+                            state.grid[r][c] = null;
+                            dropped = true;
+                        }
+                    }
+                    for (let i = 0; i < empty; i++) {
+                        let r = empty-1-i;
+                        state.grid[r][c] = {
+                            r, c, x: c*cellSize, y: -(i+1)*cellSize,
+                            type: Math.floor(Math.random()*6), scale: 1, alpha: 1
                         };
-                        dropping = true;
+                        dropped = true;
                     }
                 }
 
-                if (dropping) {
+                if (dropped) {
                     await animateDrops();
-                    let newMatches = findMatches();
-                    if (newMatches.length > 0) {
-                        await processMatches(newMatches);
-                    } else {
-                        isAnimating = false;
-                    }
+                    let more = findMatches();
+                    if (more.length > 0) await processMatches(more);
+                    else state.isAnimating = false;
                 } else {
-                    isAnimating = false;
+                    state.isAnimating = false;
                 }
             }
 
             function animateDrops() {
-                return new Promise(resolve => {
-                    let dropping = true;
+                return new Promise(res => {
                     function step() {
-                        dropping = false;
-                        for (let r = 0; r < rows; r++) {
-                            for (let c = 0; c < cols; c++) {
-                                let item = grid[r][c];
-                                let targetY = r * cellSize;
-                                if (item.y < targetY) {
-                                    item.y += 12; // Fall speed
-                                    if (item.y > targetY) item.y = targetY; // Snap
-                                    dropping = true;
-                                }
+                        let moving = false;
+                        for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+                            let it = state.grid[r][c];
+                            if (!it) continue;
+                            let ty = r*cellSize;
+                            if (it.y < ty) {
+                                it.y += 15;
+                                if (it.y > ty) it.y = ty;
+                                moving = true;
                             }
                         }
-                        if (dropping) requestAnimationFrame(step);
-                        else resolve();
+                        if (moving) requestAnimationFrame(step); else res();
                     }
                     step();
                 });
             }
 
-            /* --- RENDER LOOP --- */
-            function render() {
-                if (!candyEngineRun) return;
-                
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Draw Board Grid Cells
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.02)';
-                        ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
-                    }
+            function checkGameOver() {
+                let objDone = Object.values(state.objectives).every(v => v <= 0);
+                if (objDone) {
+                    setTimeout(() => {
+                        document.getElementById('gameover-title').innerText = 'Level Complete! 🎉';
+                        document.getElementById('gameover-score').innerText = state.score.toLocaleString();
+                        document.getElementById('gameover-modal').classList.add('active');
+                    }, 500);
+                } else if (state.moves <= 0) {
+                    setTimeout(() => {
+                        document.getElementById('gameover-title').innerText = 'Game Over!';
+                        document.getElementById('gameover-score').innerText = state.score.toLocaleString();
+                        document.getElementById('gameover-modal').classList.add('active');
+                    }, 500);
                 }
+            }
 
-                // Draw Candies
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        let item = grid[r][c];
-                        if (item) {
-                            drawRealisticCandy(item.x, item.y, cellSize, item.type, item.scale, item.alpha);
+            // Hint system - find a valid move after idle
+            function findHint() {
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        // Try swap right
+                        if (c < COLS-1) {
+                            swapTypes(r, c, r, c+1);
+                            if (findMatches().length > 0) {
+                                swapTypes(r, c, r, c+1);
+                                return [state.grid[r][c], state.grid[r][c+1]];
+                            }
+                            swapTypes(r, c, r, c+1);
+                        }
+                        // Try swap down
+                        if (r < ROWS-1) {
+                            swapTypes(r, c, r+1, c);
+                            if (findMatches().length > 0) {
+                                swapTypes(r, c, r+1, c);
+                                return [state.grid[r][c], state.grid[r+1][c]];
+                            }
+                            swapTypes(r, c, r+1, c);
                         }
                     }
                 }
+                return null;
+            }
+            function swapTypes(r1, c1, r2, c2) {
+                let t = state.grid[r1][c1].type;
+                state.grid[r1][c1].type = state.grid[r2][c2].type;
+                state.grid[r2][c2].type = t;
+            }
 
-                // Draw Particles
-                for (let i = particles.length - 1; i >= 0; i--) {
-                    let p = particles[i];
-                    p.x += p.vx; p.y += p.vy;
-                    p.life -= 0.05;
-                    if (p.life <= 0) { particles.splice(i, 1); continue; }
-                    
-                    ctx.fillStyle = p.color;
-                    ctx.globalAlpha = p.life;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.life * 5, 0, Math.PI*2); ctx.fill();
+            /* --- RENDER LOOP --- */
+            function render() {
+                if (!state.running) return;
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Board background
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        ctx.fillStyle = (r+c)%2===0 ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.1)';
+                        ctx.fillRect(c*cellSize, r*cellSize, cellSize, cellSize);
+                    }
+                }
+                
+                // Hint check (every frame)
+                if (!state.isAnimating && Date.now() - state.lastInteraction > 5000 && !state.hintPair) {
+                    state.hintPair = findHint();
+                }
+                state.hintPulse += 0.1;
+                
+                // Draw candies
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        let it = state.grid[r][c];
+                        if (it) {
+                            let extraScale = 1;
+                            if (state.hintPair && (state.hintPair[0] === it || state.hintPair[1] === it)) {
+                                extraScale = 1 + Math.sin(state.hintPulse) * 0.12;
+                            }
+                            drawCandyShape(ctx, it.x + cellSize/2, it.y + cellSize/2, cellSize*0.42, it.type, it.scale * extraScale, it.alpha);
+                        }
+                    }
+                }
+                
+                // Particles
+                for (let i = state.particles.length-1; i >= 0; i--) {
+                    let p = state.particles[i];
+                    p.x += p.vx; p.y += p.vy; p.vy += 0.4;
+                    p.life -= 0.04;
+                    if (p.life <= 0) { state.particles.splice(i, 1); continue; }
+                    ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2); ctx.fill();
                     ctx.globalAlpha = 1;
                 }
-
+                
                 requestAnimationFrame(render);
             }
             render();
@@ -790,7 +1087,11 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => { createStars(document.getElementById('global-stars'), 50); createConfetti(); animateLoading(); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            createStars(document.getElementById('global-stars'), 50); 
+            createConfetti(); 
+            animateLoading();
+        });
     </script>
 </body>
 </html>
