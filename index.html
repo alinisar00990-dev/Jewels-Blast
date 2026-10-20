@@ -14,7 +14,6 @@
             box-sizing: border-box;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
         }
 
         html, body {
@@ -24,7 +23,6 @@
             font-family: 'Poppins', sans-serif;
             background: #070514;
             position: fixed;
-            overscroll-behavior: none;
         }
 
         .screen {
@@ -93,7 +91,7 @@
             background: linear-gradient(180deg, #fff6bb 0%, #ffd700 35%, #d49400 65%, #8a5a00 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.9));
             letter-spacing: 2px;
         }
 
@@ -102,45 +100,9 @@
             background: linear-gradient(180deg, #fff9d4 0%, #ffe066 30%, #e6a100 65%, #996300 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(255, 224, 102, 0.4));
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.9));
             letter-spacing: 3px;
             margin-top: -10px;
-        }
-
-        .title-ornament {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 8px 0;
-        }
-
-        .ornament-line {
-            height: 2px;
-            width: 60px;
-            background: linear-gradient(90deg, transparent, #ffd700, transparent);
-        }
-
-        .ornament-gem {
-            font-size: 1.2rem;
-            color: #d8b4fe;
-            filter: drop-shadow(0 0 8px #c084fc);
-            animation: pulseGem 2s infinite ease-in-out;
-        }
-
-        @keyframes pulseGem {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.25); }
-        }
-
-        .subtitle {
-            font-family: 'Cinzel', serif;
-            color: #edd79c;
-            font-size: 1.1rem;
-            letter-spacing: 4px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-            margin-top: 5px;
-            font-weight: 700;
         }
 
         .loading-box {
@@ -156,9 +118,9 @@
             width: 100%;
             height: 18px;
             background: rgba(10, 6, 28, 0.85);
-            border: 1.5px solid rgba(255, 255, 255, 0.18);
             border-radius: 20px;
             padding: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .loading-fill {
@@ -166,7 +128,6 @@
             width: 0%;
             background: linear-gradient(90deg, #c084fc, #e879f9, #f43f5e);
             border-radius: 20px;
-            box-shadow: 0 0 12px rgba(232, 121, 249, 0.9);
             transition: width 0.2s ease-out;
         }
 
@@ -175,7 +136,6 @@
             font-size: 0.8rem;
             margin-top: 12px;
             letter-spacing: 2px;
-            font-family: 'Cinzel', serif;
         }
 
         /* ============================================
@@ -183,17 +143,16 @@
            ============================================ */
         .page-screen {
             background: radial-gradient(circle at top, #1b1240 0%, #0d0726 50%, #050212 100%);
-            padding-bottom: 85px;
+            padding-bottom: 85px; /* Space for bottom nav */
         }
 
-        /* ============================================
-           TOP HEADER - CENTERED TITLE
-           ============================================ */
         .top-header {
             width: 100%;
-            padding: 20px 20px 15px 20px;
+            padding: 20px 20px 10px 20px;
             text-align: center;
             flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
 
         .main-title {
@@ -203,29 +162,8 @@
             background: linear-gradient(180deg, #fff6bb 0%, #ffd700 50%, #d49400 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8));
             letter-spacing: 3px;
-            line-height: 1.1;
-        }
-
-        .title-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        .divider-line {
-            height: 1px;
-            width: 40px;
-            background: linear-gradient(90deg, transparent, #ffd700, transparent);
-        }
-
-        .divider-gem {
-            color: #ffd700;
-            font-size: 0.7rem;
-            filter: drop-shadow(0 0 5px #ffd700);
         }
 
         /* ============================================
@@ -235,7 +173,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 0 15px;
             overflow: hidden;
             position: relative;
             z-index: 5;
@@ -243,7 +180,7 @@
 
         /* MINI GAMES BANNERS */
         .banners-wrapper {
-            padding: 10px 0 15px 0;
+            padding: 5px 0 10px 0;
             flex-shrink: 0;
         }
 
@@ -251,18 +188,16 @@
             display: flex;
             gap: 12px;
             overflow-x: auto;
-            padding: 5px 2px;
+            padding: 5px 20px;
             scrollbar-width: none;
             scroll-snap-type: x mandatory;
         }
 
-        .banners-scroll::-webkit-scrollbar {
-            display: none;
-        }
+        .banners-scroll::-webkit-scrollbar { display: none; }
 
         .banner-card {
             min-width: 155px;
-            height: 85px;
+            height: 80px;
             border-radius: 16px;
             padding: 12px;
             display: flex;
@@ -273,398 +208,186 @@
             cursor: pointer;
             flex-shrink: 0;
             scroll-snap-align: start;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        .banner-card:active {
-            transform: scale(0.96);
-        }
-
-        .banner-mini1 {
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-        }
-
-        .banner-mini2 {
-            background: linear-gradient(135deg, #10b981, #059669);
-        }
-
-        .banner-daily {
-            background: linear-gradient(135deg, #f59e0b, #dc2626);
-        }
+        .banner-mini1 { background: linear-gradient(135deg, #38bdf8, #3b82f6); }
+        .banner-mini2 { background: linear-gradient(135deg, #34d399, #059669); }
+        .banner-daily { background: linear-gradient(135deg, #fbbf24, #ea580c); }
 
         .banner-icon-box {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             flex-shrink: 0;
-            backdrop-filter: blur(10px);
         }
 
         .banner-text-box {
             flex: 1;
-            min-width: 0;
             overflow: hidden;
         }
 
         .banner-title {
-            color: white;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .banner-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.65rem;
-            font-weight: 500;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 800;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-top: 2px;
-        }
-
-        .banner-shine {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
-            animation: shineMove 3s infinite;
-            pointer-events: none;
-        }
-
-        @keyframes shineMove {
-            0% { transform: translateX(-100%) translateY(-100%); }
-            100% { transform: translateX(100%) translateY(100%); }
-        }
-
-        /* SECTION LABEL */
-        .section-label {
-            color: #ffd700;
-            font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-align: center;
-            margin: 10px 0 15px 0;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-            flex-shrink: 0;
         }
 
         /* ============================================
-           SWIPE CARD CAROUSEL
+           ULTRA REALISTIC HORIZONTAL SCROLL CAROUSEL
            ============================================ */
         .carousel-area {
             flex: 1;
             position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 10px 0;
+            width: 100%;
             min-height: 0;
         }
 
-        .cards-stack {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            height: 100%;
-            max-height: 450px;
+        .carousel-scroll {
             display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 0 calc(50vw - 135px); /* Centers the cards perfectly */
+            gap: 20px;
+            width: 100%;
+            height: 100%;
             align-items: center;
-            justify-content: center;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
         }
 
+        .carousel-scroll::-webkit-scrollbar { display: none; /* Hide scrollbar Chrome/Safari */ }
+
+        /* EXACT CARD REPLICA FROM YOUR IMAGE */
         .game-card {
-            position: absolute;
-            width: 85%;
-            height: 95%;
-            border-radius: 28px;
+            scroll-snap-align: center;
+            flex-shrink: 0;
+            width: 270px;
+            height: 380px;
+            border-radius: 20px;
+            background: #ffffff;
             overflow: hidden;
-            cursor: grab;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 215, 0, 0.1);
             display: flex;
             flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s ease-out; /* Smooth scaling */
+            transform-origin: center center;
         }
 
-        .game-card.dragging {
-            transition: none;
-            cursor: grabbing;
-        }
-
-        /* CARD BACKGROUNDS */
-        .card-candy {
-            background: linear-gradient(145deg, #c13584 0%, #833ab4 50%, #5f2c82 100%);
-            border: 2px solid rgba(255, 182, 193, 0.4);
-        }
-
-        .card-block {
-            background: linear-gradient(145deg, #0066ff 0%, #00a8ff 50%, #0d47a1 100%);
-            border: 2px solid rgba(100, 200, 255, 0.4);
-        }
-
-        .card-number {
-            background: linear-gradient(145deg, #0d9488 0%, #10b981 50%, #047857 100%);
-            border: 2px solid rgba(100, 255, 200, 0.4);
-        }
-
-        /* ANIMATED CARD BACKGROUNDS */
-        .card-bg-animation {
-            position: absolute;
-            inset: 0;
+        /* CARD TOP (Image Area) */
+        .card-top {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            opacity: 0.3;
         }
 
+        .card-candy .card-top { background: linear-gradient(145deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); }
+        .card-block .card-top { background: linear-gradient(145deg, #4facfe 0%, #00f2fe 100%); }
+        .card-number .card-top { background: linear-gradient(145deg, #43e97b 0%, #38f9d7 100%); }
+
+        /* Background floating shapes */
         .bg-shape {
             position: absolute;
             border-radius: 50%;
-            filter: blur(40px);
-            animation: floatBg 8s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.15);
+            animation: float 6s infinite ease-in-out;
         }
-
-        .bg-shape:nth-child(1) {
-            width: 180px;
-            height: 180px;
-            top: -30px;
-            left: -30px;
-            animation-delay: 0s;
-        }
-
-        .bg-shape:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            bottom: -20px;
-            right: -20px;
-            animation-delay: 2s;
-        }
-
-        .bg-shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            top: 50%;
-            left: 50%;
-            animation-delay: 4s;
-        }
-
-        .card-candy .bg-shape { background: #ff6b9d; }
-        .card-block .bg-shape { background: #4facfe; }
-        .card-number .bg-shape { background: #43e97b; }
-
-        @keyframes floatBg {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        /* CARD CONTENT */
-        .card-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .card-badge {
-            align-self: flex-end;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 5px 12px;
-            border-radius: 15px;
-            color: white;
-            font-size: 0.68rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* GAME PREVIEW AREA (MINI ANIMATED GAME) */
-        .game-preview {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 0;
-            position: relative;
-        }
-
-        /* CANDY PREVIEW - Mini candy grid */
-        .candy-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 4px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 220px;
-        }
-
-        .candy-cell {
-            aspect-ratio: 1;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            background: rgba(255, 255, 255, 0.1);
-            animation: candyPop 3s ease-in-out infinite;
-        }
-
-        @keyframes candyPop {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* BLOCK PREVIEW - Mini block grid */
-        .block-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 3px;
-            padding: 10px;
-            background: rgba(0, 20, 60, 0.5);
-            border-radius: 15px;
-            width: 90%;
-            max-width: 220px;
-        }
-
-        .block-cell {
-            aspect-ratio: 1;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .block-cell.filled {
-            background: linear-gradient(135deg, #ff6b9d, #c13584);
-            box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4);
-            animation: blockPulse 2s ease-in-out infinite;
-        }
-
-        .block-cell.green { background: linear-gradient(135deg, #4ade80, #16a34a); box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4); }
-        .block-cell.yellow { background: linear-gradient(135deg, #fcd34d, #eab308); box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4); }
-        .block-cell.cyan { background: linear-gradient(135deg, #67e8f9, #06b6d4); box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4); }
-        .block-cell.purple { background: linear-gradient(135deg, #c084fc, #9333ea); box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4); }
-
-        @keyframes blockPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-        }
-
-        /* NUMBER PREVIEW - Number grid */
-        .number-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            padding: 12px;
-            background: rgba(0, 40, 30, 0.5);
-            border-radius: 15px;
-            width: 90%;
-            max-width: 200px;
-        }
-
-        .number-cell {
-            aspect-ratio: 1;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: #0d9488;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-            animation: numberFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes numberFloat {
+        .shape1 { width: 150px; height: 150px; top: -20px; left: -30px; }
+        .shape2 { width: 100px; height: 100px; bottom: -10px; right: -20px; animation-delay: 2s; }
+        
+        @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+            50% { transform: translateY(-15px); }
         }
 
-        /* CARD INFO - BOTTOM */
-        .card-info {
+        .card-title {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 800;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            letter-spacing: 1px;
             text-align: center;
-            width: 100%;
-            margin-top: auto;
-        }
-
-        .card-title-text {
-            font-family: 'Cinzel Decorative', serif;
-            color: white;
-            font-size: 1.6rem;
-            font-weight: 900;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
-            margin-bottom: 4px;
-            letter-spacing: 1.5px;
             line-height: 1.1;
         }
 
-        .card-desc-text {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.78rem;
-            margin-bottom: 14px;
-            font-weight: 500;
+        .card-badge {
+            background: #ffffff;
+            color: #111111;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 10px;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-        .card-play-btn {
-            padding: 12px 40px;
+        /* CARD BOTTOM (White Area exactly like picture) */
+        .card-bottom {
+            height: 175px;
+            background: #ffffff;
+            padding: 20px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .points-label {
+            color: #888888;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .points-value {
+            color: #111111;
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: -5px;
+        }
+
+        /* The Big Blue Button from the reference */
+        .play-btn {
+            width: 100%;
+            background: #2563eb;
+            color: #ffffff;
             border: none;
             border-radius: 25px;
-            font-family: 'Cinzel', serif;
+            padding: 14px 0;
+            font-size: 1.05rem;
             font-weight: 700;
-            font-size: 0.9rem;
-            color: #333;
             cursor: pointer;
-            letter-spacing: 2px;
-            background: linear-gradient(180deg, #fff6bb, #ffd700);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            transition: transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: background 0.2s;
         }
 
-        .card-play-btn:active {
-            transform: translateY(2px);
-        }
-
-        /* DOT INDICATORS */
-        .dots-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 0 5px 0;
-            flex-shrink: 0;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.25);
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            background: #ffd700;
-            width: 28px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        .play-btn:active {
+            background: #1d4ed8;
+            transform: scale(0.98);
         }
 
         /* ============================================
@@ -675,360 +398,95 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(13, 7, 38, 0.98);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 215, 0, 0.25);
+            background: #ffffff;
+            border-top: 1px solid #eeeeee;
             display: flex;
             justify-content: space-around;
             padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 10px;
             z-index: 100;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            padding: 8px 12px;
+            gap: 4px;
+            padding: 5px 15px;
             cursor: pointer;
-            border-radius: 14px;
-            transition: all 0.3s ease;
-            min-width: 65px;
-        }
-
-        .nav-item.active {
-            background: rgba(255, 215, 0, 0.12);
-        }
-
-        .nav-item.active .nav-icon {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7));
-        }
-
-        .nav-item.active .nav-label {
-            color: #ffd700;
+            border-radius: 12px;
         }
 
         .nav-icon {
             font-size: 1.5rem;
-            transition: all 0.3s ease;
+            color: #94a3b8;
+            transition: all 0.2s ease;
         }
 
         .nav-label {
             font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: #94a3b8;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
         }
 
+        .nav-item.active .nav-icon { color: #2563eb; transform: scale(1.1); }
+        .nav-item.active .nav-label { color: #2563eb; }
+
         /* ============================================
-           PROFILE PAGE
+           OTHER PAGES (REWARDS, PROFILE, SETTINGS)
            ============================================ */
-        .profile-content {
+        .page-content {
             flex: 1;
             overflow-y: auto;
-            padding: 10px 20px;
+            padding: 15px 20px;
             position: relative;
             z-index: 5;
         }
+        .page-content::-webkit-scrollbar { display: none; }
 
-        .profile-content::-webkit-scrollbar { display: none; }
-
-        .avatar-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .avatar-circle {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ffd700, #d49400);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4), inset 0 2px 10px rgba(255, 255, 255, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .player-name {
-            color: white;
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 15px;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        }
-
-        .player-level {
-            color: #ffd700;
-            font-size: 0.9rem;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .stat-box {
-            background: rgba(255, 255, 255, 0.06);
+        /* Generic Settings/Profile Box */
+        .info-box {
+            background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .stat-icon {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            color: #ffd700;
-            font-size: 1.4rem;
-            font-weight: 800;
-            font-family: 'Cinzel', serif;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.72rem;
-            margin-top: 3px;
-            letter-spacing: 1px;
-        }
-
-        .achievements-section {
-            margin-top: 25px;
-        }
-
-        .section-heading {
-            color: #ffd700;
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            padding-left: 5px;
-        }
-
-        .achievement-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-radius: 12px;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .achievement-icon {
-            font-size: 1.8rem;
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 215, 0, 0.15);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .achievement-info { flex: 1; }
-
-        .achievement-name {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .achievement-desc {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.7rem;
-            margin-top: 2px;
-        }
-
-        /* ============================================
-           SETTINGS PAGE
-           ============================================ */
-        .settings-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .settings-content::-webkit-scrollbar { display: none; }
-
-        .settings-group {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-radius: 18px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .group-header {
-            color: #ffd700;
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            padding: 15px 18px 10px 18px;
-        }
-
-        .setting-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .setting-item:first-of-type {
-            border-top: none;
-        }
-
-        .setting-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .setting-icon {
-            font-size: 1.3rem;
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .setting-label {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* TOGGLE SWITCH */
-        .toggle-switch {
-            width: 48px;
-            height: 26px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-switch.on {
-            background: linear-gradient(135deg, #ffd700, #d49400);
-        }
-
-        .toggle-knob {
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .toggle-switch.on .toggle-knob {
-            left: 24px;
-        }
-
-        .setting-arrow {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1.2rem;
-        }
-
-        /* REWARDS PAGE */
-        .rewards-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .rewards-content::-webkit-scrollbar { display: none; }
-
-        .reward-card {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 18px;
+            border-radius: 16px;
             padding: 18px;
             margin-bottom: 15px;
+            color: white;
             display: flex;
             align-items: center;
             gap: 15px;
         }
+        
+        .info-icon { font-size: 2rem; }
+        .info-title { font-weight: 700; font-size: 1.1rem; color: #ffd700; }
+        .info-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
 
-        .reward-icon {
-            font-size: 2.5rem;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+        /* TOAST */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
-        .reward-info { flex: 1; }
-
-        .reward-title {
-            color: #ffd700;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Cinzel', serif;
-        }
-
-        .reward-desc {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.75rem;
-            margin-top: 3px;
-        }
-
-        .reward-claim-btn {
-            padding: 8px 18px;
-            background: linear-gradient(180deg, #fff6bb, #ffd700);
-            border: none;
-            border-radius: 15px;
-            color: #333;
-            font-weight: 700;
-            font-size: 0.75rem;
-            cursor: pointer;
-            letter-spacing: 1px;
-        }
-
-        /* RESPONSIVE */
+        /* RESPONSIVE Adjustments */
         @media (max-width: 360px) {
-            .main-title { font-size: 1.7rem; }
-            .card-title-text { font-size: 1.4rem; }
-            .banner-card { min-width: 140px; }
-        }
-
-        @media (max-height: 680px) {
-            .cards-stack { max-height: 400px; }
-            .card-title-text { font-size: 1.4rem; }
-            .candy-cell { font-size: 1.1rem; }
+            .game-card { width: 240px; height: 340px; }
+            .carousel-scroll { padding: 0 calc(50vw - 120px); }
+            .card-bottom { padding: 15px 20px; height: 150px; }
+            .card-title { font-size: 1.7rem; }
+            .points-value { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -1039,13 +497,7 @@
         <div class="stars-container" id="stars-container"></div>
         <div class="logo-box">
             <span class="title-word jewels-title">Jewels</span>
-            <div class="title-ornament">
-                <div class="ornament-line"></div>
-                <div class="ornament-gem">✦</div>
-                <div class="ornament-line"></div>
-            </div>
             <span class="title-word blast-title">Blast</span>
-            <p class="subtitle">mystery world 3</p>
         </div>
         <div class="loading-box">
             <div class="loading-track">
@@ -1055,202 +507,85 @@
         </div>
     </div>
 
-    <!-- MENU SCREEN -->
+    <!-- MAIN MENU SCREEN -->
     <div id="menu-screen" class="screen page-screen">
         <div class="stars-container" id="menu-stars"></div>
         
         <div class="top-header">
             <div class="main-title">JEWELS BLAST</div>
-            <div class="title-divider">
-                <div class="divider-line"></div>
-                <div class="divider-gem">✦</div>
-                <div class="divider-line"></div>
-            </div>
         </div>
 
         <div class="menu-content">
-            <!-- BANNERS -->
+            <!-- BANNERS (Like Top of Reference Image) -->
             <div class="banners-wrapper">
                 <div class="banners-scroll">
-                    <div class="banner-card banner-mini1" onclick="showToast('Mini Game 1 coming soon!')">
-                        <div class="banner-shine"></div>
-                        <div class="banner-icon-box">🎯</div>
+                    <div class="banner-card banner-mini1" onclick="showToast('Loading Daily Challenge...')">
+                        <div class="banner-icon-box">📅</div>
                         <div class="banner-text-box">
-                            <div class="banner-title">MINI GAME</div>
-                            <div class="banner-subtitle">Quick Puzzle</div>
+                            <div class="banner-title">Daily Challenge</div>
+                            <div class="banner-subtitle">Play Today</div>
                         </div>
                     </div>
-                    <div class="banner-card banner-mini2" onclick="showToast('Mini Game 2 coming soon!')">
-                        <div class="banner-shine"></div>
-                        <div class="banner-icon-box">⚡</div>
+                    <div class="banner-card banner-mini2" onclick="showToast('Loading Event...')">
+                        <div class="banner-icon-box">🌱</div>
                         <div class="banner-text-box">
-                            <div class="banner-title">MINI GAME</div>
-                            <div class="banner-subtitle">Speed Match</div>
-                        </div>
-                    </div>
-                    <div class="banner-card banner-daily" onclick="showToast('Daily Challenge coming soon!')">
-                        <div class="banner-shine"></div>
-                        <div class="banner-icon-box">🏆</div>
-                        <div class="banner-text-box">
-                            <div class="banner-title">DAILY</div>
-                            <div class="banner-subtitle">Win Rewards!</div>
+                            <div class="banner-title">Special Event</div>
+                            <div class="banner-subtitle">Water Sort</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="section-label">◆ SWIPE TO CHOOSE ◆</div>
-
-            <!-- CAROUSEL -->
+            <!-- ULTRA REALISTIC CAROUSEL (NO DOTS, EXACT LAYOUT) -->
             <div class="carousel-area">
-                <div class="cards-stack" id="cardsStack">
+                <div class="carousel-scroll" id="carousel">
                     
-                    <!-- CANDY QUEST CARD -->
-                    <div class="game-card card-candy" data-index="0">
-                        <div class="card-bg-animation">
-                            <div class="bg-shape"></div>
-                            <div class="bg-shape"></div>
-                            <div class="bg-shape"></div>
+                    <!-- CANDY QUEST -->
+                    <div class="game-card card-candy">
+                        <div class="card-top">
+                            <div class="bg-shape shape1"></div>
+                            <div class="bg-shape shape2"></div>
+                            <div class="card-title">Candy Quest</div>
+                            <div class="card-badge">Popular</div>
                         </div>
-                        <div class="card-content">
-                            <div class="card-badge">⭐ POPULAR</div>
-                            <div class="game-preview">
-                                <div class="candy-grid">
-                                    <div class="candy-cell" style="animation-delay: 0s;">🍬</div>
-                                    <div class="candy-cell" style="animation-delay: 0.1s;">🍭</div>
-                                    <div class="candy-cell" style="animation-delay: 0.2s;">🍬</div>
-                                    <div class="candy-cell" style="animation-delay: 0.3s;">🧁</div>
-                                    <div class="candy-cell" style="animation-delay: 0.4s;">🍰</div>
-                                    <div class="candy-cell" style="animation-delay: 0.5s;">🍭</div>
-                                    <div class="candy-cell" style="animation-delay: 0.6s;">🍬</div>
-                                    <div class="candy-cell" style="animation-delay: 0.7s;">🍭</div>
-                                    <div class="candy-cell" style="animation-delay: 0.8s;">🧁</div>
-                                    <div class="candy-cell" style="animation-delay: 0.9s;">🍬</div>
-                                    <div class="candy-cell" style="animation-delay: 1s;">🧁</div>
-                                    <div class="candy-cell" style="animation-delay: 1.1s;">🍰</div>
-                                    <div class="candy-cell" style="animation-delay: 1.2s;">🍭</div>
-                                    <div class="candy-cell" style="animation-delay: 1.3s;">🍬</div>
-                                    <div class="candy-cell" style="animation-delay: 1.4s;">🧁</div>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-title-text">CANDY QUEST</div>
-                                <div class="card-desc-text">Match 3 sweet candies!</div>
-                                <button class="card-play-btn" onclick="launchGame('candy')">PLAY GAME</button>
-                            </div>
+                        <div class="card-bottom">
+                            <div class="points-label">Win Rate</div>
+                            <div class="points-value">🏆 98%</div>
+                            <button class="play-btn" onclick="launchGame('Candy Quest')">New Game</button>
                         </div>
                     </div>
 
-                    <!-- BLOCK BLAST CARD -->
-                    <div class="game-card card-block" data-index="1">
-                        <div class="card-bg-animation">
-                            <div class="bg-shape"></div>
-                            <div class="bg-shape"></div>
-                            <div class="bg-shape"></div>
+                    <!-- BLOCK BLAST -->
+                    <div class="game-card card-block">
+                        <div class="card-top">
+                            <div class="bg-shape shape1"></div>
+                            <div class="bg-shape shape2"></div>
+                            <div class="card-title">Block Blast</div>
+                            <div class="card-badge">Hard</div>
                         </div>
-                        <div class="card-content">
-                            <div class="card-badge">🔥 HOT</div>
-                            <div class="game-preview">
-                                <div class="block-grid">
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell filled"></div>
-                                    <div class="block-cell filled"></div>
-                                    <div class="block-cell green"></div>
-                                    <div class="block-cell green"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell purple"></div>
-                                    <div class="block-cell purple"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell cyan"></div>
-                                    <div class="block-cell cyan"></div>
-                                    <div class="block-cell cyan"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell filled"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell yellow"></div>
-                                    <div class="block-cell yellow"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell green"></div>
-                                    <div class="block-cell green"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell yellow"></div>
-                                    <div class="block-cell"></div>
-                                    <div class="block-cell"></div>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-title-text">BLOCK BLAST</div>
-                                <div class="card-desc-text">Fill rows & columns!</div>
-                                <button class="card-play-btn" onclick="launchGame('block')">PLAY GAME</button>
-                            </div>
+                        <div class="card-bottom">
+                            <div class="points-label">Popularity</div>
+                            <div class="points-value">🏆 400%</div>
+                            <button class="play-btn" onclick="launchGame('Block Blast')">New Game</button>
                         </div>
                     </div>
 
-                    <!-- NUMBER MATCH CARD -->
-                    <div class="game-card card-number" data-index="2">
-                        <div class="card-bg-animation">
-                            <div class="bg-shape"></div>
-                            <div class="bg-shape"></div>
-                            <div class="bg-shape"></div>
+                    <!-- NUMBER MATCH -->
+                    <div class="game-card card-number">
+                        <div class="card-top">
+                            <div class="bg-shape shape1"></div>
+                            <div class="bg-shape shape2"></div>
+                            <div class="card-title">Number<br>Match</div>
+                            <div class="card-badge">Expert</div>
                         </div>
-                        <div class="card-content">
-                            <div class="card-badge">💎 NEW</div>
-                            <div class="game-preview">
-                                <div class="number-grid">
-                                    <div class="number-cell" style="animation-delay: 0s;">1</div>
-                                    <div class="number-cell" style="animation-delay: 0.1s;">2</div>
-                                    <div class="number-cell" style="animation-delay: 0.2s;">3</div>
-                                    <div class="number-cell" style="animation-delay: 0.3s;">4</div>
-                                    <div class="number-cell" style="animation-delay: 0.4s;">5</div>
-                                    <div class="number-cell" style="animation-delay: 0.5s;">6</div>
-                                    <div class="number-cell" style="animation-delay: 0.6s;">7</div>
-                                    <div class="number-cell" style="animation-delay: 0.7s;">8</div>
-                                    <div class="number-cell" style="animation-delay: 0.8s;">9</div>
-                                    <div class="number-cell" style="animation-delay: 0.9s;">1</div>
-                                    <div class="number-cell" style="animation-delay: 1s;">2</div>
-                                    <div class="number-cell" style="animation-delay: 1.1s;">3</div>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-title-text">NUMBER MATCH</div>
-                                <div class="card-desc-text">Connect the numbers!</div>
-                                <button class="card-play-btn" onclick="launchGame('number')">PLAY GAME</button>
-                            </div>
+                        <div class="card-bottom">
+                            <div class="points-label">Completion</div>
+                            <div class="points-value">🏆 200%</div>
+                            <button class="play-btn" onclick="launchGame('Number Match')">New Game</button>
                         </div>
                     </div>
 
                 </div>
-            </div>
-
-            <div class="dots-indicator">
-                <div class="dot active" data-dot="0"></div>
-                <div class="dot" data-dot="1"></div>
-                <div class="dot" data-dot="2"></div>
-            </div>
-        </div>
-
-        <div class="bottom-nav">
-            <div class="nav-item active" onclick="showPage('menu-screen', this)">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">HOME</div>
-            </div>
-            <div class="nav-item" onclick="showPage('rewards-screen', this)">
-                <div class="nav-icon">🎁</div>
-                <div class="nav-label">REWARDS</div>
-            </div>
-            <div class="nav-item" onclick="showPage('profile-screen', this)">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">PROFILE</div>
-            </div>
-            <div class="nav-item" onclick="showPage('settings-screen', this)">
-                <div class="nav-icon">⚙️</div>
-                <div class="nav-label">SETTINGS</div>
             </div>
         </div>
     </div>
@@ -1258,75 +593,14 @@
     <!-- REWARDS SCREEN -->
     <div id="rewards-screen" class="screen page-screen">
         <div class="stars-container"></div>
-        
-        <div class="top-header">
-            <div class="main-title">REWARDS</div>
-            <div class="title-divider">
-                <div class="divider-line"></div>
-                <div class="divider-gem">✦</div>
-                <div class="divider-line"></div>
-            </div>
-        </div>
-
-        <div class="rewards-content">
-            <div class="reward-card">
-                <div class="reward-icon">🎁</div>
-                <div class="reward-info">
-                    <div class="reward-title">Daily Reward</div>
-                    <div class="reward-desc">Login daily to earn gems!</div>
+        <div class="top-header"><div class="main-title">REWARDS</div></div>
+        <div class="page-content">
+            <div class="info-box">
+                <div class="info-icon">🎁</div>
+                <div>
+                    <div class="info-title">Daily Bonus</div>
+                    <div class="info-desc">Claim your free gems today!</div>
                 </div>
-                <button class="reward-claim-btn" onclick="showToast('Claimed!')">CLAIM</button>
-            </div>
-            <div class="reward-card">
-                <div class="reward-icon">🏆</div>
-                <div class="reward-info">
-                    <div class="reward-title">Weekly Challenge</div>
-                    <div class="reward-desc">Complete 7 games this week</div>
-                </div>
-                <button class="reward-claim-btn" onclick="showToast('Locked!')">LOCKED</button>
-            </div>
-            <div class="reward-card">
-                <div class="reward-icon">⭐</div>
-                <div class="reward-info">
-                    <div class="reward-title">First Win Bonus</div>
-                    <div class="reward-desc">Win your first game today</div>
-                </div>
-                <button class="reward-claim-btn" onclick="showToast('Claimed!')">CLAIM</button>
-            </div>
-            <div class="reward-card">
-                <div class="reward-icon">💎</div>
-                <div class="reward-info">
-                    <div class="reward-title">Diamond Pack</div>
-                    <div class="reward-desc">Reach level 10 to unlock</div>
-                </div>
-                <button class="reward-claim-btn" onclick="showToast('Locked!')">LOCKED</button>
-            </div>
-            <div class="reward-card">
-                <div class="reward-icon">🎯</div>
-                <div class="reward-info">
-                    <div class="reward-title">Achievement Reward</div>
-                    <div class="reward-desc">Score 1000 points to claim</div>
-                </div>
-                <button class="reward-claim-btn" onclick="showToast('Claimed!')">CLAIM</button>
-            </div>
-        </div>
-
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="showPage('menu-screen', this)">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">HOME</div>
-            </div>
-            <div class="nav-item active" onclick="showPage('rewards-screen', this)">
-                <div class="nav-icon">🎁</div>
-                <div class="nav-label">REWARDS</div>
-            </div>
-            <div class="nav-item" onclick="showPage('profile-screen', this)">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">PROFILE</div>
-            </div>
-            <div class="nav-item" onclick="showPage('settings-screen', this)">
-                <div class="nav-icon">⚙️</div>
-                <div class="nav-label">SETTINGS</div>
             </div>
         </div>
     </div>
@@ -1334,228 +608,38 @@
     <!-- PROFILE SCREEN -->
     <div id="profile-screen" class="screen page-screen">
         <div class="stars-container"></div>
-        
-        <div class="top-header">
-            <div class="main-title">PROFILE</div>
-            <div class="title-divider">
-                <div class="divider-line"></div>
-                <div class="divider-gem">✦</div>
-                <div class="divider-line"></div>
-            </div>
-        </div>
-
-        <div class="profile-content">
-            <div class="avatar-section">
-                <div class="avatar-circle">👤</div>
-                <div class="player-name">Player One</div>
-                <div class="player-level">⚔️ Level 5 Adventurer</div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-icon">🏆</div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">WINS</div>
+        <div class="top-header"><div class="main-title">PROFILE</div></div>
+        <div class="page-content">
+            <div class="info-box">
+                <div class="info-icon">👤</div>
+                <div>
+                    <div class="info-title">Player 1</div>
+                    <div class="info-desc">Level 5 Master</div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-value">1,250</div>
-                    <div class="stat-label">BEST SCORE</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">🎮</div>
-                    <div class="stat-value">28</div>
-                    <div class="stat-label">GAMES PLAYED</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">🔥</div>
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">DAY STREAK</div>
-                </div>
-            </div>
-
-            <div class="achievements-section">
-                <div class="section-heading">◆ ACHIEVEMENTS</div>
-                <div class="achievement-item">
-                    <div class="achievement-icon">🥇</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">First Victory</div>
-                        <div class="achievement-desc">Win your first game</div>
-                    </div>
-                </div>
-                <div class="achievement-item">
-                    <div class="achievement-icon">💎</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Jewel Collector</div>
-                        <div class="achievement-desc">Collect 100 jewels</div>
-                    </div>
-                </div>
-                <div class="achievement-item">
-                    <div class="achievement-icon">⚡</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Speed Master</div>
-                        <div class="achievement-desc">Complete a level in under 30s</div>
-                    </div>
-                </div>
-                <div class="achievement-item">
-                    <div class="achievement-icon">🎯</div>
-                    <div class="achievement-info">
-                        <div class="achievement-name">Combo King</div>
-                        <div class="achievement-desc">Score 5 combos in a row</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="showPage('menu-screen', this)">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">HOME</div>
-            </div>
-            <div class="nav-item" onclick="showPage('rewards-screen', this)">
-                <div class="nav-icon">🎁</div>
-                <div class="nav-label">REWARDS</div>
-            </div>
-            <div class="nav-item active" onclick="showPage('profile-screen', this)">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">PROFILE</div>
-            </div>
-            <div class="nav-item" onclick="showPage('settings-screen', this)">
-                <div class="nav-icon">⚙️</div>
-                <div class="nav-label">SETTINGS</div>
             </div>
         </div>
     </div>
 
-    <!-- SETTINGS SCREEN -->
-    <div id="settings-screen" class="screen page-screen">
-        <div class="stars-container"></div>
-        
-        <div class="top-header">
-            <div class="main-title">SETTINGS</div>
-            <div class="title-divider">
-                <div class="divider-line"></div>
-                <div class="divider-gem">✦</div>
-                <div class="divider-line"></div>
-            </div>
+    <!-- BOTTOM NAVIGATION (White like reference image) -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showPage('menu-screen', this)">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Main</div>
         </div>
-
-        <div class="settings-content">
-            <div class="settings-group">
-                <div class="group-header">◆ AUDIO</div>
-                <div class="setting-item">
-                    <div class="setting-left">
-                        <div class="setting-icon">🔊</div>
-                        <div class="setting-label">Sound Effects</div>
-                    </div>
-                    <div class="toggle-switch on" onclick="toggleSwitch(this)">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-                <div class="setting-item">
-                    <div class="setting-left">
-                        <div class="setting-icon">🎵</div>
-                        <div class="setting-label">Background Music</div>
-                    </div>
-                    <div class="toggle-switch on" onclick="toggleSwitch(this)">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-                <div class="setting-item">
-                    <div class="setting-left">
-                        <div class="setting-icon">📳</div>
-                        <div class="setting-label">Vibration</div>
-                    </div>
-                    <div class="toggle-switch on" onclick="toggleSwitch(this)">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="settings-group">
-                <div class="group-header">◆ GAME</div>
-                <div class="setting-item">
-                    <div class="setting-left">
-                        <div class="setting-icon">🔔</div>
-                        <div class="setting-label">Notifications</div>
-                    </div>
-                    <div class="toggle-switch" onclick="toggleSwitch(this)">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-                <div class="setting-item">
-                    <div class="setting-left">
-                        <div class="setting-icon">💡</div>
-                        <div class="setting-label">Show Hints</div>
-                    </div>
-                    <div class="toggle-switch on" onclick="toggleSwitch(this)">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-                <div class="setting-item" onclick="showToast('Language settings coming soon!')">
-                    <div class="setting-left">
-                        <div class="setting-icon">🌐</div>
-                        <div class="setting-label">Language</div>
-                    </div>
-                    <div class="setting-arrow">›</div>
-                </div>
-            </div>
-
-            <div class="settings-group">
-                <div class="group-header">◆ ACCOUNT</div>
-                <div class="setting-item" onclick="showToast('Progress reset coming soon!')">
-                    <div class="setting-left">
-                        <div class="setting-icon">🔄</div>
-                        <div class="setting-label">Reset Progress</div>
-                    </div>
-                    <div class="setting-arrow">›</div>
-                </div>
-                <div class="setting-item" onclick="showToast('Privacy policy coming soon!')">
-                    <div class="setting-left">
-                        <div class="setting-icon">🔒</div>
-                        <div class="setting-label">Privacy Policy</div>
-                    </div>
-                    <div class="setting-arrow">›</div>
-                </div>
-                <div class="setting-item" onclick="showToast('About page coming soon!')">
-                    <div class="setting-left">
-                        <div class="setting-icon">ℹ️</div>
-                        <div class="setting-label">About</div>
-                    </div>
-                    <div class="setting-arrow">›</div>
-                </div>
-            </div>
-
-            <div style="text-align: center; color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-top: 10px;">
-                Jewels Blast v1.0.0
-            </div>
+        <div class="nav-item" onclick="showPage('rewards-screen', this)">
+            <div class="nav-icon">📅</div>
+            <div class="nav-label">Challenges</div>
         </div>
-
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="showPage('menu-screen', this)">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">HOME</div>
-            </div>
-            <div class="nav-item" onclick="showPage('rewards-screen', this)">
-                <div class="nav-icon">🎁</div>
-                <div class="nav-label">REWARDS</div>
-            </div>
-            <div class="nav-item" onclick="showPage('profile-screen', this)">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">PROFILE</div>
-            </div>
-            <div class="nav-item active" onclick="showPage('settings-screen', this)">
-                <div class="nav-icon">⚙️</div>
-                <div class="nav-label">SETTINGS</div>
-            </div>
+        <div class="nav-item" onclick="showPage('profile-screen', this)">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Me</div>
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" style="position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: rgba(13, 7, 38, 0.95); color: #ffd700; padding: 12px 24px; border-radius: 20px; border: 1px solid rgba(255, 215, 0, 0.4); font-size: 0.85rem; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;"></div>
+    <div id="toast"></div>
 
     <script>
-        /* ============ STARS ============ */
+        /* ============ STARS BACKGROUND ============ */
         function createStars(container, count) {
             if (!container) return;
             for (let i = 0; i < count; i++) {
@@ -1578,140 +662,60 @@
             const fill = document.getElementById('loading-fill');
             const text = document.getElementById('loading-text');
             const interval = setInterval(() => {
-                progress += Math.random() * 8 + 3;
+                progress += Math.random() * 10 + 5;
                 if (progress > 100) progress = 100;
                 fill.style.width = progress + '%';
                 text.textContent = `LOADING... ${Math.floor(progress)}%`;
+                
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
                         document.getElementById('loading-screen').classList.remove('active');
                         document.getElementById('menu-screen').classList.add('active');
                         document.querySelectorAll('.page-screen .stars-container').forEach(c => createStars(c, 25));
-                        initCards();
-                    }, 500);
+                        initCarouselScale();
+                    }, 400);
                 }
-            }, 120);
+            }, 100);
         }
 
-        /* ============ CARD CAROUSEL - SWIPE ONLY ============ */
-        let currentCard = 0;
-        const totalCards = 3;
-        let cards = [];
-        let dots = [];
-        let isDragging = false;
-        let startX = 0;
-        let currentX = 0;
-        let activeCard = null;
+        /* ============ ULTRA REALISTIC CARD SCALING ============ */
+        // This makes the center card full size (1) and side cards slightly smaller (0.85)
+        function initCarouselScale() {
+            const carousel = document.getElementById('carousel');
+            const cards = document.querySelectorAll('.game-card');
+            
+            function updateScale() {
+                const centerPosition = carousel.scrollLeft + (carousel.clientWidth / 2);
+                
+                cards.forEach(card => {
+                    const cardCenter = card.offsetLeft + (card.clientWidth / 2);
+                    const distanceFromCenter = Math.abs(centerPosition - cardCenter);
+                    
+                    // Scale formula: Center = 1. Far away scales down to 0.85
+                    const scale = Math.max(0.85, 1 - (distanceFromCenter / 1200));
+                    
+                    card.style.transform = `scale(${scale})`;
+                });
+            }
 
-        function initCards() {
-            cards = document.querySelectorAll('.game-card');
-            dots = document.querySelectorAll('.dot');
-            updateCards();
-            attachSwipe();
-        }
-
-        function updateCards() {
-            cards.forEach((card, index) => {
-                const diff = index - currentCard;
-                let pos = diff;
-                if (diff > totalCards / 2) pos = diff - totalCards;
-                if (diff < -totalCards / 2) pos = diff + totalCards;
-
-                if (pos === 0) {
-                    card.style.transform = 'translateX(0) scale(1) rotate(0deg)';
-                    card.style.opacity = '1';
-                    card.style.zIndex = '10';
-                    card.style.pointerEvents = 'auto';
-                } else if (pos === 1) {
-                    card.style.transform = 'translateX(60%) scale(0.85) rotate(5deg)';
-                    card.style.opacity = '0.5';
-                    card.style.zIndex = '5';
-                    card.style.pointerEvents = 'none';
-                } else if (pos === -1) {
-                    card.style.transform = 'translateX(-60%) scale(0.85) rotate(-5deg)';
-                    card.style.opacity = '0.5';
-                    card.style.zIndex = '5';
-                    card.style.pointerEvents = 'none';
-                } else {
-                    card.style.transform = 'translateX(0) scale(0.7)';
-                    card.style.opacity = '0';
-                    card.style.zIndex = '1';
-                    card.style.pointerEvents = 'none';
-                }
-            });
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentCard);
-            });
-        }
-
-        function attachSwipe() {
-            const stack = document.getElementById('cardsStack');
-
-            const start = (e) => {
-                const target = e.target.closest('.game-card');
-                if (!target || parseInt(target.dataset.index) !== currentCard) return;
-                if (e.target.closest('.card-play-btn')) return;
-
-                isDragging = true;
-                activeCard = target;
-                startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-                currentX = startX;
-                activeCard.classList.add('dragging');
-            };
-
-            const move = (e) => {
-                if (!isDragging || !activeCard) return;
-                e.preventDefault();
-                currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-                const diff = currentX - startX;
-                const rotation = diff * 0.1;
-                const opacity = 1 - Math.min(Math.abs(diff) / 300, 0.5);
-                activeCard.style.transform = `translateX(${diff}px) rotate(${rotation}deg)`;
-                activeCard.style.opacity = opacity;
-            };
-
-            const end = () => {
-                if (!isDragging || !activeCard) return;
-                isDragging = false;
-                activeCard.classList.remove('dragging');
-                const diff = currentX - startX;
-
-                if (Math.abs(diff) > 80) {
-                    if (diff < 0) {
-                        currentCard = (currentCard + 1) % totalCards;
-                    } else {
-                        currentCard = (currentCard - 1 + totalCards) % totalCards;
-                    }
-                }
-                activeCard = null;
-                updateCards();
-            };
-
-            stack.addEventListener('touchstart', start, { passive: true });
-            stack.addEventListener('touchmove', move, { passive: false });
-            stack.addEventListener('touchend', end);
-            stack.addEventListener('mousedown', start);
-            stack.addEventListener('mousemove', move);
-            stack.addEventListener('mouseup', end);
-            stack.addEventListener('mouseleave', end);
+            carousel.addEventListener('scroll', updateScale);
+            // Run once to set initial sizes
+            updateScale();
+            // Scroll to center the middle card initially
+            setTimeout(() => {
+                carousel.scrollLeft = cards[1].offsetLeft - (carousel.clientWidth / 2) + (cards[1].clientWidth / 2);
+            }, 100);
         }
 
         /* ============ PAGE NAVIGATION ============ */
         function showPage(pageId, navElement) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            if (navElement) {
-                const nav = navElement.closest('.bottom-nav');
-                nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                navElement.classList.add('active');
-            }
-        }
-
-        /* ============ TOGGLE SWITCH ============ */
-        function toggleSwitch(el) {
-            el.classList.toggle('on');
+            
+            const nav = document.querySelector('.bottom-nav');
+            nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            navElement.classList.add('active');
         }
 
         /* ============ TOAST ============ */
@@ -1719,18 +723,13 @@
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.style.opacity = '1';
-            setTimeout(() => {
-                toast.style.opacity = '0';
-            }, 2000);
+            setTimeout(() => toast.style.opacity = '0', 2000);
         }
 
-        /* ============ LAUNCH GAME ============ */
-        function launchGame(game) {
-            const names = { candy: 'Candy Quest', block: 'Block Blast', number: 'Number Match' };
-            showToast(`🎮 Launching ${names[game]}... Coming next!`);
+        function launchGame(gameName) {
+            showToast(`🎮 Launching ${gameName}! Next step...`);
         }
 
-        /* ============ INIT ============ */
         document.addEventListener('DOMContentLoaded', () => {
             createStars(document.getElementById('stars-container'), 40);
             animateLoading();
